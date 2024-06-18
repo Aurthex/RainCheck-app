@@ -2,6 +2,7 @@ package com.raincheck.RainCheck.client;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.HttpStatusCode;
 
 import java.io.IOException;
 
@@ -13,6 +14,11 @@ class WeatherClientTest {
     @BeforeEach
     void setUp() {
         client = new WeatherClient("0", "0");
+    }
+
+    @Test
+    void statusCodeIs200() throws IOException, InterruptedException {
+        assertEquals(200, client.checkStatusCode());
     }
 
     @Test
