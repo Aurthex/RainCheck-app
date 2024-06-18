@@ -3,22 +3,24 @@ package com.raincheck.RainCheck.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Entity;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class Weather {
     @JsonProperty("temperature_2m")
-    private int temperature; //Converting from double to int rounds down in all cases
+    private Integer temperature; //Converting from double to int rounds down in all cases
 
     @JsonProperty("weather_code")
-    private int weather_code;
+    private Integer weather_code;
 
     @JsonProperty("wind_speed_10m")
-    private int wind_speed; //Converting from double to int rounds down in all cases
+    private Integer wind_speed; //Converting from double to int rounds down in all cases
 
     @Override
     public String toString(){
