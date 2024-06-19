@@ -17,7 +17,7 @@ CREATE TABLE conditions(
 DROP TABLE IF EXISTS activity_condition_join;
 
 CREATE TABLE activity_condition_join (
-    activity_id INT REFERENCES activities(id),
-    condition_id INT REFERENCES conditions(id),
-    CONSTRAINT activity_condition_join_pk PRIMARY KEY(activity_id, condition_id) ON DELETE CASCADE
+    activity_id INT REFERENCES activities(id) ON DELETE CASCADE,
+    condition_id INT REFERENCES conditions(id) ON DELETE CASCADE,
+    CONSTRAINT activity_condition_join_pk PRIMARY KEY(activity_id, condition_id)
     );
