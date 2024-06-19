@@ -17,5 +17,5 @@ public class Condition {
     @Column(nullable = false)
     private String name;
     @Column(nullable = false)
-    private Integer weather_code;
+    private Integer weatherCode;
 }
