@@ -1,7 +1,5 @@
 package com.raincheck.RainCheck.client;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.raincheck.RainCheck.model.Weather;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,10 +15,7 @@ class WeatherClientIntegrationTest {
     @BeforeEach
     void setUp() throws IOException, InterruptedException {
         client = new WeatherClient("0", "0");
-        ObjectMapper objectMapper = new ObjectMapper();
-
-        weather = objectMapper.readValue(String.valueOf(client.findCurrent()), new TypeReference<Weather>() {
-        });
+        weather = new Weather(client.findCurrent());
     }
 
     @Test
