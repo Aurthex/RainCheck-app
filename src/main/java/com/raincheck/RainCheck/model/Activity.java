@@ -3,7 +3,6 @@ package com.raincheck.RainCheck.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Data
 @Entity
 @Getter
 @Setter
@@ -13,7 +12,7 @@ import lombok.*;
 public class Activity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     @Column(nullable = false)
     private String name;
     @Column(nullable = false)
