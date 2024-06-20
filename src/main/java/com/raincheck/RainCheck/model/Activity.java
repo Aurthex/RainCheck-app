@@ -17,5 +17,10 @@ public class Activity {
     private String name;
     @Column(nullable = false)
     private String description;
+    @Column
+    private Integer temperature;
+    @Column
+    private Integer windSpeed;
     @Transient private Condition[] conditions;
+
 }

@@ -18,4 +18,6 @@ public class Condition {
     private String name;
     @Column(nullable = false)
     private Integer weatherCode;
+    @Column
+    private String weatherIcon;
 }
