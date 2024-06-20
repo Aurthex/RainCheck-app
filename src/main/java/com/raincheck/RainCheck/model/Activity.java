@@ -33,10 +33,15 @@ public class Activity {
     public String toJson() {
         return "{" +
                 "\"name\":\"" + name + "\"," +
-                "\"description\":\"" + description + "\"" +
-                "\"temperature\":\"" + temperature + "\"," +
-                "\"windSpeed\":\"" + windSpeed + "\"" +
+                "\"description\":\"" + description + "\"," +
+                "\"temperature\":\"" + displayInteger(temperature) + "\"," +
+                "\"windSpeed\":\"" + displayInteger(windSpeed) + "\"" +
                 // Add other properties in JSON format
                 "}";
+    }
+
+    public String displayInteger(Integer i){
+        if (i != null) return i.toString();
+        return "any";
     }
 }

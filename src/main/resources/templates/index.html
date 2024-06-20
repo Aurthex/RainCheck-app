@@ -13,10 +13,14 @@
 
             document.getElementById("activityName").innerText = selectedActivity.name;
             document.getElementById("activityDescription").innerText = selectedActivity.description;
+            document.getElementById("activityTemp").innerText = selectedActivity.temperature;
+            document.getElementById("activityWindSpeed").innerText = selectedActivity.windSpeed;
             // Add more properties as needed
         } else {
             document.getElementById("activityName").innerText = '';
             document.getElementById("activityDescription").innerText = '';
+            document.getElementById("activityTemp").innerText = '';
+            document.getElementById("activityWindSpeed").innerText = '';
             // Clear other properties as needed
         }
     }
@@ -64,6 +68,8 @@
       <h3>Activity Details</h3>
       <p>Name: <span id="activityName"></span></p>
       <p>Description: <span id="activityDescription"></span></p>
+      <p>Ideal Temperature: <span id="activityTemp"></span></p>
+      <p>Ideal Windspeed: <span id="activityWindSpeed"></span></p>
 
     </div>
 
