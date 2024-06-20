@@ -42,4 +42,12 @@ public class WeatherModelTest {
         String expected = "Weather: \nTemperature: \n23Code: \n3Wind Speed: \n5";
         assertEquals(expected, weather.toString()); // Assert the toString method returns the expected string
     }
+    @Test
+    public void testRounding() {
+        String json = "{\"time\":\"2024-06-20T13:45\",\"interval\":900,\"temperature_2m\":22.8,\"weather_code\":3,\"wind_speed_10m\":5.2}";
+        Weather weather = new Weather(json);
+        assertEquals(23, weather.getTemperature()); // Assert temperature is correctly rounded up
+        assertEquals(3, weather.getWeather_code()); // Assert weather_code is 3
+        assertEquals(5, weather.getWind_speed()); // Assert wind_speed is correctly rounded down
+    }
 }

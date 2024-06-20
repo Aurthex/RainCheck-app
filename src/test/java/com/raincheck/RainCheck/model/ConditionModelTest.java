@@ -12,6 +12,7 @@ public class ConditionModelTest {
         assertNull(condition.getId()); // Assert id is null
         assertNull(condition.getName()); // Assert name is null
         assertNull(condition.getWeatherCode()); // Assert weatherCode is null
+        assertNull(condition.getWeatherIcon()); // Assert weatherIcon is null
     }
 
     // Test all-args constructor
@@ -22,6 +23,7 @@ public class ConditionModelTest {
         assertEquals(1, condition.getId()); // Assert id is 1
         assertEquals("Clear", condition.getName()); // Assert name is "Clear"
         assertEquals(0, condition.getWeatherCode()); // Assert weatherCode is 0
+        assertNull(condition.getWeatherIcon()); // Assert weatherIcon is null initially
     }
 
     // Test getters and setters
@@ -33,11 +35,13 @@ public class ConditionModelTest {
         condition.setId(1);
         condition.setName("Clear");
         condition.setWeatherCode(0);
+        condition.setWeatherIcon("sun.png");
 
         // Assert values using getters
         assertEquals(1, condition.getId()); // Assert id is 1
         assertEquals("Clear", condition.getName()); // Assert name is "Clear"
         assertEquals(0, condition.getWeatherCode()); // Assert weatherCode is 0
+        assertEquals("sun.png", condition.getWeatherIcon()); // Assert weatherIcon is "sun.png"
     }
 
 }
