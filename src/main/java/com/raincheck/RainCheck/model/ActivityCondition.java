@@ -20,4 +20,9 @@ public class ActivityCondition {
     @ManyToOne
     @JoinColumn(name = "condition_id")
     private Condition condition;
+
+    public ActivityCondition(Activity activity, Condition condition){
+        this.activity = activity;
+        this.condition = condition;
+    }
 }

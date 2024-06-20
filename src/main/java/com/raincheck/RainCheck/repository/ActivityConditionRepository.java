@@ -11,6 +11,7 @@ public interface ActivityConditionRepository extends CrudRepository<ActivityCond
     public Optional<ActivityCondition> findById(Integer id);
     public List<ActivityCondition> findByActivity(Activity activity);
     public List<ActivityCondition> findByCondition(Condition condition);
+    public List<Condition> findConditionByActivity(Activity activity);
 
 //    public List<ActivityCondition> GetByTemperatureGreaterThanLowAndTemperatureLessThanHigh(Integer low, Integer high);
 
