@@ -30,4 +30,22 @@ public class WeatherTest {
                 "Code: " + "\n" + 0 +
                 "Wind Speed: " + "\n" + 8);
     }
+    // Additional tests for setters
+    @Test
+    public void testTemperatureSetter() {
+        weather.setTemperature(25);
+        assertEquals(25, weather.getTemperature().intValue());
+    }
+
+    @Test
+    public void testWeatherCodeSetter() {
+        weather.setWeather_code(2);
+        assertEquals(2, weather.getWeather_code().intValue());
+    }
+
+    @Test
+    public void testWindSpeedSetter() {
+        weather.setWind_speed(10);
+        assertEquals(10, weather.getWind_speed().intValue());
+    }
 }
