@@ -23,10 +23,19 @@ public class Activity {
     private Integer windSpeed;
     @Transient private Condition[] conditions;
 
+    public Activity(Integer id, String name, String description, Condition[] conditions){
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.conditions = conditions;
+    }
+
     public String toJson() {
         return "{" +
                 "\"name\":\"" + name + "\"," +
                 "\"description\":\"" + description + "\"" +
+                "\"temperature\":\"" + temperature + "\"," +
+                "\"windSpeed\":\"" + windSpeed + "\"" +
                 // Add other properties in JSON format
                 "}";
     }
