@@ -9,6 +9,7 @@ import com.raincheck.RainCheck.repository.ActivityConditionRepository;
 import com.raincheck.RainCheck.repository.ActivityRepository;
 import com.raincheck.RainCheck.repository.ConditionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,7 +22,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-@RestController
+@Controller
 public class ActivityController {
 
     @Autowired
@@ -33,7 +34,7 @@ public class ActivityController {
     @Autowired
     ConditionRepository conditionRepository;
 
-    @RequestMapping(value = "/")
+    @GetMapping("/")
     public String index(Model model) throws IOException, InterruptedException {
 
         //API request to get weather data as a JSON
@@ -48,7 +49,7 @@ public class ActivityController {
         List<Activity> activities = GetActivitiesWithConditions();
         model.addAttribute("activities", activities);
 
-        return "/index";
+        return "index";
     }
 
     @RequestMapping(value = "/activities")

@@ -1,5 +1,4 @@
 package com.raincheck.RainCheck.model;
-
 import lombok.*;
 
 @Getter
@@ -7,6 +6,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Weather {
+
     private Integer temperature;
     private Integer weather_code;
     private Integer wind_speed;
@@ -19,6 +19,12 @@ public class Weather {
         weather_code = (int) Math.round(Double.parseDouble(codeString));
         String windString = elements[4].substring(17, elements[4].length()-1);
         wind_speed = (int) Math.round(Double.parseDouble(windString));
+    }
+
+    public Weather(int temperature, int weather_code, int wind_speed){
+        this.temperature = temperature;
+        this.weather_code = weather_code;
+        this.wind_speed = wind_speed;
     }
 
     @Override

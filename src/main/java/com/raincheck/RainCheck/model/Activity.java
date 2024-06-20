@@ -18,4 +18,13 @@ public class Activity {
     @Column(nullable = false)
     private String description;
     @Transient private Condition[] conditions;
+
+    public String toJson() {
+        return "{" +
+                "\"name\":\"" + name + "\"," +
+                "\"description\":\"" + description + "\"" +
+                // Add other properties in JSON format
+                "}";
+    }
 }
+
