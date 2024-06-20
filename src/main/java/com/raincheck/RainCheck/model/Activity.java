@@ -31,12 +31,21 @@ public class Activity {
     }
 
     public String toJson() {
+        StringBuilder conditionsJson = new StringBuilder("[");
+        for (int i = 0; i < conditions.length; i++) {
+            conditionsJson.append("{\"name\":\"").append(conditions[i].getName()).append("\"}");
+            if (i < conditions.length - 1) {
+                conditionsJson.append(",");
+            }
+        }
+        conditionsJson.append("]");
+
         return "{" +
                 "\"name\":\"" + name + "\"," +
                 "\"description\":\"" + description + "\"," +
                 "\"temperature\":\"" + displayInteger(temperature) + "\"," +
-                "\"windSpeed\":\"" + displayInteger(windSpeed) + "\"" +
-                // Add other properties in JSON format
+                "\"windSpeed\":\"" + displayInteger(windSpeed) + "\"," +
+                "\"conditions\":" + conditionsJson.toString() +
                 "}";
     }
 
