@@ -21,7 +21,7 @@ public class Condition {
     @Column
     private String weatherIcon;
 
-    Condition(int id, String name, int weatherCode)
+    public Condition(int id, String name, int weatherCode)
     {
         this.id = id;
         this.name = name;
