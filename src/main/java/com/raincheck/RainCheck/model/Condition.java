@@ -20,4 +20,11 @@ public class Condition {
     private Integer weatherCode;
     @Column
     private String weatherIcon;
+
+    Condition(int id, String name, int weatherCode)
+    {
+        this.id = id;
+        this.name = name;
+        this.weatherCode = weatherCode;
+    }
 }
