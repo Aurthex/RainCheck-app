@@ -48,7 +48,7 @@ public class ActivityController {
         List<Activity> activities = GetActivitiesWithConditions();
         model.addAttribute("activities", activities);
 
-        return "weather/index";
+        return "/index";
     }
 
     @RequestMapping(value = "/activities")
@@ -56,7 +56,7 @@ public class ActivityController {
         //Get all activities with conditions and add to model
         List<Activity> activities = GetActivitiesWithConditions();
         model.addAttribute("activities", activities);
-        return "activities/index";
+        return "/activities";
     }
 
     @PostMapping("/activities")
