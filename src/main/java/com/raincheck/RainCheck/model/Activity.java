@@ -23,4 +23,11 @@ public class Activity {
     private Integer windSpeed;
     @Transient private Condition[] conditions;
 
+    public String toJson() {
+        return "{" +
+                "\"name\":\"" + name + "\"," +
+                "\"description\":\"" + description + "\"" +
+                // Add other properties in JSON format
+                "}";
+    }
 }

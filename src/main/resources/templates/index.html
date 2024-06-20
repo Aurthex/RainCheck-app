@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>RainCheck</title>
+  <script>
+    function updateActivityDetails() {
+        const selectElement = document.getElementById("activity");
+        const selectedOption = selectElement.options[selectElement.selectedIndex].dataset.activity;
+
+        if (selectedOption) {
+            const selectedActivity = JSON.parse(selectedOption);
+
+            document.getElementById("activityName").innerText = selectedActivity.name;
+            document.getElementById("activityDescription").innerText = selectedActivity.description;
+            // Add more properties as needed
+        } else {
+            document.getElementById("activityName").innerText = '';
+            document.getElementById("activityDescription").innerText = '';
+            // Clear other properties as needed
+        }
+    }
+  </script>
+</head>
+<body>
+  <header th:replace="header :: body"></header>
+
+  <main>
+
+    <div id="weather-block">
+      <h2>Current Weather in Newcastle</h2>
+      <div id="weather-icon">
+        <img src="" alt="Weather Icon">
+      </div>
+      <div id="temp-wind">
+        <p class="temp-wind-p"><span th:text="${weather.temperature}"></span> °C</p>
+        <p class="temp-wind-p"><span th:text="${weather.wind_speed}"></span> mph</p>
+
+      </div>
+
+    </div>
+
+    <div id="activity-block">
+      <form action="#">
+        <label for="activity">Today's Activity</label>
+          <select name="activity" id="activity" onchange="updateActivityDetails()">
+            <option value="0" disabled selected>Select Activity</option>
+            <option th:each="activity : ${activities}" th:data-activity="${activity.toJson()}" th:text="${activity.name}"></option>
+            <option value="add-new">Add New</option>
+          </select>
+
+
+        <div role="group" aria-labelledby="group-heading">
+          <h3 id="group-heading">Ideal Weather</h3>
+          <span></span>
+        </div>
+        <label for="ideal-temp">Ideal Temperature (°C)</label>
+        <input type="number" id="ideal-temp" min="-15" max="40">
+        <label for="ideal-wind">Ideal Wind Speed (mph)</label>
+        <input type="number" id="ideal-wind" min="0" max="175">
+
+        <input type="submit" value="Submit" />
+      </form>
+      <h3>Activity Details</h3>
+      <p>Name: <span id="activityName"></span></p>
+      <p>Description: <span id="activityDescription"></span></p>
+
+    </div>
+
+  </main>
+
+  <footer th:replace="footer :: body"></footer>
+
+</body>
+</html>
