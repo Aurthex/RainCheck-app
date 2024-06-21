@@ -17,13 +17,13 @@
         document.getElementById("activityTemp").innerText = selectedActivity.temperature;
         document.getElementById("activityWindSpeed").innerText = selectedActivity.windSpeed;
 
+        const weatherComparisons = selectedActivity.weatherComparisons;
+        const newText = weatherComparisons.replace(/<br\s*\/?>/gi, '\n');
+        document.getElementById("activityWeatherComparisons").innerText = newText;
+
         // Display conditions
         const conditions = selectedActivity.conditions.map(cond => cond.name).join(", ");
         document.getElementById("activityCond").innerText = conditions;
-
-        // Display conditions
-        const conditionCodes = selectedActivity.conditions.map(cond => cond.code).join(", ");
-        document.getElementById("conditionCodes").innerText = conditionCodes;
 
       } else {
         document.getElementById("activityName").innerText = '';
@@ -31,26 +31,9 @@
         document.getElementById("activityTemp").innerText = '';
         document.getElementById("activityWindSpeed").innerText = '';
         document.getElementById("activityCond").innerText = '';
-        document.getElementById("conditionCodes").innerText = '';
+        document.getElementById("activityWeatherComparisons").innerText = '';
       }
     }
-    function checkStringContainment(a, b, resultElementId) {
-        const resultElement = document.getElementById(resultElementId);
-        if (!a || !b) {
-            resultElement.innerText = "~";
-        } else if (a.includes(b)) {
-            resultElement.innerText = "The weather matches your preferences!";
-        } else {
-            resultElement.innerText = "The weather does not match your preferences.";
-        }
-    }
-
-    function updateContainmentMessage() {
-        const a = document.getElementById('conditionCodes').innerText;
-        const b = document.getElementById('weatherCode').innerText;
-        checkStringContainment(a, b, 'resultMessage');
-    }
-    document.addEventListener('DOMContentLoaded', updateContainmentMessage);
   </script>
 </head>
 <body>
@@ -87,10 +70,8 @@
     <p>Ideal Temperature: <span id="activityTemp"></span></p>
     <p>Ideal Wind Speed: <span id="activityWindSpeed"></span></p>
     <p>Ideal Conditions: <span id="activityCond"></span></p>
+    <p>Match Conditions: <span id="activityWeatherComparisons"></span></p>
 
-    <div id="conditionCodes" hidden></div>
-    <div id="weatherCode" th:text="'[' + ${weather.weather_code} + ']'" hidden>Code</div>
-    <div id="resultMessage"></div>
   </div>
 
 </main>
