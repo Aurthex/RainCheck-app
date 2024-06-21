@@ -64,19 +64,6 @@ public class ActivityController {
         return "/activities";
     }
 
-    @PostMapping("/activities")
-    public RedirectView create(@ModelAttribute Activity activity, @RequestParam("weather_codes") List<Integer> weather_codes){
-        activityRepository.save(activity);
-
-        for (Integer code : weather_codes){
-            Condition condition = conditionRepository.findByWeatherCode(code);
-            ActivityCondition activityCondition = new ActivityCondition(activity, condition);
-            activityConditionRepository.save(activityCondition);
-        }
-
-        return new RedirectView("/activities");
-    }
-
     //Creates a list of all activities and then populates each activity objects "conditions"
     //Field with all conditions associated with it through the join table
     public List<Activity> GetActivitiesWithConditions(){
@@ -107,9 +94,14 @@ public class ActivityController {
         return "activities/new";
     }
 
-    @PostMapping("/activities/new")
+    @PostMapping("/activities")
     public RedirectView addNewActivity(@ModelAttribute Activity activity) {
         activityRepository.save(activity);
+
+        for (Condition condition : activity.getConditions()){
+            ActivityCondition activityCondition = new ActivityCondition(activity, condition);
+            activityConditionRepository.save(activityCondition);
+        }
         return new RedirectView("/activities");
     }
 
