@@ -99,5 +99,19 @@ public class ActivityController {
         return activities;
     }
 
+    @GetMapping("/activities/new")
+    public String addNewActivity(Model model) {
+        model.addAttribute("activity", new Activity());
+        Iterable<Condition> conditions = conditionRepository.findAll();
+        model.addAttribute("conditions", conditions);
+        return "activities/new";
+    }
+
+    @PostMapping("/activities/new")
+    public RedirectView addNewActivity(@ModelAttribute Activity activity) {
+        activityRepository.save(activity);
+        return new RedirectView("/activities");
+    }
+
 
 }
