@@ -32,12 +32,15 @@ public class Activity {
     public String toJson() {
         StringBuilder conditionsJson = new StringBuilder("[");
         for (int i = 0; i < conditions.length; i++) {
-            conditionsJson.append("{\"name\":\"").append(conditions[i].getName()).append("\"}");
+            conditionsJson.append("{\"name\":\"").append(conditions[i].getName()).append("\",");
+            conditionsJson.append("\"code\":\"").append(getCode(conditions[i])).append("\"}");
             if (i < conditions.length - 1) {
                 conditionsJson.append(",");
             }
         }
         conditionsJson.append("]");
+
+        System.out.println(conditionsJson);
 
         return "{" +
                 "\"name\":\"" + name + "\"," +
@@ -51,5 +54,9 @@ public class Activity {
     public String displayInteger(Integer i){
         if (i != null) return i.toString();
         return "any";
+    }
+
+    private String getCode(Condition condition){
+        return "[" + condition.getWeatherCode().toString() + "]";
     }
 }
