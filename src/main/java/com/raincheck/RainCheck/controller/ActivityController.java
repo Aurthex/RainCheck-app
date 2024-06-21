@@ -45,6 +45,10 @@ public class ActivityController {
         Weather weather = new Weather(current); // new Weather(current, forecast)
         model.addAttribute("weather", weather);
 
+        String weather_icon = conditionRepository.findByWeatherCode(weather.getWeather_code()).getWeatherIcon();
+        if (weather_icon == null) weather_icon = "";
+        model.addAttribute(weather_icon);
+
         //Get all activities with conditions and add to model
         List<Activity> activities = GetActivitiesWithConditions();
         model.addAttribute("activities", activities);
