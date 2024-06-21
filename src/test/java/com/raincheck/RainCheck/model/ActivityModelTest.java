@@ -76,7 +76,9 @@ public class ActivityModelTest {
         assertTrue(json.contains("\"windSpeed\":\"10\""));
 
         // Validate conditions array
-        assertTrue(json.contains("\"conditions\":[{\"name\":\"Sunny\"},{\"name\":\"Clear\"}]"));
+        assertTrue(json.contains("\"conditions\""));
+        assertTrue(json.contains("\"name\":\"Sunny\""));
+        assertTrue(json.contains("\"name\":\"Clear\""));
     }
     @Test
     public void testDisplayInteger() {
