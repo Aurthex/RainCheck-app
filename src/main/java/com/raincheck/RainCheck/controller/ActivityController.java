@@ -61,7 +61,7 @@ public class ActivityController {
         //Get all activities with conditions and add to model
         List<Activity> activities = GetActivitiesWithConditions();
         model.addAttribute("activities", activities);
-        return "/activities";
+        return "activities/activities";
     }
 
     //Creates a list of all activities and then populates each activity objects "conditions"

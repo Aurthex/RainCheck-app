@@ -9,7 +9,7 @@
 <main>
     <div id="main-block">
         <h2>My Saved Activities</h2>
-        <a th:href="@{/activities/new}">Add New Activity</a>
+        <a th:href="@{/activities/new}" class="button">Add New</a>
         <div id="all-activities">
             <div class="activity-container" th:each="activity : ${activities}">
                 <h3 th:text="${activity.name}"></h3>
