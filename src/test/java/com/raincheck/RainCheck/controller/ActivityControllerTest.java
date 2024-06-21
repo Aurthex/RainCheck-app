@@ -56,13 +56,16 @@ public class ActivityControllerTest {
     @BeforeEach
     public void setUp() {
         activity = new Activity(1, "Running", "Outdoor running", null);
-        condition = new Condition(1, "Sunny", 100);
+        condition = new Condition(1, "Sunny", 100, "sun.png");
         activityCondition = new ActivityCondition(activity, condition);
     }
 
 
     @Test
     public void testIndex() throws Exception {
+        // Mock the ConditionRepository to return a valid Condition
+        when(conditionRepository.findByWeatherCode(anyInt())).thenReturn(condition);
+
         // Call the index method under test
         String viewName = activityController.index(model);
 
