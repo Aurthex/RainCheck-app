@@ -59,8 +59,9 @@ public class ActivityModelTest {
 
     @Test
     public void testToJsonMethod() {
-        Condition[] conditions = new Condition[1];
-        conditions[0] = new Condition(1, "Clear", 0);
+        Condition[] conditions = new Condition[2];
+        conditions[0] = new Condition(1, "Sunny", 0);
+        conditions[1] = new Condition(2, "Clear", 0);
 
         Activity activity = new Activity(1, "Running", "Outdoor running activity", conditions);
         activity.setTemperature(25);
@@ -73,6 +74,9 @@ public class ActivityModelTest {
         assertTrue(json.contains("\"description\":\"Outdoor running activity\""));
         assertTrue(json.contains("\"temperature\":\"25\""));
         assertTrue(json.contains("\"windSpeed\":\"10\""));
+
+        // Validate conditions array
+        assertTrue(json.contains("\"conditions\":[{\"name\":\"Sunny\"},{\"name\":\"Clear\"}]"));
     }
     @Test
     public void testDisplayInteger() {

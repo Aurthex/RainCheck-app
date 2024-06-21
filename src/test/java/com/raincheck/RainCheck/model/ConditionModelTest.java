@@ -19,11 +19,11 @@ public class ConditionModelTest {
     @Test
     public void testAllArgsConstructor() {
         // Instantiate Condition object using all-args constructor
-        Condition condition = new Condition(1, "Clear", 0);
+        Condition condition = new Condition(1, "Clear", 0, "sun.png");
         assertEquals(1, condition.getId()); // Assert id is 1
         assertEquals("Clear", condition.getName()); // Assert name is "Clear"
         assertEquals(0, condition.getWeatherCode()); // Assert weatherCode is 0
-        assertNull(condition.getWeatherIcon()); // Assert weatherIcon is null initially
+        assertEquals("sun.png",condition.getWeatherIcon()); // Assert weatherIcon is null initially
     }
 
     // Test getters and setters
