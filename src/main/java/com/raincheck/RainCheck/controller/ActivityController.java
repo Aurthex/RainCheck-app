@@ -50,7 +50,7 @@ public class ActivityController {
         model.addAttribute("weather_icon", weather_icon);
 
         //Get all activities with conditions and add to model
-        List<Activity> activities = GetActivitiesWithConditions();
+        List<Activity> activities = GetActivitiesWithConditions(weather);
         model.addAttribute("activities", activities);
 
         return "index";
@@ -70,20 +70,36 @@ public class ActivityController {
         List<Activity> activities = activityRepository.findAll(); //Get all activities in table
         for (Activity activity: activities){
             //For each activity, get all activityconditions associated through the join table
-            var conditions = new ArrayList<Condition>();
-            var activityConditions = activityConditionRepository.findByActivity(activity);
-
-            //iterate over each activitycondition and populate arraylist with conditions
-            for (ActivityCondition activityCondition: activityConditions){
-                conditions.add(activityCondition.getCondition());
-            }
-
-            //Convert arraylist to array and assign to activity.conditions
-            Condition[] conditionsAr = new Condition[conditions.size()];
-            for (int i = 0; i < conditions.size(); i++) conditionsAr[i] = conditions.get(i);
-            activity.setConditions(conditionsAr);
+            populateActivityConditions(activity);
         }
         return activities;
+    }
+
+    public List<Activity> GetActivitiesWithConditions(Weather weather){
+        List<Activity> activities = activityRepository.findAll(); //Get all activities in table
+        for (Activity activity: activities){
+            //For each activity, get all activityconditions associated through the join table
+            populateActivityConditions(activity);
+
+            //For each activity, compare weather conditions
+            activity.generateWeatherComparisons(weather);
+        }
+        return activities;
+    }
+
+    public void populateActivityConditions(Activity activity){
+        var conditions = new ArrayList<Condition>();
+        var activityConditions = activityConditionRepository.findByActivity(activity);
+
+        //iterate over each activitycondition and populate arraylist with conditions
+        for (ActivityCondition activityCondition: activityConditions){
+            conditions.add(activityCondition.getCondition());
+        }
+
+        //Convert arraylist to array and assign to activity.conditions
+        Condition[] conditionsAr = new Condition[conditions.size()];
+        for (int i = 0; i < conditions.size(); i++) conditionsAr[i] = conditions.get(i);
+        activity.setConditions(conditionsAr);
     }
 
     @GetMapping("/activities/new")
