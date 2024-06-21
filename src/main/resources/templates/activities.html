@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>RainCheck</title>
+</head>
+<body>
+<header th:replace="header :: body"></header>
+<main>
+    <div id="main-block">
+        <h2>My Saved Activities</h2>
+        <button>Add New</button>
+        <div id="all-activities">
+            <div class="activity-container" th:each="activity : ${activities}">
+                <h3 th:text="${activity.name}"></h3>
+                <p th:text="${activity.description}"></p>
+                <div class="row-activity">
+<!--                    <p th:text="${activity.conditions}" alt="conditions"></p>-->
+                    <span>Ideal Temperature: </span>
+                    <p th:if="${activity.temperature == null}" alt="temperature">Any</p>
+                    <p th:text="${activity.temperature}" alt="temperature"></p>
+                    <span>Ideal Wind Speed: </span>
+                    <p th:if="${activity.windSpeed == null}" alt="wind speed">Any</p>
+                    <p th:text="${activity.windSpeed}" alt="wind speed"></p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+<footer th:replace="footer :: body"></footer>
+</body>
+</html>
