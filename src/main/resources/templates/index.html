@@ -39,7 +39,7 @@
   <div id="weather-block">
     <h2>Current Weather in Newcastle</h2>
     <div id="weather-icon">
-      <img src="" alt="Weather Icon">
+      <img th:src="${weather_icon}" onerror="this.style.display = 'none';" alt="Weather Icon">
     </div>
     <div id="temp-wind">
       <p class="temp-wind-p"><span th:text="${weather.temperature}"></span> °C</p>
