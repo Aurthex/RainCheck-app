@@ -26,6 +26,7 @@ public class Weather {
         this.wind_speed = wind_speed;
     }
 
+
     @Override
     public String toString(){
         return "Weather: " + "\n" +
