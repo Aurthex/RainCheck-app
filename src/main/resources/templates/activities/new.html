@@ -21,14 +21,14 @@
             <div class="options-container">
                 <ul>
                     <li th:each="condition : ${conditions}">
-                        <input type="checkbox" th:field="*{condition_checkboxes}" th:value="${condition}" />
-                        <label th:for="${#ids.prev('condition_checkboxes')}"
-                               th:text="#{${condition.name}}"></label>
+                        <input type="checkbox"
+                               th:field="*{conditions}"
+                               th:value="${condition.id}"
+                               id="${condition.id}" />
+                        <label th:for="${condition.id}"
+                               th:text="${condition.name}"></label>
                     </li>
                 </ul>
-
-<!--                <label th:each="condition : ${conditions}" th:for="${condition.id}" th:text="${condition.name}"></label>-->
-<!--                <input th:id="${condition.id}" type="checkbox">-->
             </div>
 
         </div>
