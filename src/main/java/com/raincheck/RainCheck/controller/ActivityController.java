@@ -56,7 +56,7 @@ public class ActivityController {
         return "index";
     }
 
-    @RequestMapping(value = "/activities")
+    @GetMapping(value = "/activities")
     public String showActivities(Model model) {
         //Get all activities with conditions and add to model
         List<Activity> activities = GetActivitiesWithConditions();
