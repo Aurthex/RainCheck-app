@@ -1,0 +1,27 @@
+header {
+    width: 812px;
+    height: 120px;
+    margin: 0 auto;
+    background-color: #219EBC;
+}
+
+#nav-container{
+    height: inherit;
+    background-color: #023047;
+    border-radius: 0 0 50px 50px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.header-elemt {
+    margin: auto 3vw;
+}
+
+#header-logo {
+    max-width: 300px;
+}
+
+#logo-image {
+    max-width: inherit;
+    object-fit: contain;
+}

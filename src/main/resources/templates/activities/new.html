@@ -2,6 +2,9 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="/styles/header.css">
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="/styles/footer.css">
     <title>RainCheck</title>
     <script>
         // JavaScript function to change the saved icon and href based on the page title
@@ -32,20 +35,20 @@
     </script>
 </head>
 <body>
-<header th:replace="header :: body"></header>
+<header th:replace="header :: header"></header>
 <main>
-<form action="#" th:action="@{/activities}" th:object="${activity}" method="post">
+<form action="#" th:action="@{/activities}" th:object="${activity}" method="post" id="new-act-form">
     <div class="title">Add New Activity</div>
 
     <div class="input-container ic1">
         <label for="name" class="placeholder">Activity Name:</label>
         <div class="cut"></div>
-        <input id="name" class="input" type="text" th:field="*{name}" placeholder=" " />
+        <input id="name" class="input" type="text" th:field="*{name}" placeholder=" " required/>
     </div>
     <div class="input-container ic2">
         <label for="description" class="placeholder">Description:</label>
         <div class="cut"></div>
-        <input id="description" class="input" type="text" th:field="*{description}" placeholder=" " />
+        <input id="description" class="input" type="text" th:field="*{description}" placeholder=" " required/>
     </div>
     <div class="input-container ic2">
         <p class="placeholder">Ideal Weather:</p>
@@ -56,7 +59,7 @@
                     <input type="checkbox"
                            th:field="*{conditions}"
                            th:value="${condition.id}"
-                           id="${condition.id}" />
+                           id="${condition.id}"/>
                     <label th:for="${condition.id}"
                            th:text="${condition.name}"></label>
                 </li>
@@ -66,18 +69,18 @@
     <div class="input-container ic2">
         <label for="ideal-temperature" class="placeholder">Ideal Temperature (°C):</label>
         <div class="cut cut-short"></div>
-        <input id="ideal-temperature" class="input" type="number" th:field="*{temperature}" min="-15" max="40" placeholder=" " />
+        <input id="ideal-temperature" class="input" type="number" th:field="*{temperature}" min="-15" max="40" placeholder=" "/>
     </div>
     <div class="input-container ic2">
         <label for="ideal-wind" class="placeholder">Ideal Wind Speed (mph):</label>
         <div class="cut cut-short"></div>
-        <input id="ideal-wind" class="input" type="number" th:field="*{windSpeed}" min="0" max="175" placeholder=" " />
+        <input id="ideal-wind" class="input" type="number" th:field="*{windSpeed}" min="0" max="175" placeholder=" "/>
     </div>
-    <button type="submit" class="submit">submit</button>
-    <button type="reset">Reset</button>
+    <button type="submit" class="submit button"><p>submit</p></button>
+    <button type="reset" class="button"><p>reset</p></button>
 </form>
 
 </main>
-<footer th:replace="footer :: body"></footer>
+<footer th:replace="footer :: footer"></footer>
 </body>
 </html>

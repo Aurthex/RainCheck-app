@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/styles/header.css">
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="/styles/footer.css">
     <title>RainCheck Activities</title>
     <script>
         // JavaScript function to change the saved icon and href based on the page title
@@ -32,11 +35,13 @@
     </script>
 </head>
 <body>
-<header th:replace="header :: body"></header>
+<header th:replace="header :: header"></header>
 <main>
     <div id="main-block">
-        <h2>My Saved Activities</h2>
-        <a th:href="@{/activities/new}" class="button">Add New</a>
+        <div class="row">
+            <h2>My Saved Activities</h2>
+            <a th:href="@{/activities/new}" class="button"><p>Add New</p></a>
+        </div>
         <div id="all-activities">
             <div class="activity-container" th:each="activity : ${activities}">
                 <h3 th:text="${activity.name}"></h3>
@@ -50,14 +55,11 @@
                     <p th:if="${activity.windSpeed == null}" alt="wind speed">Any</p>
                     <p th:text="${activity.windSpeed}" alt="wind speed"></p>
                 </div>
-
             </div>
-
         </div>
-
     </div>
 
 </main>
-<footer th:replace="footer :: body"></footer>
+<footer th:replace="footer :: footer"></footer>
 </body>
 </html>
