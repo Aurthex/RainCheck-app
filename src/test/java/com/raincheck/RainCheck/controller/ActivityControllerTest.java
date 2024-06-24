@@ -92,7 +92,7 @@ public class ActivityControllerTest {
         String viewName = activityController.showActivities(model);
 
         verify(model, times(1)).addAttribute("activities", Collections.singletonList(activity));
-        assertEquals("/activities", viewName);
+        assertEquals("activities/activities", viewName);
     }
 
     /**
