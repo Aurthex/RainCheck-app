@@ -101,16 +101,16 @@ public class ActivityControllerTest {
      * Verifies that activity and activity condition repositories are called once to save data.
      * Checks that the redirection view URL matches expected value.
      */
-//    @Test
-//    public void testCreate() {
-//        when(conditionRepository.findByWeatherCode(anyInt())).thenReturn(condition);
-//
-//        RedirectView redirectView = activityController.create(activity, Arrays.asList(100));
-//
-//        verify(activityRepository, times(1)).save(activity);
-//        verify(activityConditionRepository, times(1)).save(any(ActivityCondition.class));
-//        assertEquals("/activities", redirectView.getUrl());
-//    }
+    @Test
+    public void testAddNewActivity() {
+        when(conditionRepository.findAll()).thenReturn(Collections.singletonList(condition));
+
+        String viewName = activityController.addNewActivity(model);
+
+        verify(model, times(1)).addAttribute(eq("activity"), any(Activity.class));
+        verify(model, times(1)).addAttribute("conditions", Collections.singletonList(condition));
+        assertEquals("activities/new", viewName);
+    }
 
     /**
      * Test method for getting activities with conditions.
@@ -127,5 +127,13 @@ public class ActivityControllerTest {
         assertEquals(1, activities.size());
         assertEquals(1, activities.get(0).getConditions().length);
         assertEquals("Sunny", activities.get(0).getConditions()[0].getName());
+    }
+
+    @Test
+    public void testDeleteActivity(){
+        Integer activityId = 1;
+        RedirectView redirectView = activityController.deleteActivity(activityId);
+        verify(activityRepository, times(1)).deleteById(activityId);
+        assertEquals("/activities", redirectView.getUrl());
     }
 }

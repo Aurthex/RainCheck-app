@@ -50,6 +50,10 @@
                     <p th:if="${activity.windSpeed == null}" alt="wind speed">Any</p>
                     <p th:text="${activity.windSpeed}" alt="wind speed"></p>
                 </div>
+                <form th:action="@{/activities/delete/{id} (id=${activity.id})}" method="post">
+                    <button type="submit">Delete</button>
+
+                </form>
 
             </div>
 
