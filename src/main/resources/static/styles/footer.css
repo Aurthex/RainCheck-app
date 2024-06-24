@@ -1,0 +1,17 @@
+footer {
+    width: 812px;
+    height: 40px;
+    margin: 0 auto;
+    background-color: #023047;
+    align-content: center;
+    position: fixed;
+    bottom: 0;
+}
+
+#foo-container {
+    display: flex;
+    color: #fff;
+    font-size: 0.8vw;
+    justify-content: center;
+    opacity: 50%;
+}
