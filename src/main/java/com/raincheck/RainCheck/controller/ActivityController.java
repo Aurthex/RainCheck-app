@@ -21,6 +21,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class ActivityController {
@@ -112,9 +113,26 @@ public class ActivityController {
         return "activities/new";
     }
 
+    @GetMapping("/activities/edit")
+    public String editActivity(@RequestParam("activityId") int id, Model model) {
+        Optional<Activity> activityOp = activityRepository.findById(id);
+        if (activityOp.isEmpty()) return "error";
+        Activity activity = activityOp.get();
+        populateActivityConditions(activity);
+        model.addAttribute("activity", activity);
+
+        Iterable<Condition> conditions = conditionRepository.findAll();
+        model.addAttribute("conditions", conditions);
+        return "activities/new";
+    }
+
     @PostMapping("/activities")
     public RedirectView addNewActivity(@ModelAttribute Activity activity) {
         activityRepository.save(activity);
+
+        var activityConditions = activityConditionRepository.findByActivity(activity);
+
+        activityConditionRepository.deleteAll(activityConditions);
 
         for (Condition condition : activity.getConditions()){
             ActivityCondition activityCondition = new ActivityCondition(activity, condition);
