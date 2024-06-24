@@ -74,7 +74,7 @@ h2 {
 }
 
 .title-row {
-    margin: 0 0 10px 50px;
+    margin: 0 0 10px 40px;
 }
 
 .weather-info {
@@ -136,14 +136,18 @@ h2 {
     align-items: center;
 }
 
-select, input[type="text"], input[type="number"], input[type="textarea"]{
-    width: 200px;
+select, input[type="text"], input[type="number"], textarea{
+    width: 300px;
     background-color: #fff;
     height: 30px;
     border-radius: 50px;
     border: none;
     padding-left: 10px;
     color: #023047;
+}
+
+select {
+    width: 200px;
 }
 
 #activity-block p{
@@ -175,7 +179,9 @@ select, input[type="text"], input[type="number"], input[type="textarea"]{
 }
 
 
+
 /* SAVED ACTIVITIES PAGE*/
+
 /*  -- SCROLLBAR -- */
 ::-webkit-scrollbar {
     width: 10px;
@@ -260,7 +266,6 @@ h3 {
 
 .buttons-row {
     gap: 5px;
-    margin-top: 1vw;
     display: flex;
     justify-content: flex-end;
 }
@@ -284,10 +289,15 @@ h3 {
 
 .wind-speed-pair p {
     font-weight: 300;
+    margin-top: 5px;
 }
 
 .cond-span {
     font-weight: 700;
+}
+
+.cond-span + p{
+    line-height: 1.5;
 }
 
 /* NEW ACTIVITY PAGE */
@@ -303,20 +313,25 @@ h3 {
     align-items: center;
 }
 
+.name-desc {
+    max-width: 450px;
+}
+
 .column {
     flex-direction: column;
     align-items: flex-start;
+    gap: 0.5vw;
 }
 
 #description {
-    min-width: 350px;
+    width: 100%;
     min-height: 80px;
     border-radius: 15px;
     line-height: 1.5;
     padding: 10px;
-    font-size: 16px;
     color: #023047;
     resize: both;
+    vertical-align: top;
 }
 
 input[type="number"]{
@@ -349,7 +364,7 @@ input[type="number"]{
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
-    margin: 10px 10px 10px 0px;
+    margin-right: 10px;
 }
 
 ul {

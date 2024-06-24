@@ -22,6 +22,6 @@ header {
 }
 
 #logo-image {
-    max-width: inherit;
+    max-width: 300px;
     object-fit: contain;
 }
