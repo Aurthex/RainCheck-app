@@ -1,0 +1,9 @@
+DROP TABLE IF EXISTS user_data;
+
+CREATE TABLE user_data (
+    id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL DEFAULT 'User',
+    latitude VARCHAR(255) NOT NULL DEFAULT '54.9783',
+    longitude VARCHAR(255) NOT NULL DEFAULT '-1.6178',
+    "date" DATE NOT NULL DEFAULT CURRENT_DATE
+    );
