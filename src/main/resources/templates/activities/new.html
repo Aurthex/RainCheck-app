@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>RainCheck</title>
+</head>
+<body>
+<header th:replace="header :: body"></header>
+<main>
+<form action="#" th:action="@{/activities}" th:object="${activity}" method="post">
+    <div class="title">Add New Activity</div>
+
+    <div class="input-container ic1">
+        <label for="name" class="placeholder">Activity Name:</label>
+        <div class="cut"></div>
+        <input id="name" class="input" type="text" th:field="*{name}" placeholder=" " />
+    </div>
+    <div class="input-container ic2">
+        <label for="description" class="placeholder">Description:</label>
+        <div class="cut"></div>
+        <input id="description" class="input" type="text" th:field="*{description}" placeholder=" " />
+    </div>
+    <div class="input-container ic2">
+        <p class="placeholder">Ideal Weather:</p>
+        <div class="cut"></div>
+        <div class="options-container">
+            <ul>
+                <li th:each="condition : ${conditions}">
+                    <input type="checkbox"
+                           th:field="*{conditions}"
+                           th:value="${condition.id}"
+                           id="${condition.id}" />
+                    <label th:for="${condition.id}"
+                           th:text="${condition.name}"></label>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="input-container ic2">
+        <label for="ideal-temperature" class="placeholder">Ideal Temperature (°C):</label>
+        <div class="cut cut-short"></div>
+        <input id="ideal-temperature" class="input" type="number" th:field="*{temperature}" min="-15" max="40" placeholder=" " />
+    </div>
+    <div class="input-container ic2">
+        <label for="ideal-wind" class="placeholder">Ideal Wind Speed (mph):</label>
+        <div class="cut cut-short"></div>
+        <input id="ideal-wind" class="input" type="number" th:field="*{windSpeed}" min="0" max="175" placeholder=" " />
+    </div>
+    <button type="submit" class="submit">submit</button>
+    <button type="reset">Reset</button>
+</form>
+
+</main>
+<footer th:replace="footer :: body"></footer>
+</body>
+</html>

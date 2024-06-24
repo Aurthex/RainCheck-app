@@ -50,31 +50,18 @@ public class ActivityController {
         model.addAttribute("weather_icon", weather_icon);
 
         //Get all activities with conditions and add to model
-        List<Activity> activities = GetActivitiesWithConditions();
+        List<Activity> activities = GetActivitiesWithConditions(weather);
         model.addAttribute("activities", activities);
 
         return "index";
     }
 
-    @RequestMapping(value = "/activities")
+    @GetMapping(value = "/activities")
     public String showActivities(Model model) {
         //Get all activities with conditions and add to model
         List<Activity> activities = GetActivitiesWithConditions();
         model.addAttribute("activities", activities);
-        return "/activities";
-    }
-
-    @PostMapping("/activities")
-    public RedirectView create(@ModelAttribute Activity activity, @RequestParam("weather_codes") List<Integer> weather_codes){
-        activityRepository.save(activity);
-
-        for (Integer code : weather_codes){
-            Condition condition = conditionRepository.findByWeatherCode(code);
-            ActivityCondition activityCondition = new ActivityCondition(activity, condition);
-            activityConditionRepository.save(activityCondition);
-        }
-
-        return new RedirectView("/activities");
+        return "activities/activities";
     }
 
     //Creates a list of all activities and then populates each activity objects "conditions"
@@ -83,20 +70,55 @@ public class ActivityController {
         List<Activity> activities = activityRepository.findAll(); //Get all activities in table
         for (Activity activity: activities){
             //For each activity, get all activityconditions associated through the join table
-            var conditions = new ArrayList<Condition>();
-            var activityConditions = activityConditionRepository.findByActivity(activity);
-
-            //iterate over each activitycondition and populate arraylist with conditions
-            for (ActivityCondition activityCondition: activityConditions){
-                conditions.add(activityCondition.getCondition());
-            }
-
-            //Convert arraylist to array and assign to activity.conditions
-            Condition[] conditionsAr = new Condition[conditions.size()];
-            for (int i = 0; i < conditions.size(); i++) conditionsAr[i] = conditions.get(i);
-            activity.setConditions(conditionsAr);
+            populateActivityConditions(activity);
         }
         return activities;
+    }
+
+    public List<Activity> GetActivitiesWithConditions(Weather weather){
+        List<Activity> activities = activityRepository.findAll(); //Get all activities in table
+        for (Activity activity: activities){
+            //For each activity, get all activityconditions associated through the join table
+            populateActivityConditions(activity);
+
+            //For each activity, compare weather conditions
+            activity.generateWeatherComparisons(weather);
+        }
+        return activities;
+    }
+
+    public void populateActivityConditions(Activity activity){
+        var conditions = new ArrayList<Condition>();
+        var activityConditions = activityConditionRepository.findByActivity(activity);
+
+        //iterate over each activitycondition and populate arraylist with conditions
+        for (ActivityCondition activityCondition: activityConditions){
+            conditions.add(activityCondition.getCondition());
+        }
+
+        //Convert arraylist to array and assign to activity.conditions
+        Condition[] conditionsAr = new Condition[conditions.size()];
+        for (int i = 0; i < conditions.size(); i++) conditionsAr[i] = conditions.get(i);
+        activity.setConditions(conditionsAr);
+    }
+
+    @GetMapping("/activities/new")
+    public String addNewActivity(Model model) {
+        model.addAttribute("activity", new Activity());
+        Iterable<Condition> conditions = conditionRepository.findAll();
+        model.addAttribute("conditions", conditions);
+        return "activities/new";
+    }
+
+    @PostMapping("/activities")
+    public RedirectView addNewActivity(@ModelAttribute Activity activity) {
+        activityRepository.save(activity);
+
+        for (Condition condition : activity.getConditions()){
+            ActivityCondition activityCondition = new ActivityCondition(activity, condition);
+            activityConditionRepository.save(activityCondition);
+        }
+        return new RedirectView("/activities");
     }
 
 
