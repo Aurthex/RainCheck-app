@@ -38,48 +38,49 @@
 <header th:replace="header :: header"></header>
 <main>
 <form action="#" th:action="@{/activities}" th:object="${activity}" method="post" id="new-act-form">
-    <div class="title">Add New Activity</div>
+    <h2>Add New Activity</h2>
     <input type="hidden" th:field="*{id}"/>
 
-    <div class="input-container ic1">
+    <div class="input-container">
         <label for="name" class="placeholder">Activity Name:</label>
-        <div class="cut"></div>
         <input id="name" class="input" type="text" th:field="*{name}" placeholder=" " required/>
     </div>
-    <div class="input-container ic2">
+    <div class="input-container">
         <label for="description" class="placeholder">Description:</label>
-        <div class="cut"></div>
-        <input id="description" class="input" type="text" th:field="*{description}" placeholder=" " required/>
+        <input id="description" class="input" type="textarea" th:field="*{description}" placeholder=" " required/>
     </div>
-    <div class="input-container ic2">
+    <div class="input-container column">
         <p class="placeholder">Ideal Weather:</p>
-        <div class="cut"></div>
         <div class="options-container">
-            <ul>
-                <li th:each="condition : ${conditions}">
-                    <input type="checkbox"
-                           th:field="*{conditions}"
-                           th:value="${condition.id}"
-                           th:id="${condition.id}"
-                           th:checked="${activity.conditions != null and #lists.contains(activity.conditions, condition)}">
-                    <label th:for="${condition.id}"
-                           th:text="${condition.name}"></label>
-                </li>
-            </ul>
+            <div class="all-options">
+                <ul>
+                    <li th:each="condition : ${conditions}">
+                        <input type="checkbox"
+                               th:field="*{conditions}"
+                               th:value="${condition.id}"
+                               th:id="${condition.id}"
+                               th:checked="${activity.conditions != null and #lists.contains(activity.conditions, condition)}">
+                        <label th:for="${condition.id}"
+                               th:text="${condition.name}"></label>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
-    <div class="input-container ic2">
-        <label for="ideal-temperature" class="placeholder">Ideal Temperature (°C):</label>
-        <div class="cut cut-short"></div>
-        <input id="ideal-temperature" class="input" type="number" th:field="*{temperature}" min="-15" max="40" placeholder=" "/>
+    <div class="row">
+        <div class="input-container temp-wind">
+            <label for="ideal-temperature" class="placeholder">Ideal Temperature (°C):</label>
+            <input id="ideal-temperature" class="input" type="number" th:field="*{temperature}" min="-15" max="40" placeholder=" "/>
+        </div>
+        <div class="input-container temp-wind">
+            <label for="ideal-wind" class="placeholder">Ideal Wind Speed (mph):</label>
+            <input id="ideal-wind" class="input" type="number" th:field="*{windSpeed}" min="0" max="175" placeholder=" "/>
+        </div>
     </div>
-    <div class="input-container ic2">
-        <label for="ideal-wind" class="placeholder">Ideal Wind Speed (mph):</label>
-        <div class="cut cut-short"></div>
-        <input id="ideal-wind" class="input" type="number" th:field="*{windSpeed}" min="0" max="175" placeholder=" "/>
+    <div class="row buttons-row">
+        <button type="reset" class="button"><p>reset</p></button>
+        <button type="submit" class="submit button"><p>submit</p></button>
     </div>
-    <button type="submit" class="submit button"><p>submit</p></button>
-    <button type="reset" class="button"><p>reset</p></button>
 </form>
 
 </main>

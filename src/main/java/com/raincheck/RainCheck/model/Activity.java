@@ -127,7 +127,7 @@ public class Activity {
         StringBuilder conditionString = new StringBuilder();
         for (int i = 0; i < conditions.length-1; i++){
             conditionString.append((conditions[i].getName()));
-            conditionString.append(" -- ");
+            conditionString.append(" - ");
         }
         conditionString.append((conditions[conditions.length-1].getName()));
         return conditionString.toString();

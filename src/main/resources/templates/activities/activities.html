@@ -38,27 +38,36 @@
 <header th:replace="header :: header"></header>
 <main>
     <div id="main-block">
-        <div class="row">
+        <div class="row title-row">
             <h2>My Saved Activities</h2>
             <a th:href="@{/activities/new}" class="button"><p>Add New</p></a>
         </div>
         <div id="all-activities">
             <div class="activity-container" th:each="activity : ${activities}">
-                <h3 th:text="${activity.name}"></h3>
-                <p th:text="${activity.description}"></p>
-                <div class="row-activity">
-                    <p th:text="${activity.getConditionString}" alt="conditions"></p>
-                    <span>Ideal Temperature: </span>
-                    <p th:if="${activity.temperature == null}" alt="temperature">Any</p>
-                    <p th:text="${activity.temperature}" alt="temperature"></p>
-                    <span>Ideal Wind Speed: </span>
-                    <p th:if="${activity.windSpeed == null}" alt="wind speed">Any</p>
-                    <p th:text="${activity.windSpeed}" alt="wind speed"></p>
+                <div class="row activity-top">
+                    <h3 th:text="${activity.name}"></h3>
+                    <div class="row buttons-row">
+                        <a class="button edit" th:href="@{/activities/edit(activityId=${activity.id})}"><p>edit</p></a>
+                        <form th:action="@{/activities/delete/{id} (id=${activity.id})}" method="post">
+                            <button type="submit" class="button delete"><p>delete</p></button>
+                        </form>
+                    </div>
                 </div>
-                <a th:href="@{/activities/edit(activityId=${activity.id})}">Edit</a>
-                <form th:action="@{/activities/delete/{id} (id=${activity.id})}" method="post">
-                    <button type="submit">Delete</button>
-                </form>
+                <p class="description" th:text="${activity.description}"></p>
+                <div class="row row-temp-wind">
+                    <div class="row wind-speed-pair">
+                        Temperature: <p th:if="${activity.temperature == null}" alt="temperature">Any</p>
+                        <p th:text="${activity.temperature}" alt="temperature"></p><p>°C</p>
+                    </div>
+                    <div class="row wind-speed-pair">
+                        Wind Speed:
+                        <p th:if="${activity.windSpeed == null}" alt="wind speed">Any</p>
+                        <p th:text="${activity.windSpeed}" alt="wind speed"></p><p>mph</p>
+
+                    </div>
+                </div>
+                <span class="cond-span">Conditions: </span>
+                <p th:text="${activity.getConditionString}" alt="conditions"></p>
             </div>
         </div>
     </div>
