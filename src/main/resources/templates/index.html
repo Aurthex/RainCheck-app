@@ -15,7 +15,7 @@
       if (activityData) {
         const selectedActivity = JSON.parse(activityData);
 
-        document.getElementById("activityName").innerText = selectedActivity.name;
+//        document.getElementById("activityName").innerText = selectedActivity.name;
         document.getElementById("activityDescription").innerText = selectedActivity.description;
         document.getElementById("activityTemp").innerText = selectedActivity.temperature;
         document.getElementById("activityWindSpeed").innerText = selectedActivity.windSpeed;
@@ -29,7 +29,7 @@
         document.getElementById("conditionCodes").innerText = conditionCodes;
 
       } else {
-        document.getElementById("activityName").innerText = '';
+//        document.getElementById("activityName").innerText = '';
         document.getElementById("activityDescription").innerText = '';
         document.getElementById("activityTemp").innerText = '';
         document.getElementById("activityWindSpeed").innerText = '';
@@ -110,11 +110,10 @@
         <option value="add-new" >Add New</option>
       </select>
     </form>
-    <h3>Activity Details</h3>
-    <p>Name: <span id="activityName"></span></p>
+<!--    <p>Name: <span id="activityName"></span></p>-->
     <p>Description: <span id="activityDescription"></span></p>
-    <p>Ideal Temperature: <span id="activityTemp"></span>°C</p>
-    <p>Ideal Wind Speed: <span id="activityWindSpeed"></span>mph</p>
+    <p>Ideal Temperature: <span id="activityTemp"></span><span>°C</span></p>
+    <p>Ideal Wind Speed: <span id="activityWindSpeed"></span><span>mph</span></p>
     <p>Ideal Conditions: <span id="activityCond"></span></p>
   </div>
 

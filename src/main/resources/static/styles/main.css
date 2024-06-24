@@ -11,6 +11,7 @@
 }
 
 html, body {
+    display: flex;
     height: 100%;
 }
 
@@ -49,7 +50,7 @@ body{
 
 main {
     flex-grow: 1;
-    padding: 40px;
+    padding: 30px;
     background-color: #219EBC;
     color: #fff;
 }
@@ -104,29 +105,30 @@ h2 {
 #temp-p, #temp-p span{
     font-family: "Fredoka", sans-serif;
     font-optical-sizing: auto;
-    font-size: 6vw;
+    font-size: 6rem;
     font-weight: 500;
     font-style: normal;
     font-variation-settings:
     "wdth" 100;
+    line-height: normal;
 }
 
 #wind-p {
-    font-size: 1.7vw;
+    font-size: 1.4rem;
 }
 
 /* ACTIVITY BLOCK*/
 #activity-block {
-    max-width: 450px;
+    max-width: 500px;
     background-color: #023047;
-    margin: 40px auto;
+    margin: 0px auto 20px auto;
     border-radius: 50px;
-    padding: 2vw;
+    padding: 1rem 2rem;
     color: #FFB703;
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
-    gap: 0.5vw;
+    gap: 1rem;
 }
 
 #activity-block form {
@@ -151,30 +153,31 @@ select {
 }
 
 #activity-block p{
-    display: flex;
     width: 100%;
+    font-weight: 600;
 }
 
 #activity-block p span{
     margin-left: 10px;
-    align-self: flex-end;
+    font-weight: 400;
+    line-height: 1.5;
 }
 
 /* OUTPUT MESSAGE*/
 .output-message {
-    width: 500px;
-    margin: 0 auto;
+    width: 80%;
+    margin: 10px auto;
     background-color: #FFB703;
     color: #023047;
     border-radius: 50px;
-    font-size: 40px;
+    font-size: 30px;
     display: flex;
     justify-content: center;
     align-content: center;
 }
 
 #resultMessage {
-    padding: 2vw;
+    padding: 1rem;
     text-align: center;
 }
 
@@ -323,6 +326,13 @@ h3 {
     gap: 0.5vw;
 }
 
+.placeholder {
+    color: #023047;
+    font-family: 'Familjen Grotesk', sans-serif;
+    font-size: 1.5 rem;
+    font-weight: 500;
+}
+
 #description {
     width: 100%;
     min-height: 80px;
@@ -351,7 +361,7 @@ input[type="number"]{
 
 .options-container {
     width: 100%;
-    height: 300px;
+    height: 250px;
     margin: 0 auto;
     overflow-y: auto;
     border-radius: 15px;
