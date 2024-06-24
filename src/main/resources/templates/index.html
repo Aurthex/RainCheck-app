@@ -2,6 +2,9 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
+  <link rel="stylesheet" href="/styles/header.css">
+  <link rel="stylesheet" href="/styles/main.css">
+  <link rel="stylesheet" href="/styles/footer.css">
   <title>RainCheck</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.9/flatpickr.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.9/flatpickr.min.js"></script>
@@ -22,85 +25,86 @@
       if (activityData) {
         const selectedActivity = JSON.parse(activityData);
 
-        document.getElementById("activityName").innerText = selectedActivity.name;
+//        document.getElementById("activityName").innerText = selectedActivity.name;
         document.getElementById("activityDescription").innerText = selectedActivity.description;
         document.getElementById("activityTemp").innerText = selectedActivity.temperature;
         document.getElementById("activityWindSpeed").innerText = selectedActivity.windSpeed;
-
-        const weatherComparisons = selectedActivity.weatherComparisons;
-        const newText = weatherComparisons.replace(/<br\s*\/?>/gi, '\n');
-        document.getElementById("activityWeatherComparisons").innerText = newText;
 
         // Display conditions
         const conditions = selectedActivity.conditions.map(cond => cond.name).join(", ");
         document.getElementById("activityCond").innerText = conditions;
 
+        // Display conditions
+        const conditionCodes = selectedActivity.conditions.map(cond => cond.code).join(", ");
+        document.getElementById("conditionCodes").innerText = conditionCodes;
+
       } else {
-        document.getElementById("activityName").innerText = '';
+//        document.getElementById("activityName").innerText = '';
         document.getElementById("activityDescription").innerText = '';
         document.getElementById("activityTemp").innerText = '';
         document.getElementById("activityWindSpeed").innerText = '';
         document.getElementById("activityCond").innerText = '';
-        document.getElementById("activityWeatherComparisons").innerText = '';
+        document.getElementById("conditionCodes").innerText = '';
       }
     }
-     // JavaScript function to change the saved icon and href based on the page title
-        function updateSavedIcon() {
-            var title = document.title; // Get the current page title
+    // JavaScript function to change the saved icon and href based on the page title
+    function updateSavedIcon() {
+      var title = document.title; // Get the current page title
 
-            var savedIcon = document.getElementById("icon-image");
-            var savedLink = document.getElementById("icon-link"); // Get the anchor tag
+      var savedIcon = document.getElementById("icon-image");
+      var savedLink = document.getElementById("icon-link"); // Get the anchor tag
 
-            // Set the image source and href based on the title
-            if (title === "RainCheck") {
-                savedIcon.src = "https://i.ibb.co/rHXmBFs/list-icon.png";
-                savedLink.href = "/activities";
-            } else if (title === "RainCheck Activities") {
-                savedIcon.src = "https://i.ibb.co/Qb9zzTY/back-arrow.png";
-                savedLink.href = "/";
-            } else {
-                // Default case if title doesn't match expected values
-                savedIcon.src = "https://i.ibb.co/rHXmBFs/list-icon.png";
-                savedLink.href = "/";
-            }
-        }
+      // Set the image source and href based on the title
+      if (title === "RainCheck") {
+        savedIcon.src = "https://i.ibb.co/rHXmBFs/list-icon.png";
+        savedLink.href = "/activities";
+      } else if (title === "RainCheck Activities") {
+        savedIcon.src = "https://i.ibb.co/Qb9zzTY/back-arrow.png";
+        savedLink.href = "/";
+      } else {
+        // Default case if title doesn't match expected values
+        savedIcon.src = "https://i.ibb.co/rHXmBFs/list-icon.png";
+        savedLink.href = "/";
+      }
+    }
 
-        // Call the function once when the page loads
-        window.onload = function() {
-            updateSavedIcon();
-        };
+    // Call the function once when the page loads
+    window.onload = function() {
+      updateSavedIcon();
+    };
+
     function checkStringContainment(a, b, resultElementId) {
-        const resultElement = document.getElementById(resultElementId);
-        if (!a || !b) {
-            resultElement.innerText = "~";
-        } else if (a.includes(b)) {
-            resultElement.innerText = "The weather matches your preferences!";
-        } else {
-            resultElement.innerText = "The weather does not match your preferences.";
-        }
+      const resultElement = document.getElementById(resultElementId);
+      if (!a || !b) {
+        resultElement.innerText = "Shh... I'm thinking!";
+      } else if (a.includes(b)) {
+        resultElement.innerText = "The weather matches your preferences!";
+      } else {
+        resultElement.innerText = "The weather does not match your preferences.";
+      }
     }
 
     function updateContainmentMessage() {
-        const a = document.getElementById('conditionCodes').innerText;
-        const b = document.getElementById('weatherCode').innerText;
-        checkStringContainment(a, b, 'resultMessage');
+      const a = document.getElementById('conditionCodes').innerText;
+      const b = document.getElementById('weatherCode').innerText;
+      checkStringContainment(a, b, 'resultMessage');
     }
     document.addEventListener('DOMContentLoaded', updateContainmentMessage);
   </script>
 </head>
 <body>
-<header th:replace="header :: body"></header>
-
+<header th:replace="header :: header"></header>
 <main>
-
   <div id="weather-block">
     <h2 th:text="'Weather for ' + ${userData.date} + ' in ' + ${userData.location}">Current Weather</h2>
-    <div id="weather-icon">
-      <img th:src="${weather_icon}" onerror="this.style.display = 'none';" alt="Weather Icon">
-    </div>
-    <div id="temp-wind">
-      <p class="temp-wind-p"><span th:text="${weather.temperature}"></span> °C</p>
-      <p class="temp-wind-p"><span th:text="${weather.wind_speed}"></span> mph</p>
+    <div class="weather-info">
+      <div id="weather-icon">
+        <img th:src="${weather_icon}" onerror="this.style.display = 'none';" alt="Weather Icon">
+      </div>
+      <div id="temp-wind">
+        <p id="temp-p" class="temp-wind-p"><span th:text="${weather.temperature}"></span>°C</p>
+        <p id="wind-p" class="temp-wind-p">wind: <span th:text="${weather.wind_speed}"></span> mph</p>
+      </div>
     </div>
   </div>
 
@@ -120,29 +124,31 @@
 
   <div id="activity-block">
     <form action="#">
-      <label for="activity">Today's Activity</label>
+      <label for="activity">Today's Activity: </label>
       <select name="activity" id="activity" onchange="updateActivityDetails(); updateContainmentMessage();">
         <option value="0" disabled selected>Select Activity</option>
         <option th:each="activity : ${activities}"
                 th:attr="data-activity=${activity.toJson()}"
                 th:text="${activity.name}">
         </option>
-        <option value="add-new">Add New</option>
+        <option value="add-new" >Add New</option>
       </select>
     </form>
-    <h3>Activity Details</h3>
-    <p>Name: <span id="activityName"></span></p>
+<!--    <p>Name: <span id="activityName"></span></p>-->
     <p>Description: <span id="activityDescription"></span></p>
-    <p>Ideal Temperature: <span id="activityTemp"></span></p>
-    <p>Ideal Wind Speed: <span id="activityWindSpeed"></span></p>
+    <p>Ideal Temperature: <span id="activityTemp"></span><span>°C</span></p>
+    <p>Ideal Wind Speed: <span id="activityWindSpeed"></span><span>mph</span></p>
     <p>Ideal Conditions: <span id="activityCond"></span></p>
-    <p>Match Conditions: <span id="activityWeatherComparisons"></span></p>
-
   </div>
 
+  <div class="output-message">
+    <div id="conditionCodes" hidden></div>
+    <div id="weatherCode" th:text="'[' + ${weather.weather_code} + ']'" hidden>Code</div>
+    <div id="resultMessage"></div>
+  </div>
 </main>
 
-<footer th:replace="footer :: body"></footer>
+<footer th:replace="footer :: footer"></footer>
 
 </body>
 </html>
