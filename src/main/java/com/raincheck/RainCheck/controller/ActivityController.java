@@ -1,24 +1,20 @@
 package com.raincheck.RainCheck.controller;
 
 import com.raincheck.RainCheck.client.WeatherClient;
-import com.raincheck.RainCheck.model.Activity;
-import com.raincheck.RainCheck.model.ActivityCondition;
-import com.raincheck.RainCheck.model.Condition;
-import com.raincheck.RainCheck.model.Weather;
+import com.raincheck.RainCheck.model.*;
 import com.raincheck.RainCheck.repository.ActivityConditionRepository;
 import com.raincheck.RainCheck.repository.ActivityRepository;
 import com.raincheck.RainCheck.repository.ConditionRepository;
+import com.raincheck.RainCheck.repository.UserDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -35,15 +31,27 @@ public class ActivityController {
     @Autowired
     ConditionRepository conditionRepository;
 
+    @Autowired
+    UserDataRepository userDataRepository;
+
     @GetMapping("/")
     public String index(Model model) throws IOException, InterruptedException {
+        UserData userData = userDataRepository.findAll().iterator().next();
+
+        Date date = userData.getDate();
+        Date now = Date.valueOf(LocalDate.now());
+        if (now.after(date)) date = now;
+
+        userData.setDate(date);
+        userDataRepository.save(userData);
+        model.addAttribute("userData", userData);
 
         //API request to get weather data as a JSON
-        WeatherClient client = new WeatherClient("54.9783", "-1.6178");
-        String current = client.findCurrent();
+        WeatherClient client = new WeatherClient(userData.getLatitude(), userData.getLongitude(), userData.getDate());
+        String daily = client.findDaily();
 
         //Pass current weather JSON into weather and instantiate and add to model
-        Weather weather = new Weather(current); // new Weather(current, forecast)
+        Weather weather = new Weather(daily); // new Weather(current, forecast)
         model.addAttribute("weather", weather);
 
         String weather_icon = conditionRepository.findByWeatherCode(weather.getWeather_code()).getWeatherIcon();
@@ -55,6 +63,18 @@ public class ActivityController {
         model.addAttribute("activities", activities);
 
         return "index";
+    }
+
+    @PostMapping("/update_settings")
+    public RedirectView updateUserData(@ModelAttribute UserData userData, @RequestParam String postcode) {
+        //TODO validate postcode
+        //If postcode is invalid, use existing postcode
+        //TODO set Long and Lat from userData postcode before saving
+        userData.setLatitude("54.9783");
+        userData.setLongitude("-1.6178");
+
+        userDataRepository.save(userData);
+        return new RedirectView("/");
     }
 
     @GetMapping(value = "/activities")
