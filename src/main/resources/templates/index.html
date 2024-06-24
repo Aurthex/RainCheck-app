@@ -6,6 +6,16 @@
   <link rel="stylesheet" href="/styles/main.css">
   <link rel="stylesheet" href="/styles/footer.css">
   <title>RainCheck</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.9/flatpickr.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.9/flatpickr.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        flatpickr("#forecast_date", {
+            dateFormat: "Y-m-d",
+            minDate: "today"
+        });
+    });
+  </script>
   <script>
     function updateActivityDetails() {
       const selectElement = document.getElementById("activity");
@@ -86,7 +96,7 @@
 <header th:replace="header :: header"></header>
 <main>
   <div id="weather-block">
-    <h2>Current Weather in Newcastle</h2>
+    <h2 th:text="'Weather for ' + ${userData.date} + ' in ' + ${userData.location}">Current Weather</h2>
     <div class="weather-info">
       <div id="weather-icon">
         <img th:src="${weather_icon}" onerror="this.style.display = 'none';" alt="Weather Icon">
@@ -97,6 +107,20 @@
       </div>
     </div>
   </div>
+
+  <form th:action="@{/update_settings}" th:object="${userData}" method="post">
+    <input type="hidden" name="id" th:value="${userData.Id}">
+    <input type="hidden" name="longitude" th:value="${userData.longitude}">
+    <input type="hidden" name="latitude" th:value="${userData.latitude}">
+    <input type="hidden" name="location" th:value="${userData.location}">
+    <label for="postcode">Postcode:</label>
+    <input type="text" id="postcode" name="postcode" th:value="postcode">
+    <div>
+      <label for="forecast_date">Select Date:</label>
+      <input type="text" id="forecast_date" th:field="*{date}" required>
+    </div>
+    <button type="submit">Confirm Date</button>
+  </form>
 
   <div id="activity-block">
     <form action="#">

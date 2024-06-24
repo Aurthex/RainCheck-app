@@ -12,11 +12,11 @@ public class Weather {
 
     public Weather(String json){
         String[] elements = json.split(",");
-        String tempString = elements[2].substring(17);
-        temperature = (int) Math.round(Double.parseDouble(tempString));
-        String codeString = elements[3].substring(15);
+        String codeString = elements[1].substring(16,elements[1].length()-1);
         weather_code = (int) Math.round(Double.parseDouble(codeString));
-        String windString = elements[4].substring(17, elements[4].length()-1);
+        String tempString = elements[2].substring(22, elements[2].length()-1);
+        temperature = (int) Math.round(Double.parseDouble(tempString));
+        String windString = elements[3].substring(22, elements[3].length()-2);
         wind_speed = (int) Math.round(Double.parseDouble(windString));
     }
 
