@@ -24,4 +24,6 @@ public class UserData {
     private String latitude;
     @Column
     private Date date;
+    @Column
+    private String location;
 }

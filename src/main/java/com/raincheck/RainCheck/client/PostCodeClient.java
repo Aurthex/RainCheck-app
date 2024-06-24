@@ -15,13 +15,16 @@ public class PostCodeClient {
     private String latitude;
     @Getter
     private String longitude;
+    @Getter
+    private String location;
 
     public PostCodeClient(String postcode) {
         BASE_URL= "https://api.postcodes.io/postcodes/" + postcode;
         client = HttpClient.newHttpClient();
+        fetchJson();
     }
 
-    public void fetchLatLong() {
+    private void fetchJson() {
         try {
             // Build the request
             HttpRequest request = HttpRequest.newBuilder()
@@ -50,6 +53,10 @@ public class PostCodeClient {
             // Extract longitude
             longitude = json.split("\"longitude\":")[1].split(",")[0].trim();
             longitude = longitude.substring(0, longitude.length() - 1); // Remove surrounding quotes
+
+            // Extract admin district
+            location = json.split("\"admin_district\":")[1].split(",")[0].trim();
+            location = location.substring(1, location.length() - 1);
 
         } catch (Exception e) {
             e.printStackTrace(); // Replace with proper logging

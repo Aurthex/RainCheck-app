@@ -1,5 +1,6 @@
 package com.raincheck.RainCheck.controller;
 
+import com.raincheck.RainCheck.client.PostCodeClient;
 import com.raincheck.RainCheck.client.WeatherClient;
 import com.raincheck.RainCheck.model.*;
 import com.raincheck.RainCheck.repository.ActivityConditionRepository;
@@ -68,10 +69,17 @@ public class ActivityController {
     @PostMapping("/update_settings")
     public RedirectView updateUserData(@ModelAttribute UserData userData, @RequestParam String postcode) {
         //TODO validate postcode
+        postcode = postcode.replace(" ", "");
+        postcode = postcode.trim();
         //If postcode is invalid, use existing postcode
+        PostCodeClient client = new PostCodeClient(postcode);
         //TODO set Long and Lat from userData postcode before saving
-        userData.setLatitude("54.9783");
-        userData.setLongitude("-1.6178");
+
+        if (client.getLatitude() != null){
+            userData.setLatitude(client.getLatitude());
+            userData.setLongitude(client.getLongitude());
+            userData.setLocation(client.getLocation());
+        }
 
         userDataRepository.save(userData);
         return new RedirectView("/");
