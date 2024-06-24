@@ -103,6 +103,8 @@ public class ActivityController {
         activity.setConditions(conditionsAr);
     }
 
+    //Get the page to add a new activity
+
     @GetMapping("/activities/new")
     public String addNewActivity(Model model) {
         model.addAttribute("activity", new Activity());
@@ -136,6 +138,14 @@ public class ActivityController {
             ActivityCondition activityCondition = new ActivityCondition(activity, condition);
             activityConditionRepository.save(activityCondition);
         }
+        return new RedirectView("/activities");
+    }
+
+    // Delete an activity on the activity page
+
+    @PostMapping("/activities/delete/{id}")
+    public RedirectView deleteActivity(@PathVariable Integer id) {
+        activityRepository.deleteById(id);
         return new RedirectView("/activities");
     }
 
