@@ -36,6 +36,7 @@
 <main>
 <form action="#" th:action="@{/activities}" th:object="${activity}" method="post">
     <div class="title">Add New Activity</div>
+    <input type="hidden" th:field="*{id}"/>
 
     <div class="input-container ic1">
         <label for="name" class="placeholder">Activity Name:</label>
@@ -56,7 +57,8 @@
                     <input type="checkbox"
                            th:field="*{conditions}"
                            th:value="${condition.id}"
-                           id="${condition.id}" />
+                           th:id="${condition.id}"
+                           th:checked="${activity.conditions != null and #lists.contains(activity.conditions, condition)}">
                     <label th:for="${condition.id}"
                            th:text="${condition.name}"></label>
                 </li>

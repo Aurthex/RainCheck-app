@@ -50,6 +50,7 @@
                     <p th:if="${activity.windSpeed == null}" alt="wind speed">Any</p>
                     <p th:text="${activity.windSpeed}" alt="wind speed"></p>
                 </div>
+                <a th:href="@{/activities/edit(activityId=${activity.id})}">Edit</a>
 
             </div>
 
