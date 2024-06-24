@@ -1,5 +1,7 @@
 package com.raincheck.RainCheck.client;
 
+import lombok.Getter;
+
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -9,7 +11,9 @@ public class PostCodeClient {
 
     private final String BASE_URL;
     private final HttpClient client;
+    @Getter
     private String latitude;
+    @Getter
     private String longitude;
 
     public PostCodeClient(String postcode) {
@@ -52,23 +56,4 @@ public class PostCodeClient {
         }
     }
 
-    public String getLatitude() {
-        return latitude;
-    }
-
-    public String getLongitude() {
-        return longitude;
-    }
-    public static void main(String[] args) {
-        // Example postcode to test with
-        String testPostcode = "NE403BX"; // Replace with a valid postcode for testing
-        PostCodeClient client = new PostCodeClient(testPostcode);
-
-        // Fetch the latitude and longitude
-        client.fetchLatLong();
-
-        // Print out the latitude and longitude
-        System.out.println("Latitude: " + client.getLatitude());
-        System.out.println("Longitude: " + client.getLongitude());
-    }
 }
