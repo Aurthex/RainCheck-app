@@ -40,7 +40,6 @@ public class Activity {
         }
         conditionsJson.append("]");
 
-        System.out.println(conditionsJson);
 
         return "{" +
                 "\"name\":\"" + name + "\"," +
@@ -121,5 +120,16 @@ public class Activity {
         if (weather.getWind_speed() - 5 <= windSpeed) return "It is a little less windy than you'd like.";
 
         return "You should never see this string.";
+    }
+
+    public String getConditionString(){
+        if (conditions.length == 0) return "Any Weather";
+        StringBuilder conditionString = new StringBuilder();
+        for (int i = 0; i < conditions.length-1; i++){
+            conditionString.append((conditions[i].getName()));
+            conditionString.append(" -- ");
+        }
+        conditionString.append((conditions[conditions.length-1].getName()));
+        return conditionString.toString();
     }
 }

@@ -42,7 +42,7 @@
                 <h3 th:text="${activity.name}"></h3>
                 <p th:text="${activity.description}"></p>
                 <div class="row-activity">
-<!--                    <p th:text="${activity.conditions}" alt="conditions"></p>-->
+                    <p th:text="${activity.getConditionString}" alt="conditions"></p>
                     <span>Ideal Temperature: </span>
                     <p th:if="${activity.temperature == null}" alt="temperature">Any</p>
                     <p th:text="${activity.temperature}" alt="temperature"></p>
