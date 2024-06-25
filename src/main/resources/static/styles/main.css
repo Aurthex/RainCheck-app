@@ -329,6 +329,8 @@ h3 {
 
 .cond-span + p{
     line-height: 1.5;
+    max-height: 100px;
+    overflow-y: auto;
 }
 
 /* NEW ACTIVITY PAGE */
