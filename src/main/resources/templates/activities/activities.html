@@ -25,6 +25,9 @@
                         <form th:action="@{/activities/delete/{id} (id=${activity.id})}" method="post">
                             <button type="submit" class="button delete"><p>delete</p></button>
                         </form>
+                        <form th:action="@{/remove_booking/{id} (id=${activity.id})}" method="post">
+                            <button th:if="${activity.date != null}" type="submit" class="button remove"><p>unbook</p></button>
+                        </form>
                     </div>
                 </div>
                 <p class="description" th:text="${activity.description}"></p>
@@ -37,11 +40,17 @@
                         Wind Speed:
                         <p th:if="${activity.windSpeed == null}" alt="wind speed">Any</p>
                         <p th:text="${activity.windSpeed}" alt="wind speed"></p><p>mph</p>
-
                     </div>
                 </div>
                 <span class="cond-span">Conditions: </span>
                 <p th:text="${activity.getConditionString}" alt="conditions"></p>
+                <div th:if="${activity.date != null}">
+                    <p>Location: <span th:text="${activity.location}"></span></p>
+                    <p>Date: <span th:text="${activity.date}"></span></p>
+                    <p>Booking Score: <span th:text="${activity.dateScore}"></span></p>
+                    <p>Current Score: <span th:text="${activity.score}"></span></p>
+                    <p th:if="${activity.score != null and activity.dateScore != null and activity.score + 5 < activity.dateScore}">RAIN CHECK</p>
+                </div>
             </div>
         </div>
     </div>

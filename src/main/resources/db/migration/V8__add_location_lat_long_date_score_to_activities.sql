@@ -1,0 +1,7 @@
+ALTER TABLE activities
+ADD COLUMN location VARCHAR(255),
+ADD COLUMN latitude VARCHAR(255),
+Add COLUMN longitude VARCHAR(255),
+ADD COLUMN "date" DATE,
+ADD COLUMN score INT;
+

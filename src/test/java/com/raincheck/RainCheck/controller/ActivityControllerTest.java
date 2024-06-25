@@ -91,7 +91,7 @@ public class ActivityControllerTest {
      * Verifies that the model attribute "activities" is set correctly.
      */
     @Test
-    public void testShowActivities() {
+    public void testShowActivities() throws IOException, InterruptedException {
         when(activityRepository.findAll()).thenReturn(Collections.singletonList(activity));
         when(activityConditionRepository.findByActivity(any(Activity.class))).thenReturn(Collections.singletonList(activityCondition));
 
@@ -221,3 +221,4 @@ public class ActivityControllerTest {
         assertEquals("/activities", redirectView.getUrl());
     }
 }
+
