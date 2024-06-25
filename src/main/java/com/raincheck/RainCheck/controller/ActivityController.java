@@ -50,7 +50,7 @@ public class ActivityController {
         model.addAttribute("weather_icon", weather_icon);
 
         //Get all activities with conditions and add to model
-        List<Activity> activities = GetActivitiesWithConditions(weather);
+        List<Activity> activities = getActivitiesWithConditions(weather);
         model.addAttribute("activities", activities);
 
         return "index";
@@ -78,7 +78,7 @@ public class ActivityController {
     @GetMapping(value = "/activities")
     public String showActivities(Model model) {
         //Get all activities with conditions and add to model
-        List<Activity> activities = GetActivitiesWithConditions();
+        List<Activity> activities = getActivitiesWithConditions();
         model.addAttribute("activities", activities);
         return "activities/activities";
     }
@@ -160,7 +160,7 @@ public class ActivityController {
 
     //Creates a list of all activities and then populates each activity objects "conditions"
     //Field with all conditions associated with it through the join table
-    public List<Activity> GetActivitiesWithConditions(){
+    public List<Activity> getActivitiesWithConditions(){
         List<Activity> activities = activityRepository.findAll(); //Get all activities in table
         for (Activity activity: activities){
             //For each activity, get all activityconditions associated through the join table
@@ -169,7 +169,7 @@ public class ActivityController {
         return activities;
     }
 
-    public List<Activity> GetActivitiesWithConditions(Weather weather){
+    public List<Activity> getActivitiesWithConditions(Weather weather){
         List<Activity> activities = activityRepository.findAll(); //Get all activities in table
         for (Activity activity: activities){
             //For each activity, get all activityconditions associated through the join table

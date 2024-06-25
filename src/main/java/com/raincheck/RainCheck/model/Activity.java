@@ -21,7 +21,8 @@ public class Activity {
     @Column
     private Integer windSpeed;
     @Transient private Condition[] conditions;
-    @Transient private String weatherComparisons;
+    @Transient private Integer score;
+    @Transient private String scoreMessage;
 
     public Activity(Integer id, String name, String description, Condition[] conditions){
         this.id = id;
@@ -46,7 +47,8 @@ public class Activity {
                 "\"description\":\"" + description + "\"," +
                 "\"temperature\":\"" + displayInteger(temperature) + "\"," +
                 "\"windSpeed\":\"" + displayInteger(windSpeed) + "\"," +
-                "\"weatherComparisons\":\"" + weatherComparisons + "\"," +
+                "\"score\":\"" + displayInteger(score) + "\"," +
+                "\"scoreMessage\":\"" + scoreMessage + "\"," +
                 "\"conditions\":" + conditionsJson.toString() +
                 "}";
     }
@@ -57,69 +59,64 @@ public class Activity {
     }
 
     public void generateWeatherComparisons(Weather weather){
-        int count = 0;
-        String codeStatement = "";
-        String tempStatement = "";
-        String speedStatement = "";
+        int max = 0;
+        int score = 0;
         if (conditions.length > 0){
-            count++;
-            codeStatement = getCodeStatement(weather);
+            max += 15;
+            score += getCodeStatement(weather);
         }
         if (temperature != null){
-            count ++;
-            tempStatement = getTempStatement(weather);
+            max += 10;
+            score += getTempStatement(weather);
         }
         if (windSpeed != null){
-            count ++;
-            speedStatement = getSpeedStatement(weather);
+            max += 5;
+            score += getSpeedStatement(weather);
         }
 
-        if (count == 0) weatherComparisons = "This activity has no conditions.";
+        if (max == 0) score = 100;
         else{
-            String[] comparisons = new String[count];
-            count--;
-            if (!speedStatement.isEmpty()){
-                comparisons[count] = speedStatement;
-                count--;
-            }
-            if (!tempStatement.isEmpty()){
-                comparisons[count] = tempStatement;
-                count--;
-            }
-            if (!codeStatement.isEmpty()){
-                comparisons[count] = codeStatement;
-            }
-            weatherComparisons = String.join("<br>", comparisons);
+            double ratio = ((double)score / (double)max) * 100;
+            score = (int) Math.round(ratio);
         }
+        this.score = score;
+        this.scoreMessage = getScoreMessage(score);
     }
 
-    private String getCodeStatement(Weather weather){
-        if (conditions.length == 0) return "";
+    private String getScoreMessage(Integer score){
+        if (score >= 95) return "The weather is a perfect match!";
+        if (score >= 85) return "The weather is ideal for your activity.";
+        if (score >= 75) return "The weather is close to what you want.";
+        if (score >= 50) return "You could maybe make this work.";
+        return "Maybe you should do something else.";
+    }
+
+    private Integer getCodeStatement(Weather weather){
+        if (conditions.length == 0) return 0;
+        int min = 3;
         for (Condition condition : conditions){
-            if (condition.getWeatherCode() == weather.getWeather_code()) return "The weather matches your conditions!";
+            int conditionCode = condition.getWeatherCode();
+            int weatherCode = weather.getWeather_code();
+            int dif = Math.abs(conditionCode - weatherCode);
+            min = Math.min(dif,min);
         }
-        return "The weather does not match your conditions.";
+        int penalty = min * 5;
+        return 15 - penalty;
     }
 
-    private String getTempStatement(Weather weather){
-        if (temperature == null) return "";
-        if (weather.getTemperature() - 8 >= temperature) return "It is a lot hotter than you'd like.";
-        if (weather.getTemperature() - 3 >= temperature) return "It is a little hotter than you'd like.";
-        if (Math.abs(weather.getTemperature() - temperature) < 3) return "The temperature is about right!";
-        if (weather.getTemperature() - 3 <= temperature) return "It is a little colder than you'd like.";
-        if (weather.getTemperature() - 8 <= temperature) return "It is a lot colder than you'd like.";
-        return "You should never see this string.";
+    private Integer getTempStatement(Weather weather){
+        if (temperature == null) return 0;
+        int dif = Math.abs(weather.getTemperature() - temperature);
+
+        dif = Math.min(dif, 10);
+        return 10 - dif;
     }
 
-    private String getSpeedStatement(Weather weather){
-        if (windSpeed == null) return "";
-        if (weather.getWind_speed() - 10 >= windSpeed) return "It is a lot more windy than you'd like.";
-        if (weather.getWind_speed() - 5 >= windSpeed) return "It is a little more windy than you'd like.";
-        if (Math.abs(weather.getWind_speed() - windSpeed) < 3) return "The wind speed is about right!";
-        if (weather.getWind_speed() - 10 <= windSpeed) return "It is a lot less windy than you'd like.";
-        if (weather.getWind_speed() - 5 <= windSpeed) return "It is a little less windy than you'd like.";
-
-        return "You should never see this string.";
+    private Integer getSpeedStatement(Weather weather){
+        if (windSpeed == null) return 0;
+        int dif = Math.abs(weather.getWind_speed() - windSpeed);
+        dif = Math.min(dif, 20);
+        return 5 - (dif/4);
     }
 
     public String getConditionString(){

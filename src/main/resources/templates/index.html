@@ -29,21 +29,20 @@
         document.getElementById("activityDescription").innerText = selectedActivity.description;
         document.getElementById("activityTemp").innerText = selectedActivity.temperature;
         document.getElementById("activityWindSpeed").innerText = selectedActivity.windSpeed;
+        document.getElementById("activityScore").innerText = selectedActivity.score;
+        document.getElementById("activityScoreMessage").innerText = selectedActivity.scoreMessage;
 
         // Display conditions
         const conditions = selectedActivity.conditions.map(cond => cond.name).join(", ");
         document.getElementById("activityCond").innerText = conditions;
 
-        // Display condition codes
-        const conditionCodes = selectedActivity.conditions.map(cond => cond.code).join(", ");
-        document.getElementById("conditionCodes").innerText = conditionCodes;
-
       } else {
         document.getElementById("activityDescription").innerText = '';
         document.getElementById("activityTemp").innerText = '';
         document.getElementById("activityWindSpeed").innerText = '';
+        document.getElementById("activityScore").innerText = '';
+        document.getElementById("activityScoreMessage").innerText = '';
         document.getElementById("activityCond").innerText = '';
-        document.getElementById("conditionCodes").innerText = '';
       }
     }
 
@@ -83,13 +82,6 @@
         resultElement.innerText = "The weather does not match your preferences.";
       }
     }
-
-    function updateContainmentMessage() {
-      const a = document.getElementById('conditionCodes').innerText;
-      const b = document.getElementById('weatherCode').innerText;
-      checkStringContainment(a, b, 'resultMessage');
-    }
-    document.addEventListener('DOMContentLoaded', updateContainmentMessage);
 
     // Handle activity change and redirect if "Add New" is selected
     function handleActivityChange() {
@@ -166,10 +158,12 @@
 
 <!--  OUTPUT MESSAGE -->
   <div class="output-message">
-    <div id="conditionCodes" hidden></div>
-    <div id="weatherCode" th:text="'[' + ${weather.weather_code} + ']'" hidden>Code</div>
-    <div id="resultMessage"></div>
+    <p>Compatibility Score: <span id="activityScore"></span></p>
   </div>
+  <div class = "output-message">
+    <p><span id = "activityScoreMessage"></span></p>
+  </div>
+
 </main>
 
 <footer th:replace="footer :: footer"></footer>

@@ -17,7 +17,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.view.RedirectView;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -122,7 +121,7 @@ public class ActivityControllerTest {
         when(activityRepository.findAll()).thenReturn(Collections.singletonList(activity));
         when(activityConditionRepository.findByActivity(any(Activity.class))).thenReturn(Collections.singletonList(activityCondition));
 
-        List<Activity> activities = activityController.GetActivitiesWithConditions();
+        List<Activity> activities = activityController.getActivitiesWithConditions();
 
         assertEquals(1, activities.size());
         assertEquals(1, activities.get(0).getConditions().length);
