@@ -53,7 +53,7 @@ public class ActivityController {
         model.addAttribute("weather_icon", weather_icon);
 
         //Get all activities with conditions and add to model
-        List<Activity> activities = GetActivitiesWithConditions(weather);
+        List<Activity> activities = getActivitiesWithConditions(weather);
 
         // Sort activities alphabetically by name
         activities.sort(Comparator.comparing(Activity::getName));
@@ -94,7 +94,7 @@ public class ActivityController {
     @GetMapping(value = "/activities")
     public String showActivities(Model model) {
         //Get all activities with conditions and add to model
-        List<Activity> activities = GetActivitiesWithConditions();
+        List<Activity> activities = getActivitiesWithConditions();
 
         // Sort activities alphabetically by name
         activities.sort(Comparator.comparing(Activity::getName));
