@@ -5,6 +5,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.util.Calendar;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,8 +16,9 @@ class WeatherClientIntegrationTest {
 
     @BeforeEach
     void setUp() throws IOException, InterruptedException {
-        client = new WeatherClient("0", "0");
-        weather = new Weather(client.findCurrent());
+        Date currentDate = new Date(Calendar.getInstance().getTimeInMillis());
+        client = new WeatherClient("0", "0", currentDate);
+        weather = new Weather(client.findDaily());
     }
 
     @Test

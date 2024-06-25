@@ -75,7 +75,7 @@
     function checkStringContainment(a, b, resultElementId) {
       const resultElement = document.getElementById(resultElementId);
       if (!a || !b) {
-        resultElement.innerText = "Shh... I'm thinking!";
+        resultElement.innerText = "Checking the weather...";
       } else if (a.includes(b)) {
         resultElement.innerText = "The weather matches your preferences!";
       } else {
@@ -103,7 +103,9 @@
 <main>
 <!--  WEATHER BLOCK  -->
   <div id="weather-block">
-    <h2 th:text="'Weather for ' + ${userData.date} + ' in ' + ${userData.location}">Current Weather</h2>
+    <h2 th:if="${userData.date.toString() == today}" th:text="'Weather for today in ' + ${userData.location}"></h2>
+    <h2 th:if="${userData.date.toString() == tomorrow}" th:text="'Weather for tomorrow in ' + ${userData.location}"></h2>
+    <h2 th:unless="${userData.date.toString() == today || userData.date.toString() == tomorrow}" th:text="'Weather for ' + ${#dates.format(userData.date, 'EEEE dd MMMM')} + ' in ' + ${userData.location}"></h2>
     <div class="weather-info">
       <div id="weather-icon">
         <img th:src="${weather_icon}" onerror="this.style.display = 'none';" alt="Weather Icon">
@@ -139,7 +141,7 @@
 <!--  ACTIVITY BLOCK  -->
   <div id="activity-block">
     <form action="#">
-      <label for="activity">Today's Activity: </label>
+      <label for="activity">Pick an activity: </label>
       <select name="activity" id="activity" onchange="handleActivityChange()">
         <option value="0" disabled selected>Select Activity</option>
         <option th:each="activity : ${activities}"

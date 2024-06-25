@@ -14,9 +14,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,14 +53,27 @@ public class ActivityController {
         model.addAttribute("weather_icon", weather_icon);
 
         //Get all activities with conditions and add to model
-        List<Activity> activities = getActivitiesWithConditions(weather);
+        List<Activity> activities = GetActivitiesWithConditions(weather);
+
+        // Sort activities alphabetically by name
+        activities.sort(Comparator.comparing(Activity::getName));
         model.addAttribute("activities", activities);
+
+        // Get today and tomorrow's date and format them to YYYY-MM-DD format
+        LocalDate today = LocalDate.now();
+        LocalDate tomorrow = today.plusDays(1);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String formattedToday = today.format(formatter);
+        String formattedTomorrow = tomorrow.format(formatter);
+
+        model.addAttribute("today", formattedToday);
+        model.addAttribute("tomorrow", formattedTomorrow);
 
         return "index";
     }
 
     @PostMapping("/update_settings")
-    public RedirectView updateUserData(@ModelAttribute UserData userData, @RequestParam String postcode) {
+    public RedirectView updateUserData(@ModelAttribute UserData userData, @RequestParam String postcode) throws URISyntaxException, IOException, InterruptedException {
         //TODO validate postcode
         postcode = postcode.replace(" ", "");
         postcode = postcode.trim();
@@ -78,7 +94,10 @@ public class ActivityController {
     @GetMapping(value = "/activities")
     public String showActivities(Model model) {
         //Get all activities with conditions and add to model
-        List<Activity> activities = getActivitiesWithConditions();
+        List<Activity> activities = GetActivitiesWithConditions();
+
+        // Sort activities alphabetically by name
+        activities.sort(Comparator.comparing(Activity::getName));
         model.addAttribute("activities", activities);
         return "activities/activities";
     }
