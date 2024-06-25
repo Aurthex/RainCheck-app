@@ -3,6 +3,7 @@ header {
     height: 120px;
     margin: 0 auto;
     background-color: #219EBC;
+    position: fixed;
 }
 
 #nav-container{

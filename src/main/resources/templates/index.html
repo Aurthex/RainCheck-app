@@ -95,6 +95,7 @@
 <body>
 <header th:replace="header :: header"></header>
 <main>
+<!--  WEATHER BLOCK  -->
   <div id="weather-block">
     <h2 th:text="'Weather for ' + ${userData.date} + ' in ' + ${userData.location}">Current Weather</h2>
     <div class="weather-info">
@@ -108,23 +109,31 @@
     </div>
   </div>
 
-  <form th:action="@{/update_settings}" th:object="${userData}" method="post">
-    <input type="hidden" name="id" th:value="${userData.Id}">
-    <input type="hidden" name="longitude" th:value="${userData.longitude}">
-    <input type="hidden" name="latitude" th:value="${userData.latitude}">
-    <input type="hidden" name="location" th:value="${userData.location}">
-    <label for="postcode">Postcode:</label>
-    <input type="text" id="postcode" name="postcode" th:value="postcode">
-    <div>
-      <label for="forecast_date">Select Date:</label>
-      <input type="text" id="forecast_date" th:field="*{date}" required>
-    </div>
-    <button type="submit">Confirm Date</button>
-  </form>
 
+  <!--  POSTCODE & DATE FORM / BLOCK  -->
+  <div class="postcode-date-block">
+    <form th:action="@{/update_settings}" th:object="${userData}" method="post" id="postcode-date-form">
+      <div class="row">
+        <input type="hidden" name="id" th:value="${userData.Id}">
+        <input type="hidden" name="longitude" th:value="${userData.longitude}">
+        <input type="hidden" name="latitude" th:value="${userData.latitude}">
+        <input type="hidden" name="location" th:value="${userData.location}">
+        <label for="postcode">Where?</label>
+        <input type="text" id="postcode" name="postcode" th:value="postcode">
+      </div>
+      <div class="row">
+        <label for="forecast_date">When?</label>
+        <input type="date" id="forecast_date" th:field="*{date}" required>
+      </div>
+      <button class="button" type="submit"><p>Confirm</p></button>
+    </form>
+  </div>
+
+
+<!--  ACTIVITY BLOCK  -->
   <div id="activity-block">
     <form action="#">
-      <label for="activity">Today's Activity: </label>
+      <label for="activity">What are we doing today? </label>
       <select name="activity" id="activity" onchange="updateActivityDetails(); updateContainmentMessage();">
         <option value="0" disabled selected>Select Activity</option>
         <option th:each="activity : ${activities}"
@@ -141,6 +150,8 @@
     <p>Ideal Conditions: <span id="activityCond"></span></p>
   </div>
 
+
+<!--  OUTPUT MESSAGE -->
   <div class="output-message">
     <div id="conditionCodes" hidden></div>
     <div id="weatherCode" th:text="'[' + ${weather.weather_code} + ']'" hidden>Code</div>

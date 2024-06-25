@@ -50,7 +50,7 @@ body{
 
 main {
     flex-grow: 1;
-    padding: 30px;
+    padding: 160px 30px 80px 30px;
     background-color: #219EBC;
     color: #fff;
 }
@@ -117,11 +117,35 @@ h2 {
     font-size: 1.4rem;
 }
 
-/* ACTIVITY BLOCK*/
+/*  POSTCODE - DATE BLOCK  */
+.postcode-date-block {
+    max-width: 500px;
+    margin: 2rem auto;
+}
+
+.postcode-date-block .row {
+    margin-bottom: 0.2rem;
+    gap: 8px;
+}
+
+#postcode-date-form {
+    display: flex;
+    justify-content: space-between;
+    gap: 22px;
+    align-items: center;
+}
+
+#postcode-date-form input {
+    width: 100px;
+    grid-auto-columns: auto;
+}
+
+
+/*  ACTIVITY BLOCK  */
 #activity-block {
     max-width: 500px;
     background-color: #023047;
-    margin: 0px auto 20px auto;
+    margin: 20px auto;
     border-radius: 50px;
     padding: 1rem 2rem;
     color: #FFB703;
