@@ -26,7 +26,6 @@
       if (activityData) {
         const selectedActivity = JSON.parse(activityData);
 
-//        document.getElementById("activityName").innerText = selectedActivity.name;
         document.getElementById("activityDescription").innerText = selectedActivity.description;
         document.getElementById("activityTemp").innerText = selectedActivity.temperature;
         document.getElementById("activityWindSpeed").innerText = selectedActivity.windSpeed;
@@ -35,12 +34,11 @@
         const conditions = selectedActivity.conditions.map(cond => cond.name).join(", ");
         document.getElementById("activityCond").innerText = conditions;
 
-        // Display conditions
+        // Display condition codes
         const conditionCodes = selectedActivity.conditions.map(cond => cond.code).join(", ");
         document.getElementById("conditionCodes").innerText = conditionCodes;
 
       } else {
-//        document.getElementById("activityName").innerText = '';
         document.getElementById("activityDescription").innerText = '';
         document.getElementById("activityTemp").innerText = '';
         document.getElementById("activityWindSpeed").innerText = '';
@@ -48,6 +46,7 @@
         document.getElementById("conditionCodes").innerText = '';
       }
     }
+
     // JavaScript function to change the saved icon and href based on the page title
     function updateSavedIcon() {
       var title = document.title; // Get the current page title
@@ -91,6 +90,20 @@
       checkStringContainment(a, b, 'resultMessage');
     }
     document.addEventListener('DOMContentLoaded', updateContainmentMessage);
+
+    // Handle activity change and redirect if "Add New" is selected
+    function handleActivityChange() {
+      const activitySelect = document.getElementById('activity');
+      const selectedValue = activitySelect.value;
+
+
+      if (selectedValue === 'add-new') {
+        window.location.href = '/activities/new';
+      } else {
+        updateActivityDetails();
+        updateContainmentMessage();
+      }
+    }
   </script>
 </head>
 <body>
@@ -126,16 +139,15 @@
   <div id="activity-block">
     <form action="#">
       <label for="activity">Today's Activity: </label>
-      <select name="activity" id="activity" onchange="updateActivityDetails(); updateContainmentMessage();">
+      <select name="activity" id="activity" onchange="handleActivityChange()">
         <option value="0" disabled selected>Select Activity</option>
         <option th:each="activity : ${activities}"
                 th:attr="data-activity=${activity.toJson()}"
                 th:text="${activity.name}">
         </option>
-        <option value="add-new" >Add New</option>
+        <option value="add-new">Add New</option>
       </select>
     </form>
-<!--    <p>Name: <span id="activityName"></span></p>-->
     <p>Description: <span id="activityDescription"></span></p>
     <p>Ideal Temperature: <span id="activityTemp"></span><span>°C</span></p>
     <p>Ideal Wind Speed: <span id="activityWindSpeed"></span><span>mph</span></p>
