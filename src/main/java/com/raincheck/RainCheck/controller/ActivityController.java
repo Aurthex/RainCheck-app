@@ -92,9 +92,9 @@ public class ActivityController {
     }
 
     @GetMapping(value = "/activities")
-    public String showActivities(Model model) {
+    public String showActivities(Model model) throws IOException, InterruptedException {
         //Get all activities with conditions and add to model
-        List<Activity> activities = getActivitiesWithConditions();
+        List<Activity> activities = getActivitiesWithConditions(null);
 
         // Sort activities alphabetically by name
         activities.sort(Comparator.comparing(Activity::getName));
@@ -126,6 +126,8 @@ public class ActivityController {
 
     @PostMapping("/activities")
     public RedirectView addNewActivity(@ModelAttribute Activity activity) {
+        if (activity.getLocation() == null || activity.getLocation().isEmpty()) activity.resetBooking();
+
         activityRepository.save(activity);
 
         var activityConditions = activityConditionRepository.findByActivity(activity);
@@ -144,6 +146,37 @@ public class ActivityController {
     public RedirectView deleteActivity(@PathVariable Integer id) {
         activityRepository.deleteById(id);
         return new RedirectView("/activities");
+    }
+
+    @PostMapping("/remove_booking/{id}")
+    public RedirectView removeBooking(@PathVariable Integer id) {
+        Optional<Activity> activityOptional = activityRepository.findById(id);
+        if (activityOptional.isEmpty()) return new RedirectView("/activities");
+        Activity activity = activityOptional.get();
+        activity.resetBooking();
+        activityRepository.save(activity);
+        return new RedirectView("/activities");
+    }
+
+    @PostMapping("/book_activity")
+    public RedirectView bookActivity(@RequestParam("activityId") String id) throws IOException, InterruptedException {
+        Optional<Activity> activityOptional = activityRepository.findById(Integer.parseInt(id));
+        if (activityOptional.isEmpty()) return new RedirectView("/");
+
+        Activity activity = activityOptional.get();
+        UserData userData = getUserData();
+        Weather weather = getWeather(userData);
+        populateActivityConditions(activity);
+        activity.generateWeatherComparisons(weather);
+
+        activity.setLocation(userData.getLocation());
+        activity.setLatitude(userData.getLatitude());
+        activity.setLongitude(userData.getLongitude());
+        activity.setDate(userData.getDate());
+        activity.setDateScore(activity.getScore());
+
+        activityRepository.save(activity);
+        return new RedirectView("/");
     }
 
     // Utility Methods //
@@ -169,6 +202,15 @@ public class ActivityController {
         return new Weather(daily);
     }
 
+    private Weather getWeatherFromBooking(Activity activity) throws IOException, InterruptedException {
+        //API request to get weather data as a JSON
+        WeatherClient client = new WeatherClient(activity.getLatitude(), activity.getLongitude(), activity.getDate());
+        String daily = client.findDaily();
+
+        //Pass current weather JSON into weather and instantiate and add to model
+        return new Weather(daily);
+    }
+
     private String getWeatherIcon(Weather weather){
         Integer code = weather.getWeather_code();
         Condition condition = conditionRepository.findByWeatherCode(code);
@@ -188,14 +230,34 @@ public class ActivityController {
         return activities;
     }
 
-    public List<Activity> getActivitiesWithConditions(Weather weather){
+    public void checkBooking(Activity activity) throws IOException, InterruptedException {
+        Weather weather = getWeatherFromBooking(activity);
+        activity.generateWeatherComparisons(weather);
+    }
+
+    public void validateActivities(){
+        List<Activity> activities = activityRepository.findAll();
+        for (Activity activity: activities){
+            Date date = activity.getDate();
+            if (date == null) continue;
+            Date now = Date.valueOf(LocalDate.now());
+            if (!now.after(date)) continue;
+            activity.resetBooking();
+            activityRepository.save(activity);
+        }
+    }
+
+    public List<Activity> getActivitiesWithConditions(Weather weather) throws IOException, InterruptedException {
+        validateActivities();
         List<Activity> activities = activityRepository.findAll(); //Get all activities in table
         for (Activity activity: activities){
             //For each activity, get all activityconditions associated through the join table
             populateActivityConditions(activity);
 
             //For each activity, compare weather conditions
-            activity.generateWeatherComparisons(weather);
+            //activity.generateWeatherComparisons(weather);
+            if (weather != null) activity.generateWeatherComparisons(weather);
+            else if (activity.getLocation() != null) checkBooking(activity);
         }
         return activities;
     }
