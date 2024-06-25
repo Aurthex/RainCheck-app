@@ -95,10 +95,8 @@
       const activitySelect = document.getElementById('activity');
       const selectedValue = activitySelect.value;
 
-      console.log('Selected value:', selectedValue); // Debugging log
 
       if (selectedValue === 'add-new') {
-        console.log('Redirecting to /activities/new'); // Debugging log
         window.location.href = '/activities/new';
       } else {
         updateActivityDetails();
