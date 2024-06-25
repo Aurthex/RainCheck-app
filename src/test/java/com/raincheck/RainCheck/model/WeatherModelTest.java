@@ -27,11 +27,11 @@ public class WeatherModelTest {
     @Test
     public void testJsonConstructor() {
         // JSON string with weather data
-        String json = "{\"time\":\"2024-06-20T13:45\",\"interval\":900,\"temperature_2m\":22.8,\"weather_code\":3,\"wind_speed_10m\":5.2}";
+        String json = "{\"time\":[\"2024-06-25\"],\"weather_code\":[3],\"temperature_2m_max\":[27.4],\"wind_speed_10m_max\":[14.8]}";
         Weather weather = new Weather(json); // Instantiate Weather object using JSON constructor
-        assertEquals(23, weather.getTemperature()); // Assert temperature is rounded to 23
-        assertEquals(3, weather.getWeather_code()); // Assert weather_code is 3
-        assertEquals(5, weather.getWind_speed()); // Assert wind_speed is rounded to 5
+        assertEquals(27, weather.getTemperature());
+        assertEquals(3, weather.getWeather_code());
+        assertEquals(15, weather.getWind_speed());
     }
 
     // Test toString method
@@ -44,10 +44,10 @@ public class WeatherModelTest {
     }
     @Test
     public void testRounding() {
-        String json = "{\"time\":\"2024-06-20T13:45\",\"interval\":900,\"temperature_2m\":22.8,\"weather_code\":3,\"wind_speed_10m\":5.2}";
+        String json = "{\"time\":[\"2024-06-25\"],\"weather_code\":[3],\"temperature_2m_max\":[27.6],\"wind_speed_10m_max\":[14.2]}";
         Weather weather = new Weather(json);
-        assertEquals(23, weather.getTemperature()); // Assert temperature is correctly rounded up
+        assertEquals(28, weather.getTemperature()); // Assert temperature is correctly rounded up
         assertEquals(3, weather.getWeather_code()); // Assert weather_code is 3
-        assertEquals(5, weather.getWind_speed()); // Assert wind_speed is correctly rounded down
+        assertEquals(14, weather.getWind_speed()); // Assert wind_speed is correctly rounded down
     }
 }

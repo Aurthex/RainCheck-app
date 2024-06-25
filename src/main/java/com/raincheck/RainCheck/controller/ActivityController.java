@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -82,7 +83,7 @@ public class ActivityController {
     }
 
     @PostMapping("/update_settings")
-    public RedirectView updateUserData(@ModelAttribute UserData userData, @RequestParam String postcode) {
+    public RedirectView updateUserData(@ModelAttribute UserData userData, @RequestParam String postcode) throws URISyntaxException, IOException, InterruptedException {
         //TODO validate postcode
         postcode = postcode.replace(" ", "");
         postcode = postcode.trim();

@@ -8,6 +8,7 @@ import com.raincheck.RainCheck.model.Condition;
 import com.raincheck.RainCheck.repository.ActivityConditionRepository;
 import com.raincheck.RainCheck.repository.ActivityRepository;
 import com.raincheck.RainCheck.repository.ConditionRepository;
+import com.raincheck.RainCheck.repository.UserDataRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
