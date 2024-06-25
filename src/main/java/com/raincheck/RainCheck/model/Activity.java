@@ -96,7 +96,7 @@ public class Activity {
         this.scoreMessage = getScoreMessage(score);
     }
 
-    private String getScoreMessage(Integer score){
+    String getScoreMessage(Integer score){
         if (score >= 95) return "The weather is a perfect match!";
         if (score >= 85) return "The weather is ideal for your activity.";
         if (score >= 75) return "The weather is close to what you want.";
@@ -117,7 +117,7 @@ public class Activity {
         return 15 - penalty;
     }
 
-    private Integer getTempStatement(Weather weather){
+    Integer getTempStatement(Weather weather){
         if (temperature == null) return 0;
         int dif = Math.abs(weather.getTemperature() - temperature);
 
@@ -125,7 +125,7 @@ public class Activity {
         return 10 - dif;
     }
 
-    private Integer getSpeedStatement(Weather weather){
+    Integer getSpeedStatement(Weather weather){
         if (windSpeed == null) return 0;
         int dif = Math.abs(weather.getWind_speed() - windSpeed);
         dif = Math.min(dif, 20);

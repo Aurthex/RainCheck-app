@@ -3,6 +3,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Familjen+Grotesk:ital,wght@0,400..700;1,400..700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
 
+/* Reset */
 * {
     margin: 0;
     padding: 0;
@@ -10,6 +11,7 @@
     font-family: ubuntu, sans-serif;
 }
 
+/* Base styles */
 html, body {
     display: flex;
     height: 100%;
@@ -20,11 +22,10 @@ a {
     color: #023047;
 }
 
-/* --- background --- */
+/* Background */
 html::before {
     content: "";
     background-image: url(https://i.ibb.co/P5cjt61/clouds-background.jpg);
-    background-repeat: repeat;
     position: fixed;
     top: 0px;
     right: 0px;
@@ -32,8 +33,10 @@ html::before {
     left: 0px;
     background-size: 800px;
     opacity: 0.4;
+    background-repeat: repeat;
 }
 
+/* Main content*/
 html {
     background-color: #8ECAE6;
 }
@@ -42,10 +45,9 @@ body{
     position: relative;
     display: flex;
     flex-direction: column;
-    min-height: 100%;
     width: 812px;
+    min-height: 100%;
     margin: 0 auto;
-    box-shadow: 5px 0 8px -5px rgba(0, 0, 0, 0.5), -5px 0 8px -5px rgba(0, 0, 0, 0.5);
 }
 
 main {
@@ -53,9 +55,10 @@ main {
     padding: 160px 30px 80px 30px;
     background-color: #219EBC;
     color: #fff;
+    box-shadow: 5px 0 8px -5px rgba(0, 0, 0, 0.5), -5px 0 8px -5px rgba(0, 0, 0, 0.5);
 }
 
-/* WEATHER BLOCK*/
+/* WEATHER BLOCK */
 #weather-block {
     max-width: 450px;
     margin: 0 auto 60px auto;
@@ -202,13 +205,16 @@ select {
     display: flex;
     justify-content: center;
     align-content: center;
+    padding: 1em;
 }
 
 #resultMessage {
-    padding: 1.5em;
-    text-align: center;
+    font-weight: 500;
 }
 
+#resultMessage span {
+    font-weight:400;
+}
 
 
 /* SAVED ACTIVITIES PAGE*/
@@ -218,19 +224,16 @@ select {
     width: 10px;
 }
 
-/* Track */
 ::-webkit-scrollbar-track {
     box-shadow: inset 0 0 5px grey;
     border-radius: 50px;
 }
 
-/* Handle */
 ::-webkit-scrollbar-thumb {
     background: #FFB703;
     border-radius: 50px;
 }
 
-/* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
     background: #d59500;
 }
@@ -239,9 +242,10 @@ select {
     width: 80%;
     margin: 0 auto;
 }
+/* end of scrollbar */
 
 #all-activities {
-    height: 700px;
+    max-height: 600px;
     overflow-y: auto;
 }
 

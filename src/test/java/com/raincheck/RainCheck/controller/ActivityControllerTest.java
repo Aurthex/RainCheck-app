@@ -1,14 +1,9 @@
 package com.raincheck.RainCheck.controller;
 
-import com.raincheck.RainCheck.model.Weather;
-
-import com.raincheck.RainCheck.model.Activity;
-import com.raincheck.RainCheck.model.ActivityCondition;
-import com.raincheck.RainCheck.model.Condition;
-import com.raincheck.RainCheck.repository.ActivityConditionRepository;
-import com.raincheck.RainCheck.repository.ActivityRepository;
-import com.raincheck.RainCheck.repository.ConditionRepository;
-import com.raincheck.RainCheck.repository.UserDataRepository;
+import com.raincheck.RainCheck.client.PostCodeClient;
+import com.raincheck.RainCheck.client.WeatherClient;
+import com.raincheck.RainCheck.model.*;
+import com.raincheck.RainCheck.repository.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,11 +14,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.IOException;
+import java.lang.reflect.Method;
+import java.net.URISyntaxException;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
 /**
@@ -44,12 +44,17 @@ public class ActivityControllerTest {
     @Mock
     private Model model;
 
+    @Mock
+    private UserDataRepository userDataRepository;
+
     @InjectMocks
     private ActivityController activityController;
 
     private Activity activity;
     private Condition condition;
     private ActivityCondition activityCondition;
+    private UserData userData;
+    private Weather weather;
 
     /**
      * Setup method to initialize mock objects and test data before each test method.
@@ -60,7 +65,23 @@ public class ActivityControllerTest {
         condition = new Condition(1, "Sunny", 100, "sun.png");
         activityCondition = new ActivityCondition(activity, condition);
     }
-    
+
+        weather = new Weather();
+        weather.setWeather_code(100);
+
+        userData = new UserData();
+        userData.setId(1);
+        userData.setDate(Date.valueOf(LocalDate.now()));
+        userData.setLatitude("52.5200");
+        userData.setLongitude("13.4050");
+    }
+
+
+
+//    @Test
+//    public void testIndex() throws Exception {
+//
+//    }
 
     /**
      * Test method for showing activities.
@@ -118,5 +139,40 @@ public class ActivityControllerTest {
         RedirectView redirectView = activityController.deleteActivity(activityId);
         verify(activityRepository, times(1)).deleteById(activityId);
         assertEquals("/activities", redirectView.getUrl());
+    }
+    @Test
+    public void testEditActivity() {
+        // Mock dependencies
+        when(activityRepository.findById(anyInt())).thenReturn(Optional.of(activity));
+        when(conditionRepository.findAll()).thenReturn(Collections.singletonList(condition));
+
+        // Call the editActivity method under test
+        String viewName = activityController.editActivity(1, model);
+
+        // Verify that the "activities/new" view name is returned
+        assertEquals("activities/new", viewName);
+
+        // Verify that the model.addAttribute method was called with expected attributes
+        verify(model, times(1)).addAttribute(eq("activity"), any(Activity.class));
+        verify(model, times(1)).addAttribute(eq("conditions"), anyList());
+    }
+    @Test
+    public void testGetWeatherIcon() throws Exception {
+
+        // Mock the conditionRepository to return the mock condition
+        when(conditionRepository.findByWeatherCode(100)).thenReturn(condition);
+
+        // Use reflection to access the private method
+        Method method = ActivityController.class.getDeclaredMethod("getWeatherIcon", Weather.class);
+        method.setAccessible(true);
+
+        // Invoke the private method
+        String icon = (String) method.invoke(activityController, weather);
+
+        // Verify the returned icon
+        assertEquals("sun.png", icon);
+
+        // Verify the interaction with the conditionRepository
+        verify(conditionRepository, times(1)).findByWeatherCode(100);
     }
 }

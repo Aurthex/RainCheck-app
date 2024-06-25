@@ -98,6 +98,8 @@
       }
     }
   </script>
+  <script src="js/header.js"></script>
+  <script src="js/index.js"></script>
 </head>
 <body>
 <header th:replace="header :: header"></header>
@@ -128,7 +130,7 @@
         <input type="hidden" name="latitude" th:value="${userData.latitude}">
         <input type="hidden" name="location" th:value="${userData.location}">
         <label for="postcode">Where?</label>
-        <input type="text" id="postcode" name="postcode" th:value="postcode">
+        <input type="text" id="postcode" name="postcode" th:placeholder="postcode" required>
       </div>
       <div class="row">
         <label for="forecast_date">When?</label>
@@ -160,19 +162,17 @@
 
 
 <!--  OUTPUT MESSAGE -->
-  <div class="output-message">
-    <p>Compatibility Score: <span id="activityScore"></span></p>
+  <div class="output-message column">
+    <p id="resultMessage">Compatibility Score:
+      <span id="activityScore"></span>
+    </p>
+    <span id = "activityScoreMessage"></span>
   </div>
-  <div class = "output-message">
-    <p><span id = "activityScoreMessage"></span></p>
-  </div>
-
   <!--  BOOKING FORM-->
   <form id="booking" th:action="@{/book_activity}" method="post">
     <input type="hidden" id="activityId" name="activityId">
     <button class="button" type="submit">Plan</button>
   </form>
-
 </main>
 
 <footer th:replace="footer :: footer"></footer>
