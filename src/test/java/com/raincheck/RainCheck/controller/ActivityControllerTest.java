@@ -64,7 +64,6 @@ public class ActivityControllerTest {
         activity = new Activity(1, "Running", "Outdoor running", null);
         condition = new Condition(1, "Sunny", 100, "sun.png");
         activityCondition = new ActivityCondition(activity, condition);
-    }
 
         weather = new Weather();
         weather.setWeather_code(100);
