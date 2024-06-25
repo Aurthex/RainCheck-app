@@ -5,7 +5,7 @@ function updateActivityDetails() {
 
     if (activityData) {
         const selectedActivity = JSON.parse(activityData);
-
+        document.getElementById("activityId").value = selectedActivity.id;
         document.getElementById("activityDescription").innerText = selectedActivity.description;
         document.getElementById("activityTemp").innerText = selectedActivity.temperature;
         document.getElementById("activityWindSpeed").innerText = selectedActivity.windSpeed;
@@ -17,6 +17,7 @@ function updateActivityDetails() {
         document.getElementById("activityCond").innerText = conditions;
 
     } else {
+        document.getElementById("activityId").value = '';
         document.getElementById("activityDescription").innerText = '';
         document.getElementById("activityTemp").innerText = '';
         document.getElementById("activityWindSpeed").innerText = '';
