@@ -35,28 +35,18 @@ public class ActivityController {
     @Autowired
     UserDataRepository userDataRepository;
 
+    // Mapping Methods //
+
     @GetMapping("/")
-    public String index(Model model) throws IOException, InterruptedException {
-        UserData userData = userDataRepository.findAll().iterator().next();
-
-        Date date = userData.getDate();
-        Date now = Date.valueOf(LocalDate.now());
-        if (now.after(date)) date = now;
-
-        userData.setDate(date);
-        userDataRepository.save(userData);
+    public String index(Model model) throws IOException, InterruptedException
+    {
+        UserData userData = getUserData();
         model.addAttribute("userData", userData);
 
-        //API request to get weather data as a JSON
-        WeatherClient client = new WeatherClient(userData.getLatitude(), userData.getLongitude(), userData.getDate());
-        String daily = client.findDaily();
-
-        //Pass current weather JSON into weather and instantiate and add to model
-        Weather weather = new Weather(daily); // new Weather(current, forecast)
+        Weather weather = getWeather(userData);
         model.addAttribute("weather", weather);
 
-        String weather_icon = conditionRepository.findByWeatherCode(weather.getWeather_code()).getWeatherIcon();
-        if (weather_icon == null) weather_icon = "";
+        String weather_icon = getWeatherIcon(weather);
         model.addAttribute("weather_icon", weather_icon);
 
         //Get all activities with conditions and add to model
@@ -91,6 +81,81 @@ public class ActivityController {
         List<Activity> activities = GetActivitiesWithConditions();
         model.addAttribute("activities", activities);
         return "activities/activities";
+    }
+
+    //Get the page to add a new activity
+    @GetMapping("/activities/new")
+    public String addNewActivity(Model model) {
+        model.addAttribute("activity", new Activity());
+        Iterable<Condition> conditions = conditionRepository.findAll();
+        model.addAttribute("conditions", conditions);
+        return "activities/new";
+    }
+
+    @GetMapping("/activities/edit")
+    public String editActivity(@RequestParam("activityId") int id, Model model) {
+        Optional<Activity> activityOp = activityRepository.findById(id);
+        if (activityOp.isEmpty()) return "error";
+        Activity activity = activityOp.get();
+        populateActivityConditions(activity);
+        model.addAttribute("activity", activity);
+
+        Iterable<Condition> conditions = conditionRepository.findAll();
+        model.addAttribute("conditions", conditions);
+        return "activities/new";
+    }
+
+    @PostMapping("/activities")
+    public RedirectView addNewActivity(@ModelAttribute Activity activity) {
+        activityRepository.save(activity);
+
+        var activityConditions = activityConditionRepository.findByActivity(activity);
+
+        activityConditionRepository.deleteAll(activityConditions);
+
+        for (Condition condition : activity.getConditions()){
+            ActivityCondition activityCondition = new ActivityCondition(activity, condition);
+            activityConditionRepository.save(activityCondition);
+        }
+        return new RedirectView("/activities");
+    }
+
+    // Delete an activity on the activity page
+    @PostMapping("/activities/delete/{id}")
+    public RedirectView deleteActivity(@PathVariable Integer id) {
+        activityRepository.deleteById(id);
+        return new RedirectView("/activities");
+    }
+
+    // Utility Methods //
+
+    private UserData getUserData(){
+        UserData userData = userDataRepository.findAll().iterator().next();
+
+        Date date = userData.getDate();
+        Date now = Date.valueOf(LocalDate.now());
+        if (now.after(date)) date = now;
+
+        userData.setDate(date);
+        userDataRepository.save(userData);
+        return userData;
+    }
+
+    private Weather getWeather(UserData userData) throws IOException, InterruptedException {
+        //API request to get weather data as a JSON
+        WeatherClient client = new WeatherClient(userData.getLatitude(), userData.getLongitude(), userData.getDate());
+        String daily = client.findDaily();
+
+        //Pass current weather JSON into weather and instantiate and add to model
+        return new Weather(daily);
+    }
+
+    private String getWeatherIcon(Weather weather){
+        Integer code = weather.getWeather_code();
+        Condition condition = conditionRepository.findByWeatherCode(code);
+        String icon = condition.getWeatherIcon();
+        if (icon == null || icon.isEmpty()) return "";
+        return icon;
     }
 
     //Creates a list of all activities and then populates each activity objects "conditions"
@@ -130,52 +195,5 @@ public class ActivityController {
         for (int i = 0; i < conditions.size(); i++) conditionsAr[i] = conditions.get(i);
         activity.setConditions(conditionsAr);
     }
-
-    //Get the page to add a new activity
-
-    @GetMapping("/activities/new")
-    public String addNewActivity(Model model) {
-        model.addAttribute("activity", new Activity());
-        Iterable<Condition> conditions = conditionRepository.findAll();
-        model.addAttribute("conditions", conditions);
-        return "activities/new";
-    }
-
-    @GetMapping("/activities/edit")
-    public String editActivity(@RequestParam("activityId") int id, Model model) {
-        Optional<Activity> activityOp = activityRepository.findById(id);
-        if (activityOp.isEmpty()) return "error";
-        Activity activity = activityOp.get();
-        populateActivityConditions(activity);
-        model.addAttribute("activity", activity);
-
-        Iterable<Condition> conditions = conditionRepository.findAll();
-        model.addAttribute("conditions", conditions);
-        return "activities/new";
-    }
-
-    @PostMapping("/activities")
-    public RedirectView addNewActivity(@ModelAttribute Activity activity) {
-        activityRepository.save(activity);
-
-        var activityConditions = activityConditionRepository.findByActivity(activity);
-
-        activityConditionRepository.deleteAll(activityConditions);
-
-        for (Condition condition : activity.getConditions()){
-            ActivityCondition activityCondition = new ActivityCondition(activity, condition);
-            activityConditionRepository.save(activityCondition);
-        }
-        return new RedirectView("/activities");
-    }
-
-    // Delete an activity on the activity page
-
-    @PostMapping("/activities/delete/{id}")
-    public RedirectView deleteActivity(@PathVariable Integer id) {
-        activityRepository.deleteById(id);
-        return new RedirectView("/activities");
-    }
-
 
 }
