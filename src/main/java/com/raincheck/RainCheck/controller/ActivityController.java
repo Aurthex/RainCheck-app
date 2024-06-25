@@ -16,6 +16,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -62,6 +63,16 @@ public class ActivityController {
         //Get all activities with conditions and add to model
         List<Activity> activities = GetActivitiesWithConditions(weather);
         model.addAttribute("activities", activities);
+
+        // Get today and tomorrow's date and format them to YYYY-MM-DD format
+        LocalDate today = LocalDate.now();
+        LocalDate tomorrow = today.plusDays(1);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String formattedToday = today.format(formatter);
+        String formattedTomorrow = tomorrow.format(formatter);
+
+        model.addAttribute("today", formattedToday);
+        model.addAttribute("tomorrow", formattedTomorrow);
 
         return "index";
     }

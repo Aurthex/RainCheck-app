@@ -74,8 +74,8 @@ h2 {
     "wdth" 100;
 }
 
-.title-row {
-    margin: 0 0 10px 40px;
+#weather-block h2 {
+    text-align: center;
 }
 
 .weather-info {
@@ -179,6 +179,8 @@ select {
 #activity-block p{
     width: 100%;
     font-weight: 600;
+    max-height: 100px;
+    overflow-x: auto;
 }
 
 #activity-block p span{
@@ -186,6 +188,8 @@ select {
     font-weight: 400;
     line-height: 1.5;
 }
+
+
 
 /* OUTPUT MESSAGE*/
 .output-message {
