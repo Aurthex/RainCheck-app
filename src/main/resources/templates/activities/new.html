@@ -40,6 +40,11 @@
 <form action="#" th:action="@{/activities}" th:object="${activity}" method="post" id="new-act-form">
     <h2>Add New Activity</h2>
     <input type="hidden" th:field="*{id}"/>
+    <input type="hidden" th:field="*{location}"/>
+    <input type="hidden" th:field="*{latitude}"/>
+    <input type="hidden" th:field="*{longitude}"/>
+    <input type="hidden" id="activityDate" name="date" th:value="${activity.date != null} ? ${#dates.format(activity.date, 'yyyy-MM-dd')} : '2024-01-01'"/>
+    <input type="hidden" th:field="*{dateScore}"/>
     <div class="name-desc">
         <div class="input-container">
             <label for="name" class="placeholder">Activity Name:</label>

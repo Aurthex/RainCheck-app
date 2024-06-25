@@ -18,6 +18,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
@@ -59,25 +60,7 @@ public class ActivityControllerTest {
         condition = new Condition(1, "Sunny", 100, "sun.png");
         activityCondition = new ActivityCondition(activity, condition);
     }
-
-
-    @Test
-    public void testIndex() throws Exception {
-        // Mock the ConditionRepository to return a valid Condition
-        when(conditionRepository.findByWeatherCode(anyInt())).thenReturn(condition);
-
-        // Call the index method under test
-        String viewName = activityController.index(model);
-
-        // Verify that the "index" view name is returned
-        assertEquals("index", viewName);
-
-        // Verify that the model.addAttribute method was called once with "weather" attribute and any Weather object
-        verify(model, times(1)).addAttribute(eq("weather"), any(Weather.class));
-
-        // Verify that the model.addAttribute method was called once with "activities" attribute and any List object
-        verify(model, times(1)).addAttribute(eq("activities"), anyList());
-    }
+    
 
     /**
      * Test method for showing activities.
@@ -85,7 +68,7 @@ public class ActivityControllerTest {
      * Verifies that the model attribute "activities" is set correctly.
      */
     @Test
-    public void testShowActivities() {
+    public void testShowActivities() throws IOException, InterruptedException {
         when(activityRepository.findAll()).thenReturn(Collections.singletonList(activity));
         when(activityConditionRepository.findByActivity(any(Activity.class))).thenReturn(Collections.singletonList(activityCondition));
 

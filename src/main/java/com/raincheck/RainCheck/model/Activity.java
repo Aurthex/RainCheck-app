@@ -3,6 +3,8 @@ package com.raincheck.RainCheck.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.sql.Date;
+
 @Entity
 @Getter
 @Setter
@@ -20,6 +22,16 @@ public class Activity {
     private Integer temperature;
     @Column
     private Integer windSpeed;
+    @Column
+    private String location;
+    @Column
+    private String latitude;
+    @Column
+    private String longitude;
+    @Column(nullable = true)
+    private Date date;
+    @Column(name="score")
+    private Integer dateScore;
     @Transient private Condition[] conditions;
     @Transient private Integer score;
     @Transient private String scoreMessage;
@@ -43,6 +55,7 @@ public class Activity {
 
 
         return "{" +
+                "\"id\":\"" + displayInteger(id) + "\"," +
                 "\"name\":\"" + name + "\"," +
                 "\"description\":\"" + description + "\"," +
                 "\"temperature\":\"" + displayInteger(temperature) + "\"," +
@@ -128,5 +141,13 @@ public class Activity {
         }
         conditionString.append((conditions[conditions.length-1].getName()));
         return conditionString.toString();
+    }
+
+    public void resetBooking(){
+        date = null;
+        dateScore = null;
+        location = null;
+        latitude = null;
+        longitude = null;
     }
 }
