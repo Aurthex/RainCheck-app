@@ -50,8 +50,10 @@ public class ActivityControllerTest {
     @InjectMocks
     private ActivityController activityController;
 
+
     private Activity activity;
     private Condition condition;
+    private Condition condition2;
     private ActivityCondition activityCondition;
     private UserData userData;
     private Weather weather;
@@ -63,6 +65,7 @@ public class ActivityControllerTest {
     public void setUp() {
         activity = new Activity(1, "Running", "Outdoor running", null);
         condition = new Condition(1, "Sunny", 100, "sun.png");
+        condition2 = new Condition(2, "Rainy", 200, "rain.png");
         activityCondition = new ActivityCondition(activity, condition);
 
         weather = new Weather();
@@ -173,5 +176,48 @@ public class ActivityControllerTest {
 
         // Verify the interaction with the conditionRepository
         verify(conditionRepository, times(1)).findByWeatherCode(100);
+    }
+    @Test
+    public void testAddNewActivities() {
+        activity = new Activity();
+        activity.setId(1);
+        activity.setName("Running");
+        activity.setDescription("Outdoor running");
+
+        condition = new Condition();
+        condition.setId(1);
+        condition.setName("Sunny");
+        condition.setWeatherCode(100);
+        condition.setWeatherIcon("sun.png");
+
+        condition2 = new Condition();
+        condition2.setId(2);
+        condition2.setName("Rainy");
+        condition2.setWeatherCode(200);
+        condition2.setWeatherIcon("rain.png");
+
+        activity.setConditions(new Condition[]{condition, condition2});
+
+        // Mock activity repository save method
+        when(activityRepository.save(any(Activity.class))).thenReturn(activity);
+
+        // Mock activity condition repository methods
+        when(activityConditionRepository.findByActivity(any(Activity.class))).thenReturn(Collections.emptyList());
+
+        // Call the method under test
+        RedirectView redirectView = activityController.addNewActivity(activity);
+
+        // Verify that the activity was saved
+        verify(activityRepository, times(1)).save(activity);
+
+        // Verify that the activity conditions were retrieved and deleted
+        verify(activityConditionRepository, times(1)).findByActivity(activity);
+        verify(activityConditionRepository, times(1)).deleteAll(anyList());
+
+        // Verify that new activity conditions were saved
+        verify(activityConditionRepository, times(2)).save(any(ActivityCondition.class));
+
+        // Verify the redirect URL
+        assertEquals("/activities", redirectView.getUrl());
     }
 }
