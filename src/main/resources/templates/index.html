@@ -127,7 +127,7 @@
         <input type="hidden" name="latitude" th:value="${userData.latitude}">
         <input type="hidden" name="location" th:value="${userData.location}">
         <label for="postcode">Where?</label>
-        <input type="text" id="postcode" name="postcode" th:value="postcode">
+        <input type="text" id="postcode" name="postcode" th:placeholder="postcode" required>
       </div>
       <div class="row">
         <label for="forecast_date">When?</label>
