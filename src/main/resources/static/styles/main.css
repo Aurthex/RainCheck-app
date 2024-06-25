@@ -3,6 +3,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Familjen+Grotesk:ital,wght@0,400..700;1,400..700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
 
+/* Reset */
 * {
     margin: 0;
     padding: 0;
@@ -10,6 +11,7 @@
     font-family: ubuntu, sans-serif;
 }
 
+/* Base styles */
 html, body {
     display: flex;
     height: 100%;
@@ -20,7 +22,7 @@ a {
     color: #023047;
 }
 
-/* --- background --- */
+/* Background */
 html::before {
     content: "";
     background-image: url(https://i.ibb.co/P5cjt61/clouds-background.jpg);
@@ -34,6 +36,32 @@ html::before {
     background-repeat: repeat;
 }
 
+/*  -- SCROLLBAR -- */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 50px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #FFB703;
+    border-radius: 50px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #d59500;
+}
+
+#main-block {
+    width: 80%;
+    margin: 0 auto;
+}
+/* end of scrollbar */
+
+/* Main content*/
 html {
     background-color: #8ECAE6;
 }
@@ -55,7 +83,7 @@ main {
     box-shadow: 5px 0 8px -5px rgba(0, 0, 0, 0.5), -5px 0 8px -5px rgba(0, 0, 0, 0.5);
 }
 
-/* WEATHER BLOCK*/
+/* WEATHER BLOCK */
 #weather-block {
     max-width: 450px;
     margin: 0 auto 60px auto;
@@ -214,226 +242,3 @@ select {
 }
 
 
-
-/* SAVED ACTIVITIES PAGE*/
-
-/*  -- SCROLLBAR -- */
-::-webkit-scrollbar {
-    width: 10px;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 5px grey;
-    border-radius: 50px;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-    background: #FFB703;
-    border-radius: 50px;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-    background: #d59500;
-}
-
-#main-block {
-    width: 80%;
-    margin: 0 auto;
-}
-
-#all-activities {
-    max-height: 600px;
-    overflow-y: auto;
-}
-
-.title-row {
-    margin-left: 40px;
-}
-
-.row {
-    display: flex;
-    flex-direction: row;
-    gap: 50px;
-    align-items: center;
-}
-
-.button {
-    display: flex;
-    width: 100px;
-    height: 25px;
-    justify-content: center;
-    background-color: #FFB703;
-    box-shadow: inset 0 0 4px #023047;
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-}
-
-.button:hover {
-    background-color: #d59500;
-}
-
-.button p {
-    color: #023047;
-    font-variant-caps: all-small-caps;
-    font-size: 18px;
-    font-weight: 600;
-    align-items: center;
-}
-
-.activity-container {
-    background-color: #023047;
-    border-radius: 50px;
-    margin: 1vw 10px 1vw auto;
-    padding: 2vw;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.activity-top {
-    justify-content: space-between;
-}
-
-
-h3 {
-    color: #FFB703;
-}
-
-.buttons-row {
-    gap: 5px;
-    display: flex;
-    justify-content: flex-end;
-}
-
-.edit {
-    width: 50px;
-}
-
-.delete {
-    width: 70px;
-}
-
-.description {
-    font-style: italic;
-}
-
-.wind-speed-pair {
-    gap: 5px;
-    font-weight: 700;
-}
-
-.wind-speed-pair p {
-    font-weight: 300;
-    margin-top: 5px;
-}
-
-.cond-span {
-    font-weight: 700;
-}
-
-.cond-span + p{
-    line-height: 1.5;
-    max-height: 100px;
-    overflow-y: auto;
-}
-
-/* NEW ACTIVITY PAGE */
-#new-act-form {
-    max-width: 80%;
-    margin: 0 auto;
-}
-.input-container {
-    display: flex;
-    flex-direction: row;
-    margin-top: 1.5vw;
-    width: 100%;
-    align-items: center;
-}
-
-.name-desc {
-    max-width: 450px;
-}
-
-.column {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5vw;
-}
-
-.placeholder {
-    color: #023047;
-    font-family: 'Familjen Grotesk', sans-serif;
-    font-size: 1.5 rem;
-    font-weight: 500;
-}
-
-#description {
-    width: 100%;
-    min-height: 80px;
-    border-radius: 15px;
-    line-height: 1.5;
-    padding: 10px;
-    color: #023047;
-    resize: both;
-    vertical-align: top;
-}
-
-input[type="number"]{
-    width: 50px;
-}
-
-.input-container form {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    margin: 0 auto;
-}
-
-.input-container input {
-    margin-left: 2vw;
-}
-
-.options-container {
-    width: 100%;
-    height: 250px;
-    margin: 0 auto;
-    overflow-y: auto;
-    border-radius: 15px;
-}
-
-.all-options {
-    background-color: #fff;
-    border-radius: 15px;
-    padding: 1vw;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-right: 10px;
-}
-
-ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    display: contents;
-}
-
-.options-container li {
-    display: flex;
-    align-items: center;
-    color: #023047;
-}
-
-.options-container input[type="checkbox"] {
-    margin-right: 10px;
-    margin-left: 0;
-}
-
-.temp-wind {
-    width: 300px;
-    display: flex;
-}
