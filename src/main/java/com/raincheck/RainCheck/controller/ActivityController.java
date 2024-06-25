@@ -18,6 +18,7 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -62,6 +63,9 @@ public class ActivityController {
 
         //Get all activities with conditions and add to model
         List<Activity> activities = GetActivitiesWithConditions(weather);
+
+        // Sort activities alphabetically by name
+        activities.sort(Comparator.comparing(Activity::getName));
         model.addAttribute("activities", activities);
 
         // Get today and tomorrow's date and format them to YYYY-MM-DD format
@@ -100,6 +104,9 @@ public class ActivityController {
     public String showActivities(Model model) {
         //Get all activities with conditions and add to model
         List<Activity> activities = GetActivitiesWithConditions();
+
+        // Sort activities alphabetically by name
+        activities.sort(Comparator.comparing(Activity::getName));
         model.addAttribute("activities", activities);
         return "activities/activities";
     }
