@@ -1,54 +1,72 @@
-# RainCheck-app
-RainCheck
+# RainCheck Application
 
-Github: https://github.com/Aurthex/RainCheck-app 
-Trello board: https://trello.com/b/vtfjphI6/raincheck 
+## Overview
 
-App Concept
-
-This app will check live weather data and display what activities are best suited for the current weather conditions.
+RainCheck is a web application designed to help users plan activities based on weather conditions. It provides functionality to manage activities, view weather forecasts, and adjust user settings.
 
 
-MVP
-As a user, I can record an activity and write what the ideal weather conditions are for this activity.
-As a user, I can view the activities that I’ve recorded, and their ideal conditions.
-As a user, I can see today’s weather in Newcastle.
+## Features
 
+- **Index**: Shows current user settings, weather information, and a list of recommended activities.
+- **User Settings**: Allows users to update their location based on postcode.
+- **Activities Management**: Supports adding, editing, deleting, and booking activities.
+- **Weather Integration**: Retrieves and displays weather data relevant to activities.
+- **Activity Conditions**: Allows defining conditions (general weather, temperature, wind speed) for each activity.
+- **Date Management**: Automatically adjusts activity bookings based on the current date.
 
-Future features
-Pre-existing activities to pick from (not having to create your own)
-Possibility to choose a condition that is NOT a perfect condition for the activity
-User can input postcode and see that location’s current weather
-User can input a town’s name and see that location’s current weather
+## Technologies Used
 
-Chatbox? 
-AI integration?
+- **Java**: Backend language using Spring Framework (Spring Boot, Spring MVC).
+- **HTML/CSS/JavaScript**: Frontend development for UI/UX.
+- **Thymeleaf**: Template engine for server-side rendering.
+- **PostgreSQL**: Database for storing user data, activities, and conditions.
+- **<a href="https://open-meteo.com/en/docs">Weather Forecast API</a>**: Integrates weather data via external API.
 
+## Setup Instructions
+### Clone Repository:
 
-Stack:
-Maven
-Tests: Playwright + JUnit (5 Juniper)
-APIs: Open meteo API + Postcodes.io API 
+```bash
+git clone https://github.com/Aurthex/RainCheck-app.git
+cd RainCheck
+```
 
+### Database Configuration:
 
-Some resources:
-Weather API: https://openweathermap.org/api (to get weather conditions from long and lat) Key required
-Geocoding API: https://openweathermap.org/api/geocoding-api (to get lat and long from postcode) Key required
-Open meteo: https://open-meteo.com/ (alternative to Weather API)
-Postcodes.io https://postcodes.io/ (alternative to Geocoding)
-Gemini API key - Free
+1. Create a PostgreSQL database.
+2. Update application-dev.properties with your database configuration:
+```bash
+spring.datasource.url=jdbc:postgresql://localhost:5432/your_database
+```
+### Build and Run Application:
 
+Build the project using Maven:
+```go
+mvn clean package
+```
+Run the application:
+```
+mvn spring-boot:run
+```
+Alternatively, run from an IDE like IntelliJ.
 
+## Access Application:
 
-Day Plan 
+Open a web browser and go to http://localhost:8080/ to access the RainCheck application.
 
-Stand up at 1015
+## Usage
+- Home Page: Displays user settings, current weather, recommended activities, and date selection.
 
-Mid day catch up 1400 / 1430
+- Activities Page: Lists all activities with options to add, edit, delete, and book activities.
 
-End of sprint retros
+- Add/Edit Activity: Fill in details and select conditions for each activity.
 
+- User Settings: Update location settings based on postcode.
 
+## Contributors
+- <a href="https://github.com/marklovejoydev">Mark Lovejoy</a> - Developer
+- <a href="https://github.com/Aurthex">Sam Arrowsmith</a> - Developer
+- <a href="https://github.com/paulineldb">Pauline Lelievre Du Broeuille</a> - Developer
+- <a href="https://github.com/shirinooo">Shirin Ebrahimi</a> - Developer
 
-Reminders:
-Project 3 goals: https://journey.makers.tech/units/engineering-project-3-goals 
+## Notes
+Make sure to replace placeholders (like your_database) with actual values specific to your setup.
