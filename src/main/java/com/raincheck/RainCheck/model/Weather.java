@@ -6,10 +6,12 @@ import lombok.*;
 @NoArgsConstructor
 public class Weather {
 
+    // Fields to store temperature, weather code, and wind speed
     private Integer temperature;
     private Integer weather_code;
     private Integer wind_speed;
 
+    // Constructor to parse JSON string and initialize fields
     public Weather(String json){
         String[] elements = json.split(",");
         String codeString = elements[1].substring(16,elements[1].length()-1);
@@ -20,13 +22,14 @@ public class Weather {
         wind_speed = (int) Math.round(Double.parseDouble(windString));
     }
 
+    // Constructor to initialize fields directly
     public Weather(int temperature, int weather_code, int wind_speed){
         this.temperature = temperature;
         this.weather_code = weather_code;
         this.wind_speed = wind_speed;
     }
 
-
+    // Override toString() method to provide a string representation of the Weather object
     @Override
     public String toString(){
         return "Weather: " + "\n" +
