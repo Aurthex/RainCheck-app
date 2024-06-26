@@ -58,5 +58,19 @@ function handleActivityChange() {
     } else {
         // Update activity details
         updateActivityDetails();
+        toggleFormVisibility();
+    }
+}
+
+// Function to check the activityId and toggle form visibility
+function toggleFormVisibility() {
+    const activityIdInput = document.getElementById("activityId");
+    const bookingForm = document.getElementById("booking");
+
+    var activityId = activityIdInput.value;
+    if (activityId && activityId.trim() !== "") {
+        bookingForm.style.display = "flex";
+    } else {
+        bookingForm.style.display = "none";
     }
 }

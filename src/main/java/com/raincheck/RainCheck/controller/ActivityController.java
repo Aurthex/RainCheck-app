@@ -217,7 +217,7 @@ public class ActivityController {
     // UTILITY METHODS
 
     // Cleans postcode input by removing spaces and quotes.
-    private String cleanPostcode(String input){
+    String cleanPostcode(String input){
         String postcode = input.replace(" ", "");
         postcode = postcode.replace("\"", "");
         postcode = postcode.trim();
@@ -227,7 +227,7 @@ public class ActivityController {
 
     // Retrieves user data from the database.
     // Updates user's date to current date if necessary and saves updated user data.
-    private UserData getUserData(){
+    UserData getUserData(){
         UserData userData = userDataRepository.findAll().iterator().next();
 
         Date date = userData.getDate();
@@ -240,7 +240,7 @@ public class ActivityController {
     }
 
     // Retrieves weather data based on user data (latitude, longitude, date).
-    private Weather getWeather(UserData userData) throws IOException, InterruptedException {
+    Weather getWeather(UserData userData) throws IOException, InterruptedException {
         //API request to get weather data as a JSON
         WeatherClient client = new WeatherClient(userData.getLatitude(), userData.getLongitude(), userData.getDate());
         String daily = client.findDaily();
@@ -250,7 +250,7 @@ public class ActivityController {
     }
 
     // Retrieves weather data based on activity's location, latitude, longitude, and date.
-    private Weather getWeatherFromBooking(Activity activity) throws IOException, InterruptedException {
+    Weather getWeatherFromBooking(Activity activity) throws IOException, InterruptedException {
         //API request to get weather data as a JSON
         WeatherClient client = new WeatherClient(activity.getLatitude(), activity.getLongitude(), activity.getDate());
         String daily = client.findDaily();
@@ -260,7 +260,7 @@ public class ActivityController {
     }
 
     // Retrieves weather icon based on weather condition code.
-    private String getWeatherIcon(Weather weather){
+    String getWeatherIcon(Weather weather){
         Integer code = weather.getWeather_code();
         Condition condition = conditionRepository.findByWeatherCode(code);
         String icon = condition.getWeatherIcon();
