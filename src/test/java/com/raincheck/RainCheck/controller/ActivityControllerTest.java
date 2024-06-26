@@ -80,6 +80,7 @@ public class ActivityControllerTest {
     @BeforeEach
     public void setUp() {
         activity = new Activity(1, "Running", "Outdoor running", null);
+        activity.setDate(Date.valueOf(LocalDate.now().minusDays(1)));
         condition = new Condition(1, "Sunny", 100, "sun.png");
         activityCondition = new ActivityCondition(activity, condition);
         weather = new Weather(20,1,15);

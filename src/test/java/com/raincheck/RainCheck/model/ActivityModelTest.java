@@ -54,12 +54,14 @@ public class ActivityModelTest {
         activity.setName("Running");
         activity.setDescription("Outdoor running activity");
         activity.setConditions(conditions);
+        activity.setDateScore(100);
 
         // Assert
         assertEquals(1, activity.getId()); // Assert id is 1
         assertEquals("Running", activity.getName()); // Assert name is "Running"
         assertEquals("Outdoor running activity", activity.getDescription()); // Assert description is "Outdoor running activity"
         assertEquals(conditions, activity.getConditions()); // Assert conditions is the same array
+        assertEquals(100,activity.getDateScore());
     }
 
     // Test toJson method
@@ -108,6 +110,8 @@ public class ActivityModelTest {
                 new Condition(2, "Clear", 0)
         };
         Activity activity = new Activity(1, "Running", "Outdoor running activity", conditions);
+        activity.setTemperature(20);
+        activity.setWindSpeed(5);
 
         Weather weather = new Weather(1, 1, 25); // Example weather
 
