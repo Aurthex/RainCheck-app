@@ -3,7 +3,7 @@ function updateSavedIcon() {
     var title = document.title; // Get the current page title
 
     var savedIcon = document.getElementById("icon-image");
-    var savedLink = document.getElementById("icon-link"); // Get the anchor tag
+    var savedLink = document.getElementById("icon-link");
 
     // Set the image source and href based on the title
     if (title === "RainCheck") {

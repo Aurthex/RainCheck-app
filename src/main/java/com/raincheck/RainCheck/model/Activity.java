@@ -5,37 +5,54 @@ import lombok.*;
 
 import java.sql.Date;
 
+// Specifies that this class is an entity and will be mapped to a database table
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @Table(name = "ACTIVITIES")
 public class Activity {
+
+    // Specifies the primary key of the entity
     @Id
+    // Specifies how the primary key should be generated
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     @Column(nullable = false)
     private String name;
+
     @Column(nullable = false)
     private String description;
+
     @Column
     private Integer temperature;
+
     @Column
     private Integer windSpeed;
+
     @Column
     private String location;
+
     @Column
     private String latitude;
+
     @Column
     private String longitude;
+
     @Column(nullable = true)
     private Date date;
+
     @Column(name="score")
     private Integer dateScore;
+
     @Transient private Condition[] conditions;
+
     @Transient private Integer score;
+
     @Transient private String scoreMessage;
 
+    // Default constructor for the Activity object with specified attributes
     public Activity(Integer id, String name, String description, Condition[] conditions){
         this.id = id;
         this.name = name;
@@ -43,6 +60,7 @@ public class Activity {
         this.conditions = conditions;
     }
 
+    // Converts the Activity object to a JSON format string.
     public String toJson() {
         StringBuilder conditionsJson = new StringBuilder("[");
         for (int i = 0; i < conditions.length; i++) {
@@ -52,8 +70,6 @@ public class Activity {
             }
         }
         conditionsJson.append("]");
-
-
         return "{" +
                 "\"id\":\"" + displayInteger(id) + "\"," +
                 "\"name\":\"" + name + "\"," +
@@ -66,11 +82,13 @@ public class Activity {
                 "}";
     }
 
+    // Displays an integer value as a string or "any" if the integer is null.
     public String displayInteger(Integer i){
         if (i != null) return i.toString();
         return "any";
     }
 
+    // Generates score and score message based on weather comparison.
     public void generateWeatherComparisons(Weather weather){
         int max = 0;
         int score = 0;
@@ -96,6 +114,7 @@ public class Activity {
         this.scoreMessage = getScoreMessage(score);
     }
 
+    // Retrieves score message based on score value.
     String getScoreMessage(Integer score){
         if (score >= 95) return "The weather is a perfect match!";
         if (score >= 85) return "The weather is ideal for your activity.";
@@ -104,6 +123,7 @@ public class Activity {
         return "Maybe you should do something else.";
     }
 
+    // Calculates score based on weather code comparison.
     private Integer getCodeStatement(Weather weather){
         if (conditions.length == 0) return 0;
         int min = 3;
@@ -117,14 +137,15 @@ public class Activity {
         return 15 - penalty;
     }
 
+    // Calculates score based on temperature comparison.
     Integer getTempStatement(Weather weather){
         if (temperature == null) return 0;
         int dif = Math.abs(weather.getTemperature() - temperature);
-
         dif = Math.min(dif, 10);
         return 10 - dif;
     }
 
+    // Calculates score based on wind speed comparison.
     Integer getSpeedStatement(Weather weather){
         if (windSpeed == null) return 0;
         int dif = Math.abs(weather.getWind_speed() - windSpeed);
@@ -132,6 +153,7 @@ public class Activity {
         return 5 - (dif/4);
     }
 
+    // Retrieves conditions associated with the activity as a formatted string.
     public String getConditionString(){
         if (conditions.length == 0) return "Any Weather";
         StringBuilder conditionString = new StringBuilder();
@@ -143,6 +165,7 @@ public class Activity {
         return conditionString.toString();
     }
 
+    // Resets booking details of the activity.
     public void resetBooking(){
         date = null;
         dateScore = null;

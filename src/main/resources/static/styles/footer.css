@@ -1,3 +1,4 @@
+/* Footer styles */
 footer {
     width: 812px;
     height: 40px;
@@ -8,6 +9,7 @@ footer {
     bottom: 0;
 }
 
+/* Container within the footer */
 #foo-container {
     display: flex;
     color: #fff;

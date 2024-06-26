@@ -1,23 +1,35 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <!-- Meta Information -->
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+    <!-- CSS Stylesheets -->
     <link rel="stylesheet" href="/styles/header.css">
     <link rel="stylesheet" href="/styles/main.css">
     <link rel="stylesheet" href="/styles/footer.css">
+    <!-- JavaScript File -->
     <script src="js/header.js"></script>
+    <!-- Page Title -->
     <title>RainCheck Activities</title>
 </head>
 <body>
+
+<!-- Include the header from Thymeleaf template -->
 <header th:replace="header :: header"></header>
+
+<!-- Main Content Section -->
 <main>
     <div id="main-block">
+        <!-- Title Row with "Add New" Button -->
         <div class="row title-row">
             <h2>My Saved Activities</h2>
             <a th:href="@{/activities/new}" class="button"><p>Add New</p></a>
         </div>
+        <!-- Container for All Activities -->
         <div id="all-activities">
+            <!-- Loop through Each Activity -->
             <div class="activity-container" th:each="activity : ${activities}">
+                <!-- Activity Top Row with Edit and Delete Buttons -->
                 <div class="row activity-top">
                     <h3 th:text="${activity.name}"></h3>
                     <div class="row buttons-row">
@@ -27,7 +39,9 @@
                         </form>
                     </div>
                 </div>
+                <!-- Activity Description -->
                 <p class="description" th:text="${activity.description}"></p>
+                <!-- Row for Temperature and Wind Speed -->
                 <div class="row row-temp-wind">
                     <div class="row wind-speed-pair">
                         Temperature: <p th:if="${activity.temperature == null}" alt="temperature">Any</p>
@@ -39,8 +53,10 @@
                         <p th:text="${activity.windSpeed}" alt="wind speed"></p><p>mph</p>
                     </div>
                 </div>
+                <!-- Activity Conditions -->
                 <span class="cond-span">Conditions: </span>
                 <p th:text="${activity.getConditionString}" alt="conditions"></p>
+                <!-- Booking Block (Displayed if Activity has a Date) -->
                 <div th:if="${activity.date != null}" id="booking-block">
                     <div class="separator"></div>
                     <div class="booking-top row">
@@ -49,6 +65,7 @@
                             <button th:if="${activity.date != null}" type="submit" class="button remove"><p>cancel booking</p></button>
                         </form>
                     </div>
+                    <!-- Booking Information -->
                     <div class="booking-infos">
                         <div class="booking-column">
                             <p>Location: <span th:text="${activity.location}"></span></p>
@@ -59,6 +76,7 @@
                             <p>Current Score: <span th:text="${activity.score}"></span></p>
                         </div>
                     </div>
+                    <!-- RainCheck Message -->
                     <div id="rainCheck-message">
                         <p th:if="${activity.score != null and activity.dateScore != null and activity.score + 5 < activity.dateScore}">ALERT: RAIN CHECK!</p>
                     </div>
@@ -66,8 +84,9 @@
             </div>
         </div>
     </div>
-
 </main>
+
+<!-- Include the footer from Thymeleaf template -->
 <footer th:replace="footer :: footer"></footer>
 </body>
 </html>

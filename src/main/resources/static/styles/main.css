@@ -22,7 +22,7 @@ a {
     color: #023047;
 }
 
-/* Background */
+/* Background image for the entire page*/
 html::before {
     content: "";
     background-image: url(https://i.ibb.co/P5cjt61/clouds-background.jpg);
@@ -35,204 +35,6 @@ html::before {
     opacity: 0.4;
     background-repeat: repeat;
 }
-
-/* Main content*/
-html {
-    background-color: #8ECAE6;
-}
-
-body{
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    width: 812px;
-    min-height: 100%;
-    margin: 0 auto;
-}
-
-main {
-    flex-grow: 1;
-    padding: 160px 30px 80px 30px;
-    background-color: #219EBC;
-    color: #fff;
-    box-shadow: 5px 0 8px -5px rgba(0, 0, 0, 0.5), -5px 0 8px -5px rgba(0, 0, 0, 0.5);
-}
-
-/* WEATHER BLOCK */
-#weather-block {
-    max-width: 450px;
-    margin: 0 auto 60px auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-h2 {
-    font-family: "Familjen Grotesk", sans-serif;
-    font-optical-sizing: auto;
-    font-size: 40px;
-    font-weight: 500;
-    font-style: normal;
-    font-variation-settings:
-    "wdth" 100;
-}
-
-#weather-block h2 {
-    text-align: center;
-}
-
-.weather-info {
-    margin-top: 0.8vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-}
-
-#weather-icon {
-    width: 50%;
-}
-
-#weather-icon img {
-    max-width: 100%;
-    object-fit: contain;
-}
-
-#temp-wind {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 50%;
-}
-
-#temp-p, #temp-p span{
-    font-family: "Fredoka", sans-serif;
-    font-optical-sizing: auto;
-    font-size: 6rem;
-    font-weight: 500;
-    font-style: normal;
-    font-variation-settings:
-    "wdth" 100;
-    line-height: normal;
-}
-
-#wind-p {
-    font-size: 1.4rem;
-}
-
-/*  POSTCODE - DATE BLOCK  */
-.postcode-date-block {
-    max-width: 500px;
-    margin: 0 auto;
-}
-
-.postcode-date-block .row {
-    margin-bottom: 0.2rem;
-    gap: 8px;
-}
-
-#postcode-date-form {
-    display: flex;
-    justify-content: space-between;
-    gap: 22px;
-    align-items: center;
-}
-
-#postcode-date-form input {
-    width: 100px;
-    grid-auto-columns: auto;
-}
-
-
-/*  ACTIVITY BLOCK  */
-#activity-block {
-    max-width: 500px;
-    background-color: #023047;
-    margin: 20px auto;
-    border-radius: 50px;
-    padding: 1rem 2rem;
-    color: #FFB703;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-#activity-block form {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-}
-
-select, input[type="text"], input[type="number"], textarea{
-    width: 300px;
-    background-color: #fff;
-    height: 30px;
-    border-radius: 50px;
-    border: none;
-    padding-left: 10px;
-    color: #023047;
-}
-
-select {
-    width: 200px;
-}
-
-#activity-block p{
-    width: 100%;
-    font-weight: 600;
-    max-height: 100px;
-    overflow-x: auto;
-}
-
-#activity-block p span{
-    margin-left: 10px;
-    font-weight: 400;
-    line-height: 1.5;
-}
-
-
-
-/* OUTPUT MESSAGE*/
-.output-message {
-    max-width: 500px;
-    margin: 50px auto 0 auto;
-    background-color: #FFB703;
-    color: #023047;
-    border-radius: 50px;
-    font-size: 30px;
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    padding: 1em;
-}
-
-#resultMessage {
-    font-weight: 500;
-}
-
-#resultMessage span {
-    font-weight:400;
-}
-
-#booking  {
-    max-width: 400px;
-    margin: 10px auto;
-    display: none;
-    justify-content: flex-end;
-}
-
-#booking button {
-    width: 80px;
-    background-color: #023047;
-}
-
-#booking button p {
-    color: #FFB703;
-}
-
-/* SAVED ACTIVITIES PAGE*/
 
 /*  -- SCROLLBAR -- */
 ::-webkit-scrollbar {
@@ -252,22 +54,252 @@ select {
 ::-webkit-scrollbar-thumb:hover {
     background: #d59500;
 }
+/* end of scrollbar */
 
+/* Main content area background color */
+html {
+    background-color: #8ECAE6;
+}
+
+/* Body styles */
+body{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 812px;
+    min-height: 100%;
+    margin: 0 auto;
+}
+
+/* Main section styling */
+main {
+    flex-grow: 1;
+    padding: 160px 30px 80px 30px;
+    background-color: #219EBC;
+    color: #fff;
+    box-shadow: 5px 0 8px -5px rgba(0, 0, 0, 0.5), -5px 0 8px -5px rgba(0, 0, 0, 0.5);
+}
+
+/* WEATHER BLOCK */
+/* Weather block container */
+#weather-block {
+    max-width: 450px;
+    margin: 0 auto 60px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Weather block heading */
+h2 {
+    font-family: "Familjen Grotesk", sans-serif;
+    font-optical-sizing: auto;
+    font-size: 40px;
+    font-weight: 500;
+    font-style: normal;
+    font-variation-settings:
+    "wdth" 100;
+}
+
+/* Center align heading text */
+#weather-block h2 {
+    text-align: center;
+}
+
+/* Weather information display */
+.weather-info {
+    margin-top: 0.8vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Weather icon container */
+#weather-icon {
+    width: 50%;
+}
+
+/* Weather icon image styling */
+#weather-icon img {
+    max-width: 100%;
+    object-fit: contain;
+}
+
+/* Temperature and wind speed container */
+#temp-wind {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+}
+
+/* Temperature display styling */
+#temp-p, #temp-p span{
+    font-family: "Fredoka", sans-serif;
+    font-optical-sizing: auto;
+    font-size: 6rem;
+    font-weight: 500;
+    font-style: normal;
+    font-variation-settings:
+    "wdth" 100;
+    line-height: normal;
+}
+
+/* Wind speed display styling */
+#wind-p {
+    font-size: 1.4rem;
+}
+
+
+/*  POSTCODE - DATE BLOCK  */
+/* Container for postcode and date block */
+.postcode-date-block {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+/* Row styling for postcode and date block */
+.postcode-date-block .row {
+    margin-bottom: 0.2rem;
+    gap: 8px;
+}
+
+/* Postcode and date form styling */
+#postcode-date-form {
+    display: flex;
+    justify-content: space-between;
+    gap: 22px;
+    align-items: center;
+}
+
+/* Postcode and date form input styling */
+#postcode-date-form input {
+    width: 100px;
+    grid-auto-columns: auto;
+}
+
+
+/*  ACTIVITY BLOCK  */
+/* Activity block container */
+#activity-block {
+    max-width: 500px;
+    background-color: #023047;
+    margin: 20px auto;
+    border-radius: 50px;
+    padding: 1rem 2rem;
+    color: #FFB703;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Activity block form styling */
+#activity-block form {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Input and select elements styling */
+select, input[type="text"], input[type="number"], textarea{
+    width: 300px;
+    background-color: #fff;
+    height: 30px;
+    border-radius: 50px;
+    border: none;
+    padding-left: 10px;
+    color: #023047;
+}
+
+/* Select element specific width */
+select {
+    width: 200px;
+}
+
+/* Activity block paragraph styling */
+#activity-block p{
+    width: 100%;
+    font-weight: 600;
+    max-height: 100px;
+    overflow-x: auto;
+}
+
+/* Span element inside activity block paragraph */
+#activity-block p span{
+    margin-left: 10px;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+
+
+/* OUTPUT MESSAGE*/
+/* Output message container */
+.output-message {
+    max-width: 500px;
+    margin: 50px auto 0 auto;
+    background-color: #FFB703;
+    color: #023047;
+    border-radius: 50px;
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    padding: 1em;
+}
+
+/* Result message styling */
+#resultMessage {
+    font-weight: 500;
+}
+
+/* Span inside result message */
+#resultMessage span {
+    font-weight:400;
+}
+
+/* Booking section styling */
+#booking  {
+    max-width: 400px;
+    margin: 10px auto;
+    display: none;
+    justify-content: flex-end;
+}
+
+/* Booking button styling */
+#booking button {
+    width: 80px;
+    background-color: #023047;
+}
+
+/* Booking button paragraph styling */
+#booking button p {
+    color: #FFB703;
+}
+
+/* SAVED ACTIVITIES PAGE*/
+
+/* Main block container for saved activities */
 #main-block {
     width: 80%;
     margin: 0 auto;
 }
-/* end of scrollbar */
 
+/* All activities container */
 #all-activities {
     max-height: 600px;
     overflow-y: auto;
 }
 
+/* Title row styling */
 .title-row {
     margin-left: 40px;
 }
 
+/* Row styling */
 .row {
     display: flex;
     flex-direction: row;
@@ -275,6 +307,7 @@ select {
     align-items: center;
 }
 
+/* Button styling */
 .button {
     display: flex;
     width: 100px;
@@ -287,10 +320,12 @@ select {
     cursor: pointer;
 }
 
+/* Button hover effect */
 .button:hover {
     background-color: #d59500;
 }
 
+/* Button paragraph styling */
 .button p {
     color: #023047;
     font-variant-caps: all-small-caps;
@@ -299,6 +334,7 @@ select {
     align-items: center;
 }
 
+/* Activity container styling */
 .activity-container {
     background-color: #023047;
     border-radius: 50px;
@@ -309,53 +345,62 @@ select {
     gap: 8px;
 }
 
+/* Top row styling for activity and booking */
 .activity-top, .booking-top {
     justify-content: space-between;
 }
 
-
+/* Heading 3 styling */
 h3 {
     color: #FFB703;
 }
 
+/* Buttons row styling */
 .buttons-row {
     gap: 5px;
     display: flex;
     justify-content: flex-end;
 }
 
+/* Edit button styling */
 .edit {
     width: 50px;
 }
 
+/* Delete button styling */
 .delete {
     width: 70px;
 }
 
+/* Activity description styling */
 .description {
     font-style: italic;
 }
 
+/* Wind speed pair styling */
 .wind-speed-pair {
     gap: 5px;
     font-weight: 700;
 }
 
+/* Paragraph inside wind speed pair */
 .wind-speed-pair p {
     font-weight: 300;
-    margin-top: 5px;
 }
 
+/* Condition span styling */
 .cond-span {
     font-weight: 700;
 }
 
+/* Paragraph following condition span */
 .cond-span + p{
     line-height: 1.5;
     max-height: 100px;
     overflow-y: auto;
 }
 
+/* Separator styling */
 .separator {
     height: 1px;
     background-color: #fff;
@@ -363,18 +408,22 @@ h3 {
     opacity: 0.4;
 }
 
+/* Booking block remove button */
 #booking-block .remove {
     width: 80px;
 }
 
+/* Booking block paragraph styling */
 #booking-block p {
     font-weight: 700;
 }
 
+/* Span inside booking block paragraph */
 #booking-block p span {
     font-weight: 400;
 }
 
+/* Booking information styling */
 .booking-infos {
     display: flex;
     gap: 50px;
@@ -382,10 +431,12 @@ h3 {
     margin-bottom: 20px;
 }
 
+/* Rain check message styling */
 #rainCheck-message {
     background: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(255, 183, 3, 1), rgba(0, 0, 0, 0));
 }
 
+/* Rain check message paragraph styling */
 #rainCheck-message p {
     text-align: center;
     font-size: 1.2rem;
@@ -393,10 +444,13 @@ h3 {
 }
 
 /* NEW ACTIVITY PAGE */
+/* New activity form container */
 #new-act-form {
     max-width: 80%;
     margin: 0 auto;
 }
+
+/* Input container styling */
 .input-container {
     display: flex;
     flex-direction: row;
@@ -405,16 +459,19 @@ h3 {
     align-items: center;
 }
 
+/* Name and description container */
 .name-desc {
     max-width: 450px;
 }
 
+/* Column styling */
 .column {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.5vw;
 }
 
+/* Placeholder text styling */
 .placeholder {
     color: #023047;
     font-family: 'Familjen Grotesk', sans-serif;
@@ -422,6 +479,7 @@ h3 {
     font-weight: 500;
 }
 
+/* Description textarea styling */
 #description {
     width: 100%;
     min-height: 80px;
@@ -433,10 +491,12 @@ h3 {
     vertical-align: top;
 }
 
+/* Number input styling */
 input[type="number"]{
     width: 50px;
 }
 
+/* Form styling inside input container */
 .input-container form {
     display: flex;
     flex-direction: column;
@@ -444,10 +504,12 @@ input[type="number"]{
     margin: 0 auto;
 }
 
+/* Input styling inside input container */
 .input-container input {
     margin-left: 2vw;
 }
 
+/* Options container styling */
 .options-container {
     width: 100%;
     height: 250px;
@@ -456,6 +518,7 @@ input[type="number"]{
     border-radius: 15px;
 }
 
+/* All options container styling */
 .all-options {
     background-color: #fff;
     border-radius: 15px;
@@ -466,6 +529,7 @@ input[type="number"]{
     margin-right: 10px;
 }
 
+/* Unordered list styling */
 ul {
     list-style-type: none;
     padding: 0;
@@ -473,17 +537,20 @@ ul {
     display: contents;
 }
 
+/* List item styling inside options container */
 .options-container li {
     display: flex;
     align-items: center;
     color: #023047;
 }
 
+/* Checkbox input styling inside options container */
 .options-container input[type="checkbox"] {
     margin-right: 10px;
     margin-left: 0;
 }
 
+/* Temperature and wind speed container */
 .temp-wind {
     width: 300px;
     display: flex;

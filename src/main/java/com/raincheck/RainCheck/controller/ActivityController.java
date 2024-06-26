@@ -38,8 +38,12 @@ public class ActivityController {
     @Autowired
     UserDataRepository userDataRepository;
 
-    // Mapping Methods //
+    // MAPPING METHODS
 
+/**
+ * Handles requests to the root URL ("/").
+ * Retrieves user data, weather information, activities with conditions, and formats dates for display.
+ **/
     @GetMapping("/")
     public String index(Model model) throws IOException, InterruptedException
     {
@@ -72,6 +76,10 @@ public class ActivityController {
         return "index";
     }
 
+/**
+ * Handles POST requests to update user settings.
+ * Updates user data based on provided postcode and redirects to the root URL.
+ **/
     @PostMapping("/update_settings")
     public RedirectView updateUserData(@ModelAttribute UserData userData, @RequestParam String postcode) throws URISyntaxException, IOException, InterruptedException {
         //Clean input
@@ -90,6 +98,10 @@ public class ActivityController {
         return new RedirectView("/");
     }
 
+    /**
+     * Displays a list of all activities.
+     * Retrieves activities with conditions and sorts them alphabetically by name.
+     **/
     @GetMapping(value = "/activities")
     public String showActivities(Model model) throws IOException, InterruptedException {
         //Get all activities with conditions and add to model
@@ -101,7 +113,10 @@ public class ActivityController {
         return "activities/activities";
     }
 
-    //Get the page to add a new activity
+/**
+ * Displays the form to add a new activity.
+ * Retrieves all conditions and adds them to the model.
+ **/
     @GetMapping("/activities/new")
     public String addNewActivity(Model model) {
         model.addAttribute("activity", new Activity());
@@ -110,6 +125,10 @@ public class ActivityController {
         return "activities/new";
     }
 
+/**
+ * Displays the form to edit an existing activity.
+ * Retrieves the activity by ID, populates its conditions, retrieves all conditions, and adds them to the model.
+ **/
     @GetMapping("/activities/edit")
     public String editActivity(@RequestParam("activityId") int id, Model model) {
         Optional<Activity> activityOp = activityRepository.findById(id);
@@ -123,6 +142,10 @@ public class ActivityController {
         return "activities/new";
     }
 
+/**
+ * Handles POST requests to add a new activity.
+ * Saves the activity and its associated conditions, then redirects to the activities page.
+ **/
     @PostMapping("/activities")
     public RedirectView addNewActivity(@ModelAttribute Activity activity) {
         if (activity.getLocation() == null || activity.getLocation().isEmpty()) activity.resetBooking();
@@ -140,13 +163,20 @@ public class ActivityController {
         return new RedirectView("/activities");
     }
 
-    // Delete an activity on the activity page
+/**
+ * Handles POST requests to delete an activity.
+ * Deletes the activity by ID and redirects to the activities page.
+ **/
     @PostMapping("/activities/delete/{id}")
     public RedirectView deleteActivity(@PathVariable Integer id) {
         activityRepository.deleteById(id);
         return new RedirectView("/activities");
     }
 
+/**
+ * Handles POST requests to remove booking details from an activity.
+ * Resets booking details (date, location, latitude, longitude) for the activity by ID and redirects to the activities page.
+ **/
     @PostMapping("/remove_booking/{id}")
     public RedirectView removeBooking(@PathVariable Integer id) {
         Optional<Activity> activityOptional = activityRepository.findById(id);
@@ -157,6 +187,12 @@ public class ActivityController {
         return new RedirectView("/activities");
     }
 
+/**
+ * Handles POST requests to book an activity.
+ * Retrieves the activity by ID, retrieves user data, retrieves weather information,
+ * populates activity conditions, generates weather comparisons, saves booking details,
+ * and redirects to the root URL ("/").
+ **/
     @PostMapping("/book_activity")
     public RedirectView bookActivity(@RequestParam("activityId") String id) throws IOException, InterruptedException {
         Optional<Activity> activityOptional = activityRepository.findById(Integer.parseInt(id));
@@ -178,9 +214,9 @@ public class ActivityController {
         return new RedirectView("/");
     }
 
-    // Utility Methods //
+    // UTILITY METHODS
 
-
+    // Cleans postcode input by removing spaces and quotes.
     String cleanPostcode(String input){
         String postcode = input.replace(" ", "");
         postcode = postcode.replace("\"", "");
@@ -189,6 +225,8 @@ public class ActivityController {
         return postcode;
     }
 
+    // Retrieves user data from the database.
+    // Updates user's date to current date if necessary and saves updated user data.
     UserData getUserData(){
         UserData userData = userDataRepository.findAll().iterator().next();
 
@@ -201,6 +239,7 @@ public class ActivityController {
         return userData;
     }
 
+    // Retrieves weather data based on user data (latitude, longitude, date).
     Weather getWeather(UserData userData) throws IOException, InterruptedException {
         //API request to get weather data as a JSON
         WeatherClient client = new WeatherClient(userData.getLatitude(), userData.getLongitude(), userData.getDate());
@@ -210,6 +249,7 @@ public class ActivityController {
         return new Weather(daily);
     }
 
+    // Retrieves weather data based on activity's location, latitude, longitude, and date.
     Weather getWeatherFromBooking(Activity activity) throws IOException, InterruptedException {
         //API request to get weather data as a JSON
         WeatherClient client = new WeatherClient(activity.getLatitude(), activity.getLongitude(), activity.getDate());
@@ -219,6 +259,7 @@ public class ActivityController {
         return new Weather(daily);
     }
 
+    // Retrieves weather icon based on weather condition code.
     String getWeatherIcon(Weather weather){
         Integer code = weather.getWeather_code();
         Condition condition = conditionRepository.findByWeatherCode(code);
@@ -227,8 +268,7 @@ public class ActivityController {
         return icon;
     }
 
-    //Creates a list of all activities and then populates each activity objects "conditions"
-    //Field with all conditions associated with it through the join table
+    // Retrieves a list of all activities and populates each activity's conditions field.
     public List<Activity> getActivitiesWithConditions(){
         List<Activity> activities = activityRepository.findAll(); //Get all activities in table
         for (Activity activity: activities){
@@ -238,11 +278,14 @@ public class ActivityController {
         return activities;
     }
 
+    // Retrieves weather data from booking and generates weather comparisons for the activity.
     public void checkBooking(Activity activity) throws IOException, InterruptedException {
         Weather weather = getWeatherFromBooking(activity);
         activity.generateWeatherComparisons(weather);
     }
 
+    // Validates activities by checking their booking dates.
+    // Resets booking details for activities that are past their date.
     public void validateActivities(){
         List<Activity> activities = activityRepository.findAll();
         for (Activity activity: activities){
@@ -255,6 +298,8 @@ public class ActivityController {
         }
     }
 
+    // Retrieves a list of all activities and populates each activity's conditions field.
+    // Compares weather conditions if weather is provided and validates activities.
     public List<Activity> getActivitiesWithConditions(Weather weather) throws IOException, InterruptedException {
         validateActivities();
         List<Activity> activities = activityRepository.findAll(); //Get all activities in table
@@ -270,11 +315,12 @@ public class ActivityController {
         return activities;
     }
 
+    // Populates an activity's conditions field from its associated activity conditions.
     public void populateActivityConditions(Activity activity){
         var conditions = new ArrayList<Condition>();
         var activityConditions = activityConditionRepository.findByActivity(activity);
 
-        //iterate over each activitycondition and populate arraylist with conditions
+        //iterate over each activity condition and populate arraylist with conditions
         for (ActivityCondition activityCondition: activityConditions){
             conditions.add(activityCondition.getCondition());
         }
