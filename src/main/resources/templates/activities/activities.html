@@ -25,9 +25,6 @@
                         <form th:action="@{/activities/delete/{id} (id=${activity.id})}" method="post">
                             <button type="submit" class="button delete"><p>delete</p></button>
                         </form>
-                        <form th:action="@{/remove_booking/{id} (id=${activity.id})}" method="post">
-                            <button th:if="${activity.date != null}" type="submit" class="button remove"><p>unbook</p></button>
-                        </form>
                     </div>
                 </div>
                 <p class="description" th:text="${activity.description}"></p>
@@ -44,12 +41,27 @@
                 </div>
                 <span class="cond-span">Conditions: </span>
                 <p th:text="${activity.getConditionString}" alt="conditions"></p>
-                <div th:if="${activity.date != null}">
-                    <p>Location: <span th:text="${activity.location}"></span></p>
-                    <p>Date: <span th:text="${activity.date}"></span></p>
-                    <p>Booking Score: <span th:text="${activity.dateScore}"></span></p>
-                    <p>Current Score: <span th:text="${activity.score}"></span></p>
-                    <p th:if="${activity.score != null and activity.dateScore != null and activity.score + 5 < activity.dateScore}">RAIN CHECK</p>
+                <div th:if="${activity.date != null}" id="booking-block">
+                    <div class="separator"></div>
+                    <div class="booking-top row">
+                        <h3> You have plans for this!</h3>
+                        <form th:action="@{/remove_booking/{id} (id=${activity.id})}" method="post">
+                            <button th:if="${activity.date != null}" type="submit" class="button remove"><p>cancel booking</p></button>
+                        </form>
+                    </div>
+                    <div class="booking-infos">
+                        <div class="booking-column">
+                            <p>Location: <span th:text="${activity.location}"></span></p>
+                            <p>Date: <span th:text="${activity.date}"></span></p>
+                        </div>
+                        <div class="booking-column">
+                            <p>Booking Score: <span th:text="${activity.dateScore}"></span></p>
+                            <p>Current Score: <span th:text="${activity.score}"></span></p>
+                        </div>
+                    </div>
+                    <div id="rainCheck-message">
+                        <p th:if="${activity.score != null and activity.dateScore != null and activity.score + 5 < activity.dateScore}">ALERT: RAIN CHECK!</p>
+                    </div>
                 </div>
             </div>
         </div>
