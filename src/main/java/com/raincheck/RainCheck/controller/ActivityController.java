@@ -181,7 +181,7 @@ public class ActivityController {
     // Utility Methods //
 
 
-    private String cleanPostcode(String input){
+    String cleanPostcode(String input){
         String postcode = input.replace(" ", "");
         postcode = postcode.replace("\"", "");
         postcode = postcode.trim();
