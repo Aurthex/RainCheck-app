@@ -371,6 +371,55 @@ public class ActivityControllerTest {
         // Verify redirection
         assertEquals("/", redirectView.getUrl());
     }
+    //postcode test
+    //postcode
+    @Test
+    public void testCleanPostcode_NormalInput() {
+        // Test with a normal postcode input
+        String input = "EC1A 1BB";
+        String cleanedPostcode = activityController.cleanPostcode(input);
+        assertEquals("EC1A1BB", cleanedPostcode);
+    }
+
+    @Test
+    public void testCleanPostcode_WithQuotes() {
+        // Test with input containing quotes
+        String input = "\"EC1A 1BB\"";
+        String cleanedPostcode = activityController.cleanPostcode(input);
+        assertEquals("EC1A1BB", cleanedPostcode);
+    }
+
+    @Test
+    public void testCleanPostcode_WithSpaces() {
+        // Test with input containing extra spaces
+        String input = "   EC1A 1BB   ";
+        String cleanedPostcode = activityController.cleanPostcode(input);
+        assertEquals("EC1A1BB", cleanedPostcode);
+    }
+
+    @Test
+    public void testCleanPostcode_TrimmedInput() {
+        // Test with trimmed input
+        String input = "EC1A1BB";
+        String cleanedPostcode = activityController.cleanPostcode(input);
+        assertEquals("EC1A1BB", cleanedPostcode);
+    }
+
+    @Test
+    public void testCleanPostcode_LongInput() {
+        // Test with input longer than 7 characters
+        String input = "W1A 1ABCC";
+        String cleanedPostcode = activityController.cleanPostcode(input);
+        assertEquals("", cleanedPostcode); // Should return empty string
+    }
+
+    @Test
+    public void testCleanPostcode_EmptyInput() {
+        // Test with empty input
+        String input = "";
+        String cleanedPostcode = activityController.cleanPostcode(input);
+        assertEquals("", cleanedPostcode); // Should return empty string
+    }
 
 
 }
