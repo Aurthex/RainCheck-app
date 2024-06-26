@@ -46,6 +46,9 @@ public class PostCodeClient {
 
     private void extractLatLongFromJson(String json) {
 
+        // Status Check
+        String status = json.split("\"status\":")[1].split(",")[0].trim();
+        if (!status.equals("200")) return;
         // Extract latitude
         latitude = json.split("\"latitude\":")[1].split(",")[0].trim();
         latitude = latitude.substring(0, latitude.length() - 1); // Remove surrounding quotes

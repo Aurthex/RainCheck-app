@@ -74,13 +74,12 @@ public class ActivityController {
 
     @PostMapping("/update_settings")
     public RedirectView updateUserData(@ModelAttribute UserData userData, @RequestParam String postcode) throws URISyntaxException, IOException, InterruptedException {
-        //TODO validate postcode
-        postcode = postcode.replace(" ", "");
-        postcode = postcode.trim();
-        //If postcode is invalid, use existing postcode
+        //Clean input
+        postcode = cleanPostcode(postcode);
+        //Pass postcode to client and generate internal values
         PostCodeClient client = new PostCodeClient(postcode);
-        //TODO set Long and Lat from userData postcode before saving
 
+        //If client fails to generate valid values, use existing values from userdata
         if (client.getLatitude() != null){
             userData.setLatitude(client.getLatitude());
             userData.setLongitude(client.getLongitude());
@@ -180,6 +179,15 @@ public class ActivityController {
     }
 
     // Utility Methods //
+
+
+    private String cleanPostcode(String input){
+        String postcode = input.replace(" ", "");
+        postcode = postcode.replace("\"", "");
+        postcode = postcode.trim();
+        if (postcode.length() > 7) return "";
+        return postcode;
+    }
 
     UserData getUserData(){
         UserData userData = userDataRepository.findAll().iterator().next();
