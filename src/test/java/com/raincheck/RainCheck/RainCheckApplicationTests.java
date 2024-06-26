@@ -7,8 +7,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 class RainCheckApplicationTests {
 
     @Test
-    void contextLoads() {
-        // This test method will pass if the Spring application context loads successfully
+    public void applicationContextLoaded() {
+    }
+
+    @Test
+    public void applicationContextTest() {
+        RainCheckApplication.main(new String[] {});
     }
 
 }
