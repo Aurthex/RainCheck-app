@@ -1,33 +1,42 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+  <!-- Meta Information -->
   <meta charset="UTF-8">
+  <!-- CSS stylesheets -->
   <link rel="stylesheet" href="/styles/header.css">
   <link rel="stylesheet" href="/styles/main.css">
   <link rel="stylesheet" href="/styles/footer.css">
-  <title>RainCheck</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.9/flatpickr.min.css">
+  <!-- Page Title -->
+  <title>RainCheck</title>
+  <!-- Scripts -->
+  <script src="js/header.js"></script>
+  <script src="js/index.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.9/flatpickr.min.js"></script>
   <script>
+    // Initialize the date picker when the DOM content is loaded
     document.addEventListener('DOMContentLoaded', function () {
         flatpickr("#forecast_date", {
             dateFormat: "Y-m-d",
             minDate: "today",
-            maxDate: new Date().fp_incr(14)
+            maxDate: new Date().fp_incr(14) // Max date is 14 days from today
         });
     });
   </script>
-  <script src="js/header.js"></script>
-  <script src="js/index.js"></script>
 </head>
+
 <body>
+<!-- Include the header from Thymeleaf template -->
 <header th:replace="header :: header"></header>
 <main>
 <!--  WEATHER BLOCK  -->
   <div id="weather-block">
+    <!-- Display the weather for today, tomorrow, or a specific date in a location -->
     <h2 th:if="${userData.date.toString() == today}" th:text="'Weather for today in ' + ${userData.location}"></h2>
     <h2 th:if="${userData.date.toString() == tomorrow}" th:text="'Weather for tomorrow in ' + ${userData.location}"></h2>
     <h2 th:unless="${userData.date.toString() == today || userData.date.toString() == tomorrow}" th:text="'Weather for ' + ${#dates.format(userData.date, 'EEEE dd MMMM')} + ' in ' + ${userData.location}"></h2>
+    <!-- Weather information section -->
     <div class="weather-info">
       <div id="weather-icon">
         <img th:src="${weather_icon}" onerror="this.style.display = 'none';" alt="Weather Icon">
@@ -39,29 +48,33 @@
     </div>
   </div>
 
-
   <!--  POSTCODE & DATE FORM / BLOCK  -->
   <div class="postcode-date-block">
+    <!-- Form to update settings for postcode and date -->
     <form th:action="@{/update_settings}" th:object="${userData}" method="post" id="postcode-date-form">
       <div class="row">
+        <!-- Hidden fields to store user data -->
         <input type="hidden" name="id" th:value="${userData.Id}">
         <input type="hidden" name="longitude" th:value="${userData.longitude}">
         <input type="hidden" name="latitude" th:value="${userData.latitude}">
         <input type="hidden" name="location" th:value="${userData.location}">
+        <!-- Postcode input field -->
         <label for="postcode">Where?</label>
         <input type="text" id="postcode" name="postcode" th:placeholder="postcode">
       </div>
       <div class="row">
+        <!-- Date input field with date picker -->
         <label for="forecast_date">When?</label>
         <input type="date" id="forecast_date" th:field="*{date}" required>
       </div>
+      <!-- Submit button -->
       <button class="button" type="submit"><p>Confirm</p></button>
     </form>
   </div>
 
-
 <!--  ACTIVITY BLOCK  -->
   <div id="activity-block">
+    <!-- Form to select and display activity details -->
     <form action="#">
       <label for="activity">Pick an activity: </label>
       <select name="activity" id="activity" onchange="handleActivityChange()">
@@ -73,15 +86,16 @@
         <option value="add-new">Add New</option>
       </select>
     </form>
+    <!-- Display activity details such as description, ideal temperature, wind speed, and conditions -->
     <p>Description: <span id="activityDescription"></span></p>
     <p>Ideal Temperature: <span id="activityTemp"></span><span>°C</span></p>
     <p>Ideal Wind Speed: <span id="activityWindSpeed"></span><span>mph</span></p>
     <p>Ideal Conditions: <span id="activityCond"></span></p>
   </div>
 
-
 <!--  OUTPUT MESSAGE -->
   <div class="output-message column">
+    <!-- Display compatibility score and message -->
     <p id="resultMessage">Compatibility Score:
       <span id="activityScore"></span>
     </p>
@@ -90,11 +104,14 @@
 
   <!--  PLAN AN ACTIVITY FORM-->
   <form id="booking" th:action="@{/book_activity}" method="post">
+    <!-- Hidden field to store activity ID -->
     <input type="hidden" id="activityId" name="activityId">
+    <!-- Submit button to plan the activity -->
     <button class="button" type="submit"><p>Plan</p></button>
   </form>
 </main>
 
+<!-- Include the footer from Thymeleaf template -->
 <footer th:replace="footer :: footer"></footer>
 
 </body>
