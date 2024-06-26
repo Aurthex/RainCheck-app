@@ -216,6 +216,21 @@ select {
     font-weight:400;
 }
 
+#booking  {
+    max-width: 400px;
+    margin: 10px auto;
+    display: flex;
+    justify-content: flex-end;
+}
+
+#booking button {
+    width: 80px;
+    background-color: #023047;
+}
+
+#booking button p {
+    color: #FFB703;
+}
 
 /* SAVED ACTIVITIES PAGE*/
 
