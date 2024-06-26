@@ -1,70 +1,87 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <!-- Meta Information -->
     <meta charset="UTF-8">
+    <!-- CSS Stylesheets -->
     <link rel="stylesheet" href="/styles/header.css">
     <link rel="stylesheet" href="/styles/main.css">
     <link rel="stylesheet" href="/styles/footer.css">
+    <!-- JavaScript Files -->
     <script src="/js/header.js"></script>
+    <!-- Page Title -->
     <title>RainCheck</title>
 </head>
 <body>
+<!-- Include the header from Thymeleaf template -->
 <header th:replace="header :: header"></header>
+
+<!-- Main Content Section -->
 <main>
-<form action="#" th:action="@{/activities}" th:object="${activity}" method="post" id="new-act-form">
-    <h2>Add New Activity</h2>
-    <input type="hidden" th:field="*{id}"/>
-    <input type="hidden" th:field="*{location}"/>
-    <input type="hidden" th:field="*{latitude}"/>
-    <input type="hidden" th:field="*{longitude}"/>
-    <input type="hidden" id="activityDate" name="date" th:value="${activity.date != null} ? ${#dates.format(activity.date, 'yyyy-MM-dd')} : '2024-01-01'"/>
-    <input type="hidden" th:field="*{dateScore}"/>
-    <div class="name-desc">
-        <div class="input-container">
-            <label for="name" class="placeholder">Activity Name:</label>
-            <input id="name" class="input" type="text" th:field="*{name}" placeholder="Walk the dog in the park" required/>
-        </div>
-        <div class="input-container column">
-            <label for="description" class="placeholder">Description:</label>
-            <textarea id="description" class="input" th:field="*{description}" placeholder="I should probably get a dog first." required></textarea>
-        </div>
-    </div>
-    <div class="input-container column">
-        <p class="placeholder">Ideal Weather:</p>
-        <div class="options-container">
-            <div class="all-options">
-                <ul>
-                    <li th:each="condition : ${conditions}">
-                        <input type="checkbox"
-                               th:field="*{conditions}"
-                               th:value="${condition.id}"
-                               th:id="${condition.id}"
-                               th:checked="${activity.conditions != null and #lists.contains(activity.conditions, condition)}">
-                        <label th:for="${condition.id}"
-                               th:text="${condition.name}"></label>
-                    </li>
-                </ul>
+    <!-- Form to Add New Activity -->
+    <form action="#" th:action="@{/activities}" th:object="${activity}" method="post" id="new-act-form">
+        <h2>Add New Activity</h2>
+        <!-- Hidden Fields to Store Activity Data -->
+        <input type="hidden" th:field="*{id}"/>
+        <input type="hidden" th:field="*{location}"/>
+        <input type="hidden" th:field="*{latitude}"/>
+        <input type="hidden" th:field="*{longitude}"/>
+        <input type="hidden" id="activityDate" name="date" th:value="${activity.date != null} ? ${#dates.format(activity.date, 'yyyy-MM-dd')} : '2024-01-01'"/>
+        <input type="hidden" th:field="*{dateScore}"/>
+
+        <!-- Input Fields for Activity Name and Description -->
+        <div class="name-desc">
+            <div class="input-container">
+                <label for="name" class="placeholder">Activity Name:</label>
+                <input id="name" class="input" type="text" th:field="*{name}" placeholder="Walk the dog in the park" required/>
+            </div>
+            <div class="input-container column">
+                <label for="description" class="placeholder">Description:</label>
+                <textarea id="description" class="input" th:field="*{description}" placeholder="I should probably get a dog first." required></textarea>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="input-container temp-wind">
-            <label for="ideal-temperature" class="placeholder">Ideal Temperature (°C):</label>
-            <input id="ideal-temperature" class="input" type="number" th:field="*{temperature}" min="-15" max="40" placeholder=" "/>
-        </div>
-        <div class="input-container temp-wind">
-            <label for="ideal-wind" class="placeholder">Ideal Wind Speed (mph):</label>
-            <input id="ideal-wind" class="input" type="number" th:field="*{windSpeed}" min="0" max="175" placeholder=" "/>
-        </div>
-    </div>
-    <br>
-    <div class="row buttons-row">
-        <button type="reset" class="button"><p>reset</p></button>
-        <button type="submit" class="submit button"><p>submit</p></button>
-    </div>
-</form>
 
+        <!-- Section to Select Ideal Weather Conditions -->
+        <div class="input-container column">
+            <p class="placeholder">Ideal Weather:</p>
+            <div class="options-container">
+                <div class="all-options">
+                    <!-- List of Weather Conditions -->
+                    <ul>
+                        <li th:each="condition : ${conditions}">
+                            <input type="checkbox"
+                                   th:field="*{conditions}"
+                                   th:value="${condition.id}"
+                                   th:id="${condition.id}"
+                                   th:checked="${activity.conditions != null and #lists.contains(activity.conditions, condition)}">
+                            <label th:for="${condition.id}"
+                                   th:text="${condition.name}"></label>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Input Fields for Ideal Temperature and Wind Speed -->
+        <div class="row">
+            <div class="input-container temp-wind">
+                <label for="ideal-temperature" class="placeholder">Ideal Temperature (°C):</label>
+                <input id="ideal-temperature" class="input" type="number" th:field="*{temperature}" min="-15" max="40" placeholder=" "/>
+            </div>
+            <div class="input-container temp-wind">
+                <label for="ideal-wind" class="placeholder">Ideal Wind Speed (mph):</label>
+                <input id="ideal-wind" class="input" type="number" th:field="*{windSpeed}" min="0" max="175" placeholder=" "/>
+            </div>
+        </div>
+        <br>
+        <!-- Form Buttons for Reset and Submit -->
+        <div class="row buttons-row">
+            <button type="reset" class="button"><p>reset</p></button>
+            <button type="submit" class="submit button"><p>submit</p></button>
+        </div>
+    </form>
 </main>
+
+<!-- Include the footer from Thymeleaf template -->
 <footer th:replace="footer :: footer"></footer>
 </body>
 </html>
