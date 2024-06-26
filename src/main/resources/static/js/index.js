@@ -27,17 +27,6 @@ function updateActivityDetails() {
     }
 }
 
-function checkStringContainment(a, b, resultElementId) {
-    const resultElement = document.getElementById(resultElementId);
-    if (!a || !b) {
-        resultElement.innerText = "Checking the weather...";
-    } else if (a.includes(b)) {
-        resultElement.innerText = "The weather matches your preferences!";
-    } else {
-        resultElement.innerText = "The weather does not match your preferences.";
-    }
-}
-
 // Handle activity change and redirect if "Add New" is selected
 function handleActivityChange() {
     const activitySelect = document.getElementById('activity');
@@ -48,6 +37,19 @@ function handleActivityChange() {
         window.location.href = '/activities/new';
     } else {
         updateActivityDetails();
-        updateContainmentMessage();
+        toggleFormVisibility();
+    }
+}
+
+// Function to check the activityId and toggle form visibility
+function toggleFormVisibility() {
+    const activityIdInput = document.getElementById("activityId");
+    const bookingForm = document.getElementById("booking");
+
+    var activityId = activityIdInput.value;
+    if (activityId && activityId.trim() !== "") {
+        bookingForm.style.display = "flex";
+    } else {
+        bookingForm.style.display = "none";
     }
 }
