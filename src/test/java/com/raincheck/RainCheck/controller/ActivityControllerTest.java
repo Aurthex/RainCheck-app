@@ -12,12 +12,15 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URISyntaxException;
 import java.sql.Date;
@@ -53,6 +56,9 @@ public class ActivityControllerTest {
     private PostCodeClient postCodeClient;
 
     @Mock
+    private Weather weather;
+
+    @Mock
     private WeatherClient weatherClient;
 
     @Mock
@@ -61,11 +67,12 @@ public class ActivityControllerTest {
     @InjectMocks
     private ActivityController activityController;
 
+
     private Activity activity;
     private Condition condition;
     private ActivityCondition activityCondition;
     private UserData userData;
-    private Weather weather;
+
 
     /**
      * Setup method to initialize mock objects and test data before each test method.
@@ -75,13 +82,35 @@ public class ActivityControllerTest {
         activity = new Activity(1, "Running", "Outdoor running", null);
         condition = new Condition(1, "Sunny", 100, "sun.png");
         activityCondition = new ActivityCondition(activity, condition);
+        weather = new Weather(20,1,15);
 
-        userData = new UserData();
+
+    }
+
+    @Test
+    public void testShowIndex() throws IOException, InterruptedException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        UserData userData = new UserData();
         userData.setId(1);
         userData.setDate(Date.valueOf(LocalDate.now()));
         userData.setLatitude("52.5200");
         userData.setLongitude("13.4050");
+
+        ActivityController spyController = spy(activityController);
+
+
+        when(userDataRepository.findAll()).thenReturn(Collections.singletonList(userData));
+        when(userDataRepository.save(any(UserData.class))).thenReturn(userData);
+
+
+        Mockito.doReturn(weather).when(spyController).getWeather(userData);
+        when(conditionRepository.findByWeatherCode(weather.getWeather_code())).thenReturn(condition);
+
+        String viewName = spyController.index(model);
+
+
+        assertEquals("index", viewName);
     }
+
 
     @Test
     public void testShowActivities() throws IOException, InterruptedException {
@@ -317,9 +346,6 @@ public class ActivityControllerTest {
         activity.setLongitude("13.4050");
         activity.setDate(Date.valueOf(LocalDate.now()));
 
-        // Mocked Weather object
-        Weather mockedWeatherData = new Weather(31, 3, 5);
-
         // Call the method under test
         Weather weather = activityController.getWeatherFromBooking(activity);
 
@@ -359,7 +385,11 @@ public class ActivityControllerTest {
     }
     @Test
     public void testUpdateUserData_ValidPostcode() throws URISyntaxException, IOException, InterruptedException {
-
+        userData = new UserData();
+        userData.setId(1);
+        userData.setDate(Date.valueOf(LocalDate.now()));
+        userData.setLatitude("52.5200");
+        userData.setLongitude("13.4050");
         // Call the method under test
         RedirectView redirectView = activityController.updateUserData(userData, "EC1A 1BB");
 
