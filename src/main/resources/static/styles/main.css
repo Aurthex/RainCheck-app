@@ -309,7 +309,7 @@ select {
     gap: 8px;
 }
 
-.activity-top {
+.activity-top, .booking-top {
     justify-content: space-between;
 }
 
@@ -354,6 +354,42 @@ h3 {
     line-height: 1.5;
     max-height: 100px;
     overflow-y: auto;
+}
+
+.separator {
+    height: 1px;
+    background-color: #fff;
+    margin: 10px 0;
+    opacity: 0.4;
+}
+
+#booking-block .remove {
+    width: 80px;
+}
+
+#booking-block p {
+    font-weight: 700;
+}
+
+#booking-block p span {
+    font-weight: 400;
+}
+
+.booking-infos {
+    display: flex;
+    gap: 50px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+#rainCheck-message {
+    background: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(255, 183, 3, 1), rgba(0, 0, 0, 0));
+}
+
+#rainCheck-message p {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #023047;
 }
 
 /* NEW ACTIVITY PAGE */
