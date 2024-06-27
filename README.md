@@ -4,7 +4,7 @@
 
 RainCheck is a web application designed to help users plan activities based on weather conditions. It provides functionality to manage activities, view weather forecasts, and adjust user settings.
 
-
+![index page screenshot](img.png)
 ## Features
 
 - **Index**: Shows current user settings, weather information, and a list of recommended activities.
@@ -13,6 +13,8 @@ RainCheck is a web application designed to help users plan activities based on w
 - **Weather Integration**: Retrieves and displays weather data relevant to activities.
 - **Activity Conditions**: Allows defining conditions (general weather, temperature, wind speed) for each activity.
 - **Date Management**: Automatically adjusts activity bookings based on the current date.
+
+![activities page screenshot](img_1.png)
 
 ## Technologies Used
 
@@ -64,8 +66,8 @@ Open a web browser and go to http://localhost:8080/ to access the RainCheck appl
 
 ## Contributors
 - <a href="https://github.com/marklovejoydev">Mark Lovejoy</a> - Developer
-- <a href="https://github.com/Aurthex">Sam Arrowsmith</a> - Developer
 - <a href="https://github.com/paulineldb">Pauline Lelievre Du Broeuille</a> - Developer
+- <a href="https://github.com/Aurthex">Sam Arrowsmith</a> - Developer
 - <a href="https://github.com/shirinooo">Shirin Ebrahimi</a> - Developer
 
 ## Notes
