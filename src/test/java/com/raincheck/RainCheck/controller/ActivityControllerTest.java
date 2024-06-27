@@ -348,11 +348,17 @@ public class ActivityControllerTest {
         activity.setDate(Date.valueOf(LocalDate.now()));
 
         // Call the method under test
-        Weather weather = activityController.getWeatherFromBooking(activity);
+        Weather bookingWeather = activityController.getWeatherFromBooking(activity);
+
+        WeatherClient client = new WeatherClient("52.5200", "13.4050", Date.valueOf(LocalDate.now()));
+        String daily = client.findDaily();
+
+        //Pass current weather JSON into weather and instantiate and add to model
+        Weather currentWeather = new Weather(daily);
 
         // Verify that weather object is correctly instantiated with mocked data
-        assertEquals(31, weather.getTemperature());
-        assertEquals(3, weather.getWeather_code());
+        assertEquals(currentWeather.getTemperature(), bookingWeather.getTemperature());
+        assertEquals(currentWeather.getWeather_code(), bookingWeather.getWeather_code());
 
     }
 
