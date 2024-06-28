@@ -53,6 +53,9 @@ public class ActivityController {
         Weather weather = getWeather(userData);
         model.addAttribute("weather", weather);
 
+        String description = conditionRepository.findByWeatherCode(weather.getWeather_code()).getName();
+        model.addAttribute("weather_description", description);
+
         String weather_icon = getWeatherIcon(weather);
         model.addAttribute("weather_icon", weather_icon);
 

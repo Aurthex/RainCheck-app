@@ -39,7 +39,7 @@
     <!-- Weather information section -->
     <div class="weather-info">
       <div id="weather-icon">
-        <img th:src="${weather_icon}" onerror="this.style.display = 'none';" alt="Weather Icon">
+        <img th:src="${weather_icon}" onerror="this.style.display = 'none';" th:title="${weather_description}" th:alt="${weather_description}">
       </div>
       <div id="temp-wind">
         <p id="temp-p" class="temp-wind-p"><span th:text="${weather.temperature}"></span>°C</p>
